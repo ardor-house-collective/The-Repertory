@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GNS — Create Account</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: #FAF6F0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #2c2c2c;
+      line-height: 1.5;
+    }
+
+    @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill.otf') format('opentype'); font-weight: normal; font-style: normal; }
+    @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
+    @font-face { font-family: 'Runtime'; src: url('Runtime.otf') format('opentype'); font-weight: normal; font-style: normal; }
+
+    .site-footer { border-top: 2px solid #1b2e4b; background: #faf6f0; padding: 2rem 40px; flex-shrink: 0; }
+    .site-footer-inner { max-width: 1280px; margin: 0 auto; display: flex; gap: 3rem; }
+    .footer-copy, .footer-legal { flex: 1; font-size: 0.75rem; color: #9a8e83; line-height: 1.65; }
+    .footer-copy a { color: #9a8e83; text-decoration: underline; text-underline-offset: 2px; }
+    .footer-copy a:hover { color: #b5622a; }
+    @media (max-width: 680px) { .site-footer { padding: 1.5rem 20px; } .site-footer-inner { flex-direction: column; gap: 1.2rem; } }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 20px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 16px rgba(27, 46, 75, 0.08), 0 1px 4px rgba(0, 0, 0, 0.05);
+      padding: 44px 40px;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    /* ── Card header — matches login.html exactly ── */
+    .login-header { text-align: center; margin-bottom: 28px; }
+
+    .login-logo {
+      width: 270px;
+      height: auto;
+      display: block;
+      margin: 0 auto 2px;
+    }
+
+    .co-name-line1 {
+      font-family: 'Alta', Georgia, serif;
+      font-size: 1.2rem;
+      color: #B5622A;
+      letter-spacing: 0.22em;
+      line-height: 1;
+      margin-bottom: 28px;
+      text-transform: uppercase;
+    }
+
+    .co-name-line2 {
+      font-family: 'Linden Hill';
+      font-size: 2.34rem;
+      color: #1B2E4B;
+      letter-spacing: 0.15em;
+      line-height: 1;
+      margin-bottom: 0;
+      text-transform: uppercase;
+    }
+
+    /* ── Divider between header and form ── */
+    .header-rule {
+      border: none;
+      border-top: 1px solid #ede8e1;
+      margin: 24px 0 28px;
+    }
+
+    h1 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #1B2E4B;
+      margin-bottom: 22px;
+      letter-spacing: -0.01em;
+      text-align: center;
+    }
+
+    .form-group { margin-bottom: 20px; }
+
+    label {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #555;
+      margin-bottom: 7px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 13px;
+      border: 1.5px solid #dfd9d1;
+      border-radius: 6px;
+      font-size: 0.93rem;
+      font-family: inherit;
+      color: #2c2c2c;
+      background: #ffffff;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    input::placeholder { color: #b5ada4; }
+
+    input:focus {
+      border-color: #1B2E4B;
+      box-shadow: 0 0 0 3px rgba(27, 46, 75, 0.07);
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px 16px;
+      margin-top: 10px;
+      background: #B5622A;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.93rem;
+      font-weight: 600;
+      font-family: inherit;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .btn:hover:not(:disabled) { background: #9a501f; }
+    .btn:active:not(:disabled) { background: #7d3d11; }
+    .btn:disabled { background: rgba(181,98,42,0.45); cursor: not-allowed; }
+
+    .alert {
+      padding: 12px 15px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      line-height: 1.55;
+      margin-bottom: 22px;
+      display: none;
+    }
+
+    .alert-error { background: #fdf0ef; border: 1px solid #e57373; color: #b71c1c; }
+    .alert-success { background: #f0f7f1; border: 1px solid #81c784; color: #1b5e20; }
+
+    #state-loading, #state-invalid, #state-form { display: none; }
+
+    .loading-text {
+      color: #7a7069;
+      font-size: 0.9rem;
+      text-align: center;
+      padding: 8px 0 4px;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #ede8e1;
+      margin: 28px 0 20px;
+    }
+
+    .footer-text {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #7a7069;
+    }
+
+    .footer-text a { color: #B5622A; text-decoration: none; }
+    .footer-text a:hover { text-decoration: underline; }
+
+    .hint { font-size: 0.78rem; color: #9a8e83; margin-top: 6px; }
+
+    .name-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .privacy-note {
+      font-size: 0.775rem;
+      color: #9a8e83;
+      line-height: 1.55;
+      margin-top: -10px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<main>
+  <div class="card">
+
+    <div class="login-header">
+      <img src="AHC_Logo.png" alt="Ardor House Collective" class="login-logo">
+      <p class="co-name-line1">PRESENTS</p>
+      <p class="co-name-line2">THE REPERTORY</p>
+    </div>
+
+    <hr class="header-rule">
+
+    <!-- Validating invite token -->
+    <div id="state-loading">
+      <p class="loading-text">Validating invite link…</p>
+    </div>
+
+    <!-- Token invalid or already used -->
+    <div id="state-invalid">
+      <h1>Invite Link Invalid</h1>
+      <div class="alert alert-error" style="display:block">
+        This invite link is invalid or has already been used. Please contact <a href="mailto:koyaana@ardorhousecollective.com">koyaana@ardorhousecollective.com</a>.
+      </div>
+      <hr>
+      <p class="footer-text">
+        <a href="request-access.html">Submit a residence application instead</a>
+      </p>
+    </div>
+
+    <!-- Signup form (shown after token validated) -->
+    <div id="state-form">
+      <h1>Create Your Account</h1>
+      <div id="alert" class="alert"></div>
+
+      <form id="signup-form" novalidate>
+        <div class="name-row">
+          <div class="form-group">
+            <label for="legal-first-name">Legal First Name</label>
+            <input type="text" id="legal-first-name" placeholder="First" autocomplete="given-name" required>
+          </div>
+          <div class="form-group">
+            <label for="legal-last-name">Legal Last Name</label>
+            <input type="text" id="legal-last-name" placeholder="Last" autocomplete="family-name" required>
+          </div>
+        </div>
+        <p class="privacy-note">
+          Your legal name is kept private and used for identity verification only. It will never be displayed publicly.
+        </p>
+        <div class="form-group">
+          <label for="display-name">Display Name</label>
+          <input type="text" id="display-name" placeholder="Your name as shown on contributions" autocomplete="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="you@example.com" autocomplete="email" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="••••••••" autocomplete="new-password" required>
+          <p class="hint">Minimum 8 characters.</p>
+        </div>
+        <div class="form-group">
+          <label for="confirm-password">Confirm Password</label>
+          <input type="password" id="confirm-password" placeholder="••••••••" autocomplete="new-password" required>
+        </div>
+        <input type="hidden" id="token-field">
+        <button type="submit" class="btn" id="submit-btn">Create Account</button>
+      </form>
+
+      <hr>
+      <p class="footer-text">
+        Already have an account? <a href="login.html">Sign in</a>
+      </p>
+    </div>
+
+  </div>
+</main>
+
+<script>
+  const SUPABASE_URL = 'https://hsseypuhqdlcvepgyrtd.supabase.co'
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhzc2V5cHVocWRsY3ZlcGd5cnRkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTc3NTk0MSwiZXhwIjoyMDkxMzUxOTQxfQ.mGNhUtPSCJWNDTVY1dlhwROsUMTAw-1dHkvRHYV0M0c'
+
+  const DB_HEADERS = {
+    'apikey': SUPABASE_KEY,
+    'Authorization': `Bearer ${SUPABASE_KEY}`,
+    'Content-Type': 'application/json'
+  }
+
+  const alertEl   = document.getElementById('alert')
+  const submitBtn = document.getElementById('submit-btn')
+
+  const stateLoading = document.getElementById('state-loading')
+  const stateInvalid = document.getElementById('state-invalid')
+  const stateForm    = document.getElementById('state-form')
+
+  const token = new URLSearchParams(window.location.search).get('token')
+  let tokenRow = null
+
+  function showState(state) {
+    stateLoading.style.display = 'none'
+    stateInvalid.style.display = 'none'
+    stateForm.style.display    = 'none'
+    state.style.display = 'block'
+  }
+
+  function showError(msg) {
+    alertEl.className = 'alert alert-error'
+    alertEl.textContent = msg
+    alertEl.style.display = 'block'
+  }
+
+  function setLoading(loading) {
+    submitBtn.disabled = loading
+    submitBtn.textContent = loading ? 'Creating account…' : 'Create Account'
+  }
+
+  async function validateToken() {
+    showState(stateLoading)
+
+    if (!token) {
+      showState(stateInvalid)
+      return
+    }
+
+    try {
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/invite_tokens?token=eq.${encodeURIComponent(token)}&used=eq.false&select=*&limit=1`,
+        { headers: DB_HEADERS }
+      )
+
+      if (!res.ok) throw new Error('Query failed')
+
+      const rows = await res.json()
+
+      if (!Array.isArray(rows) || rows.length === 0) {
+        showState(stateInvalid)
+        return
+      }
+
+      tokenRow = rows[0]
+      document.getElementById('token-field').value = token
+      showState(stateForm)
+    } catch {
+      showState(stateInvalid)
+    }
+  }
+
+  async function generateContributorId() {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/contributor_profile`, {
+      method: 'HEAD',
+      headers: { ...DB_HEADERS, 'Prefer': 'count=exact' }
+    })
+    const range = res.headers.get('Content-Range') ?? '*/0'
+    const total = parseInt(range.split('/')[1]) || 0
+    return 'GNS-' + String(total + 1).padStart(5, '0')
+  }
+
+  document.getElementById('signup-form').addEventListener('submit', async (e) => {
+    e.preventDefault()
+    alertEl.style.display = 'none'
+
+    const legalFirstName   = document.getElementById('legal-first-name').value.trim()
+    const legalLastName    = document.getElementById('legal-last-name').value.trim()
+    const displayName      = document.getElementById('display-name').value.trim()
+    const email            = document.getElementById('email').value.trim()
+    const password         = document.getElementById('password').value
+    const confirmPassword  = document.getElementById('confirm-password').value
+
+    if (!legalFirstName || !legalLastName || !displayName || !email || !password || !confirmPassword) {
+      showError('All fields are required.')
+      return
+    }
+    if (password.length < 8) {
+      showError('Password must be at least 8 characters.')
+      return
+    }
+    if (password !== confirmPassword) {
+      showError('Passwords do not match.')
+      return
+    }
+
+    setLoading(true)
+
+    try {
+      const authRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/users`, {
+        method: 'POST',
+        headers: DB_HEADERS,
+        body: JSON.stringify({ email, password, email_confirm: true })
+      })
+
+      const authData = await authRes.json()
+
+      if (!authRes.ok) {
+        const msg = authData.msg || authData.message || 'Failed to create account.'
+        showError(msg.includes('already registered')
+          ? 'An account with this email already exists.'
+          : msg)
+        return
+      }
+
+      const authUserId = authData.id
+      const contributorId = await generateContributorId()
+
+      const patchTokenRes = await fetch(
+        `${SUPABASE_URL}/rest/v1/invite_tokens?token=eq.${encodeURIComponent(token)}`,
+        {
+          method: 'PATCH',
+          headers: { ...DB_HEADERS, 'Prefer': 'return=minimal' },
+          body: JSON.stringify({
+            used:          true,
+            used_by_email: email,
+            used_at:       new Date().toISOString()
+          })
+        }
+      )
+
+      if (!patchTokenRes.ok) {
+        showError('Account created but invite token could not be marked as used. Please contact support.')
+        return
+      }
+
+      const profileRes = await fetch(
+        `${SUPABASE_URL}/rest/v1/contributor_profile`,
+        {
+          method: 'POST',
+          headers: { ...DB_HEADERS, 'Prefer': 'return=minimal' },
+          body: JSON.stringify({
+            auth_user_id:     authUserId,
+            contributor_id:   contributorId,
+            legal_first_name: legalFirstName,
+            legal_last_name:  legalLastName,
+            display_name:     displayName,
+            email:            email,
+            membership_tier:  tokenRow ? tokenRow.membership_tier : 'founding',
+            trust_level:      'standard',
+            approval_status:  'active'
+          })
+        }
+      )
+
+      if (!profileRes.ok) {
+        const err = await profileRes.json().catch(() => ({}))
+        showError(err.message || 'Account created but profile could not be saved. Please contact support.')
+        return
+      }
+
+      window.location.href = 'login.html?message=Account created — please sign in'
+
+    } catch {
+      showError('A network error occurred. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  })
+
+  validateToken()
+</script>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <p class="footer-copy">The Repertory is a collective effort to build the world's most complete authenticated goods database. Under the care of <a href="https://ardorhousecollective.com" target="_blank" rel="noopener">Ardor House Collective</a>.</p>
+    <p class="footer-legal">The Repertory is an independent platform. All brand names and trademarks are the property of their respective owners. We are not affiliated with, authorized by, or associated with any brand referenced in this database.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -7,8 +7,6 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #faf9f5; display: flex; align-items: center; justify-content: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
     #__bundler_loading { position: fixed; bottom: 20px; right: 20px; font: 13px/1.4 -apple-system, BlinkMacSystemFont, sans-serif; color: #666; background: #fff; padding: 8px 14px; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.12); z-index: 10000; }
-    #__bundler_thumbnail { position: fixed; inset: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #faf9f5; z-index: 9999; }
-    #__bundler_thumbnail svg { width: 100%; height: 100%; object-fit: contain; }
     #__bundler_placeholder { color: #999; font-size: 14px; }
   </style>
   <noscript>
@@ -19,20 +17,6 @@
   </noscript>
 </head>
 <body>
-  <div id="__bundler_thumbnail">
-  <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-    <rect width="200" height="200" fill="#071326"></rect>
-    <g transform="translate(100 110)" fill="none" stroke="#d4a86a" stroke-width="1.5">
-      <rect x="-30" y="-20" width="60" height="40"></rect>
-      <polygon points="-30,-20 -45,-20 -45,20 -30,20"></polygon>
-      <polygon points="30,-20 45,-20 45,20 30,20"></polygon>
-      <polygon points="-45,-20 -37.5,-40 -30,-20"></polygon>
-      <polygon points="30,-20 37.5,-40 45,-20"></polygon>
-      <polygon points="-30,-20 0,-35 30,-20"></polygon>
-    </g>
-    <text x="100" y="160" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="14" letter-spacing="3" fill="#b87142">ARDOR HOUSE</text>
-  </svg>
-</div>
   <div id="__bundler_loading">Unpacking...</div>
 
   <script>

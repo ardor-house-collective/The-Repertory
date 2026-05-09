@@ -53,9 +53,7 @@
       letter-spacing: -0.01em;
     }
 
-    .form-group {
-      margin-bottom: 20px;
-    }
+    .form-group { margin-bottom: 20px; }
 
     label {
       display: block;
@@ -117,22 +115,20 @@
       display: none;
     }
 
-    .alert-error {
-      background: #fdf0ef;
-      border: 1px solid #e57373;
-      color: #b71c1c;
-    }
-
-    .alert-success {
-      background: #f0f7f1;
-      border: 1px solid #81c784;
-      color: #1b5e20;
-    }
+    .alert-error { background: #fdf0ef; border: 1px solid #e57373; color: #b71c1c; }
+    .alert-success { background: #f0f7f1; border: 1px solid #81c784; color: #1b5e20; }
 
     hr {
       border: none;
       border-top: 1px solid #ede8e1;
       margin: 28px 0 20px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
     }
 
     .footer-text {
@@ -148,7 +144,14 @@
 
     .footer-text a:hover { text-decoration: underline; }
 
-    /* ── Login card header ─────────────────────────────────────────────────── */
+    .divider-text {
+      font-size: 0.75rem;
+      color: #c5bdb5;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── Login card header ── */
     .login-header { text-align: center; margin-bottom: 24px; }
 
     .login-logo {
@@ -206,9 +209,16 @@
 
     <hr>
 
-    <p class="footer-text">
-      Don't have an account? <a href="request-access.html">Request access</a>
-    </p>
+    <div class="footer-links">
+      <p class="footer-text">
+        Have an invite token? <a href="signup.html">Create your account</a>
+      </p>
+      <span class="divider-text">or</span>
+      <p class="footer-text">
+        <a href="request-access.html">Submit a residence application</a>
+      </p>
+    </div>
+
   </div>
 </main>
 
@@ -220,7 +230,6 @@
   const form      = document.getElementById('login-form')
   const submitBtn = document.getElementById('submit-btn')
 
-  // Show a success message if redirected here from signup
   const params = new URLSearchParams(window.location.search)
   const redirectMsg = params.get('message')
   if (redirectMsg) {
