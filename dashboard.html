@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Repertory — Dashboard</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: #FAF6F0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #2c2c2c;
+      line-height: 1.5;
+    }
+
+    /* ── Header ──────────────────────────────────────────────────────────────── */
+
+    @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill.otf') format('opentype'); font-weight: normal; font-style: normal; }
+    @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
+    @font-face { font-family: 'Runtime'; src: url('Runtime.otf') format('opentype'); font-weight: normal; font-style: normal; }
+
+    header {
+      background: #1B2E4B;
+      padding: 14px 40px;
+      height: auto;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      flex-shrink: 0;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .wordmark { display: flex; flex-direction: column; gap: 1px; line-height: 1; text-decoration: none; }
+    .wm-line1 { font-family: 'Linden Hill', Georgia, serif; font-size: 3.7rem; font-style: normal; color: #FAF6F0; letter-spacing: 0.01em; line-height: 1; }
+    .wm-line2 { font-family: 'Runtime', sans-serif; font-size: 1.64rem; color: rgba(250,246,240,0.72); letter-spacing: 0.04em; line-height: 1; }
+
+    .site-footer { border-top: 2px solid #1b2e4b; background: #faf6f0; padding: 2rem 40px; flex-shrink: 0; }
+    .site-footer-inner { max-width: 1280px; margin: 0 auto; display: flex; gap: 3rem; }
+    .footer-copy, .footer-legal { flex: 1; font-size: 0.75rem; color: #9a8e83; line-height: 1.65; }
+    .footer-copy a { color: #9a8e83; text-decoration: underline; text-underline-offset: 2px; }
+    .footer-copy a:hover { color: #b5622a; }
+    @media (max-width: 680px) { .site-footer { padding: 1.5rem 20px; } .site-footer-inner { flex-direction: column; gap: 1.2rem; } }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    #header-identity {
+      display: none;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 1px;
+    }
+
+    .header-cid {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #B5622A;
+      letter-spacing: 0.07em;
+    }
+
+    .header-name {
+      font-size: 0.75rem;
+      color: #c8d8e8;
+    }
+
+    .sign-out-btn {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.22);
+      color: #c8d8e8;
+      border-radius: 5px;
+      padding: 5px 13px;
+      font-size: 0.775rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+
+    .sign-out-btn:hover {
+      border-color: rgba(255,255,255,0.55);
+      color: #fff;
+    }
+
+    /* ── Page shell ──────────────────────────────────────────────────────────── */
+
+    main { flex: 1; }
+
+    .page-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* ── Hero section ────────────────────────────────────────────────────────── */
+
+    .hero {
+      background: #FAF6F0;
+      padding: 60px 0 52px;
+      border-bottom: 1px solid #e8e2d9;
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #B5622A;
+      margin-bottom: 14px;
+    }
+
+    .hero-name {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 2.8rem;
+      font-weight: 400;
+      color: #1B2E4B;
+      line-height: 1.15;
+      margin-bottom: 18px;
+      letter-spacing: -0.01em;
+    }
+
+    /* Skeleton shimmer for name */
+    .hero-name-skeleton {
+      display: inline-block;
+      width: 320px;
+      height: 46px;
+      background: #e4ddd4;
+      border-radius: 4px;
+      animation: shimmer 1.5s ease-in-out infinite;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .hero-contributor-id {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #B5622A;
+      letter-spacing: 0.06em;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+
+    .meta-sep {
+      color: #ccc4bb;
+      font-size: 0.9rem;
+    }
+
+    .tier-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #fff;
+    }
+
+    .tier-founding    { background: #B5622A; }
+    .tier-pro         { background: #1565c0; }
+    .tier-intelligence { background: #6a1b9a; }
+    .tier-enterprise  { background: #1B2E4B; }
+    .tier-free        { background: #757575; }
+
+    .hero-since {
+      font-size: 0.825rem;
+      color: #9a8e83;
+    }
+
+    .hero-tagline {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: #7a6e64;
+      letter-spacing: 0.01em;
+    }
+
+    /* ── Stats section ───────────────────────────────────────────────────────── */
+
+    .stats-section {
+      padding: 40px 0 0;
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: #9a8e83;
+      margin-bottom: 16px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .stat-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(27, 46, 75, 0.06), 0 1px 3px rgba(0,0,0,0.04);
+      padding: 24px 24px 22px;
+    }
+
+    .stat-number {
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: #B5622A;
+      line-height: 1;
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-number.skeleton-num {
+      width: 64px;
+      height: 36px;
+      background: #e4ddd4;
+      border-radius: 4px;
+      display: block;
+      animation: shimmer 1.5s ease-in-out infinite;
+      color: transparent;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #9a8e83;
+    }
+
+    /* ── Actions section ─────────────────────────────────────────────────────── */
+
+    .actions-section {
+      padding: 36px 0 60px;
+    }
+
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .action-card {
+      display: block;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(27, 46, 75, 0.06), 0 1px 3px rgba(0,0,0,0.04);
+      padding: 32px 32px 56px;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .action-card::after {
+      /* Subtle left accent line that deepens on hover */
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: #B5622A;
+      opacity: 0;
+      transition: opacity 0.22s ease;
+      border-radius: 10px 0 0 10px;
+    }
+
+    .action-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(27, 46, 75, 0.11), 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .action-card:hover::after {
+      opacity: 1;
+    }
+
+    .action-eyebrow {
+      font-size: 0.63rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: #B5622A;
+      margin-bottom: 14px;
+    }
+
+    .action-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #1B2E4B;
+      margin-bottom: 10px;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+    }
+
+    .action-desc {
+      font-size: 0.855rem;
+      color: #7a7069;
+      line-height: 1.65;
+    }
+
+    .action-arrow {
+      position: absolute;
+      bottom: 28px;
+      right: 28px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #B5622A;
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      font-size: 1.1rem;
+    }
+
+    .action-card:hover .action-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* ── Skeletons ───────────────────────────────────────────────────────────── */
+
+    @keyframes shimmer {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+
+    .sk {
+      display: inline-block;
+      background: #e4ddd4;
+      border-radius: 3px;
+      animation: shimmer 1.5s ease-in-out infinite;
+    }
+
+    .sk-w80  { width: 80px;  height: 13px; }
+    .sk-w140 { width: 140px; height: 13px; }
+    .sk-w200 { width: 200px; height: 13px; }
+
+    /* ── Responsive ──────────────────────────────────────────────────────────── */
+
+    @media (max-width: 900px) {
+      .stats-grid   { grid-template-columns: repeat(2, 1fr); }
+      .actions-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      header { padding: 0 20px; }
+
+      .hero         { padding: 40px 0 36px; }
+      .hero-inner   { padding: 0 20px; }
+      .hero-name    { font-size: 2rem; }
+      .page-inner   { padding: 0 20px; }
+
+      .stats-grid   { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .actions-grid { grid-template-columns: 1fr; }
+
+      .action-card  { padding: 26px 24px 52px; }
+      .stats-section  { padding: 28px 0 0; }
+      .actions-section { padding: 24px 0 48px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ──────────────────────────────────────────────────────────────── -->
+<header>
+  <div class="header-inner">
+    <a href="dashboard.html" class="wordmark">
+      <span class="wm-line1">The Repertory</span>
+      <span class="wm-line2">a Collective effort</span>
+    </a>
+    <div class="header-right">
+      <div id="header-identity">
+        <span class="header-cid"  id="header-cid"></span>
+        <span class="header-name" id="header-name"></span>
+      </div>
+      <button class="sign-out-btn" id="sign-out-btn">Sign out</button>
+    </div>
+  </div>
+</header>
+
+<!-- ── Hero ────────────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Welcome back</p>
+
+    <h1 class="hero-name" id="hero-name">
+      <span class="sk" style="width:280px; height:42px; border-radius:4px"></span>
+    </h1>
+
+    <div class="hero-meta" id="hero-meta">
+      <span class="sk sk-w80"></span>
+      <span class="meta-sep">·</span>
+      <span class="sk sk-w80"></span>
+      <span class="meta-sep">·</span>
+      <span class="sk sk-w140"></span>
+    </div>
+
+    <p class="hero-tagline">Your contributions shape the standard.</p>
+  </div>
+</section>
+
+<!-- ── Stats + Actions ─────────────────────────────────────────────────────── -->
+<main>
+  <div class="page-inner">
+
+    <!-- Stats row -->
+    <section class="stats-section">
+      <p class="section-label">Your Activity</p>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" id="stat-submissions"><span class="sk" style="width:52px;height:34px;border-radius:4px"></span></div>
+          <div class="stat-label">Total Submissions</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="stat-approved"><span class="sk" style="width:52px;height:34px;border-radius:4px"></span></div>
+          <div class="stat-label">Total Approved</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="stat-rate"><span class="sk" style="width:64px;height:34px;border-radius:4px"></span></div>
+          <div class="stat-label">Approval Rate</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="stat-streak"><span class="sk" style="width:40px;height:34px;border-radius:4px"></span></div>
+          <div class="stat-label">Contribution Streak</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick actions -->
+    <section class="actions-section">
+      <p class="section-label">Quick Actions</p>
+      <div class="actions-grid">
+
+        <a href="contributor-form.html" class="action-card">
+          <p class="action-eyebrow">Contribute</p>
+          <h2 class="action-title">Submit a Contribution</h2>
+          <p class="action-desc">Add colors, materials, pricing, serials, and more to the registry.</p>
+          <span class="action-arrow">→</span>
+        </a>
+
+        <a href="profile.html" class="action-card">
+          <p class="action-eyebrow">Profile</p>
+          <h2 class="action-title">View Public Profile</h2>
+          <p class="action-desc">See your public contributor page, badges, and leaderboard standing.</p>
+          <span class="action-arrow">→</span>
+        </a>
+
+        <a href="registry.html" class="action-card">
+          <p class="action-eyebrow">Explore</p>
+          <h2 class="action-title">Browse the Registry</h2>
+          <p class="action-desc">Search and explore the GNS database of authenticated luxury goods.</p>
+          <span class="action-arrow">→</span>
+        </a>
+
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<script>
+  const SUPABASE_URL = 'https://hsseypuhqdlcvepgyrtd.supabase.co'
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhzc2V5cHVocWRsY3ZlcGd5cnRkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTc3NTk0MSwiZXhwIjoyMDkxMzUxOTQxfQ.mGNhUtPSCJWNDTVY1dlhwROsUMTAw-1dHkvRHYV0M0c'
+
+  const DB_HEADERS = {
+    'apikey': SUPABASE_KEY,
+    'Authorization': `Bearer ${SUPABASE_KEY}`,
+    'Content-Type': 'application/json'
+  }
+
+  // ── Auth guard ──────────────────────────────────────────────────────────────
+
+  const accessToken = localStorage.getItem('gns_access_token')
+  const storedUser  = JSON.parse(localStorage.getItem('gns_user') || 'null')
+
+  if (!accessToken || !storedUser?.id) {
+    window.location.replace('login.html')
+  }
+
+  // ── Sign out ──────────────────────────────────────────────────────────────
+
+  document.getElementById('sign-out-btn').addEventListener('click', () => {
+    localStorage.removeItem('gns_access_token')
+    localStorage.removeItem('gns_refresh_token')
+    localStorage.removeItem('gns_user')
+    window.location.href = 'login.html'
+  })
+
+  // ── Date formatting ────────────────────────────────────────────────────────
+
+  const MONTHS = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ]
+
+  function formatMemberSince(isoString) {
+    const d = new Date(isoString)
+    return `Member since ${MONTHS[d.getMonth()]} ${d.getFullYear()}`
+  }
+
+  // ── Populate hero ──────────────────────────────────────────────────────────
+
+  function populateHero(p) {
+    // Name
+    const nameEl = document.getElementById('hero-name')
+    nameEl.textContent = p.display_name
+
+    // Header identity
+    document.getElementById('header-cid').textContent  = p.contributor_id
+    document.getElementById('header-name').textContent = p.display_name
+    document.getElementById('header-identity').style.display = 'flex'
+
+    // Meta row: ID · tier badge · member since
+    const metaEl = document.getElementById('hero-meta')
+    metaEl.innerHTML = `
+      <span class="hero-contributor-id">${p.contributor_id}</span>
+      <span class="meta-sep">·</span>
+      <span class="tier-badge tier-${p.membership_tier}">${p.membership_tier}</span>
+      <span class="meta-sep">·</span>
+      <span class="hero-since">${formatMemberSince(p.created_at)}</span>
+    `
+  }
+
+  // ── Populate stats ─────────────────────────────────────────────────────────
+
+  function populateStats(p) {
+    const total    = p.total_submissions || 0
+    const approved = p.total_approved    || 0
+    const streak   = p.contribution_streak || 0
+
+    const rate = total > 0
+      ? ((approved / total) * 100).toFixed(1) + '%'
+      : '—'
+
+    document.getElementById('stat-submissions').textContent = total.toLocaleString()
+    document.getElementById('stat-approved').textContent    = approved.toLocaleString()
+    document.getElementById('stat-rate').textContent        = rate
+    document.getElementById('stat-streak').textContent      = streak.toLocaleString()
+  }
+
+  // ── Boot ───────────────────────────────────────────────────────────────────
+
+  async function init() {
+    let res
+    try {
+      res = await fetch(
+        `${SUPABASE_URL}/rest/v1/contributor_profile?auth_user_id=eq.${storedUser.id}&select=*&limit=1`,
+        { headers: DB_HEADERS }
+      )
+    } catch {
+      window.location.replace('login.html')
+      return
+    }
+
+    if (!res.ok) {
+      window.location.replace('login.html')
+      return
+    }
+
+    const rows = await res.json()
+    const profile = rows[0] ?? null
+
+    if (!profile) {
+      localStorage.removeItem('gns_access_token')
+      localStorage.removeItem('gns_user')
+      window.location.replace('login.html')
+      return
+    }
+
+    populateHero(profile)
+    populateStats(profile)
+  }
+
+  init()
+</script>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <p class="footer-copy">The Repertory is a collective effort to build the world's most complete authenticated goods database. Under the care of <a href="https://ardorhousecollective.com" target="_blank" rel="noopener">Ardor House Collective</a>.</p>
+    <p class="footer-legal">The Repertory is an independent platform. All brand names and trademarks are the property of their respective owners. We are not affiliated with, authorized by, or associated with any brand referenced in this database.</p>
+  </div>
+</footer>
+
+</body>
+</html>
