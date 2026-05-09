@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Repertory | Login</title>
+  <title>GNS — Sign In</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -53,7 +53,9 @@
       letter-spacing: -0.01em;
     }
 
-    .form-group { margin-bottom: 20px; }
+    .form-group {
+      margin-bottom: 20px;
+    }
 
     label {
       display: block;
@@ -115,20 +117,22 @@
       display: none;
     }
 
-    .alert-error { background: #fdf0ef; border: 1px solid #e57373; color: #b71c1c; }
-    .alert-success { background: #f0f7f1; border: 1px solid #81c784; color: #1b5e20; }
+    .alert-error {
+      background: #fdf0ef;
+      border: 1px solid #e57373;
+      color: #b71c1c;
+    }
+
+    .alert-success {
+      background: #f0f7f1;
+      border: 1px solid #81c784;
+      color: #1b5e20;
+    }
 
     hr {
       border: none;
       border-top: 1px solid #ede8e1;
       margin: 28px 0 20px;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      align-items: center;
     }
 
     .footer-text {
@@ -144,14 +148,7 @@
 
     .footer-text a:hover { text-decoration: underline; }
 
-    .divider-text {
-      font-size: 0.75rem;
-      color: #c5bdb5;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    /* ── Login card header ── */
+    /* ── Login card header ─────────────────────────────────────────────────── */
     .login-header { text-align: center; margin-bottom: 24px; }
 
     .login-logo {
@@ -209,16 +206,9 @@
 
     <hr>
 
-    <div class="footer-links">
-      <p class="footer-text">
-        Received an invitation? <a href="signup.html">Make yourself at home.</a>
-      </p>
-      <span class="divider-text">or</span>
-      <p class="footer-text">
-        <a href="request-access.html">Request An Introduction</a>
-      </p>
-    </div>
-
+    <p class="footer-text">
+      Don't have an account? <a href="request-access.html">Request access</a>
+    </p>
   </div>
 </main>
 
@@ -230,6 +220,7 @@
   const form      = document.getElementById('login-form')
   const submitBtn = document.getElementById('submit-btn')
 
+  // Show a success message if redirected here from signup
   const params = new URLSearchParams(window.location.search)
   const redirectMsg = params.get('message')
   if (redirectMsg) {
