@@ -21,17 +21,6 @@
     @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
     @font-face { font-family: 'Runtime'; src: url('Runtime.otf') format('opentype'); font-weight: normal; font-style: normal; }
 
-    header {
-      background: #1B2E4B;
-      padding: 14px 40px;
-      display: flex;
-      align-items: center;
-    }
-
-    .wordmark { display: flex; flex-direction: column; gap: 1px; line-height: 1; text-decoration: none; }
-    .wm-line1 { font-family: 'Linden Hill', Georgia, serif; font-size: 3.7rem; font-style: normal; color: #FAF6F0; letter-spacing: 0.01em; line-height: 1; }
-    .wm-line2 { font-family: 'Runtime', sans-serif; font-size: 1.64rem; color: rgba(250,246,240,0.72); letter-spacing: 0.04em; line-height: 1; }
-
     .site-footer { border-top: 2px solid #1b2e4b; background: #faf6f0; padding: 2rem 40px; flex-shrink: 0; }
     .site-footer-inner { max-width: 1280px; margin: 0 auto; display: flex; gap: 3rem; }
     .footer-copy, .footer-legal { flex: 1; font-size: 0.75rem; color: #9a8e83; line-height: 1.65; }
@@ -187,53 +176,17 @@
       margin-bottom: 20px;
       text-transform: uppercase;
     }
-
-    .login-wordmark {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-      padding-bottom: 22px;
-      border-bottom: 1px solid #ede8e1;
-    }
-
-    .lwm-line1 {
-      font-family: 'Linden Hill', Georgia, serif;
-      font-size: 3.7rem;
-      color: #1B2E4B;
-      letter-spacing: 0.01em;
-      line-height: 1;
-    }
-
-    .lwm-line2 {
-      font-family: 'Runtime', sans-serif;
-      font-size: 1.64rem;
-      color: #B5622A;
-      letter-spacing: 0.04em;
-      line-height: 1;
-    }
   </style>
 </head>
 <body>
-
-<header>
-  <a href="login.html" class="wordmark">
-    <span class="wm-line1">The Repertory</span>
-    <span class="wm-line2">a Collective effort</span>
-  </a>
-</header>
 
 <main>
   <div class="card">
 
     <div class="login-header">
       <img src="AHC_Logo.png" alt="Ardor House Collective" class="login-logo">
-      <p class="co-name-line1">ARDOR HOUSE</p>
-      <p class="co-name-line2">COLLECTIVE</p>
-      <div class="login-wordmark">
-        <span class="lwm-line1">The Repertory</span>
-        <span class="lwm-line2">a Collective effort</span>
-      </div>
+      <p class="co-name-line1">PRESENTS</p>
+      <p class="co-name-line2">THE REPERTORY</p>
     </div>
 
     <div id="alert" class="alert"></div>
