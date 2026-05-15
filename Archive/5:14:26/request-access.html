@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GNS — Sign In</title>
+  <title>The Repertory | Request For Residence</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -21,17 +21,6 @@
     @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
     @font-face { font-family: 'Runtime'; src: url('Runtime.otf') format('opentype'); font-weight: normal; font-style: normal; }
 
-    header {
-      background: #1B2E4B;
-      padding: 14px 40px;
-      display: flex;
-      align-items: center;
-    }
-
-    .wordmark { display: flex; flex-direction: column; gap: 1px; line-height: 1; text-decoration: none; }
-    .wm-line1 { font-family: 'Linden Hill', Georgia, serif; font-size: 2.22rem; font-style: normal; color: #FAF6F0; letter-spacing: 0.01em; line-height: 1; }
-    .wm-line2 { font-family: 'Runtime', sans-serif; font-size: 0.98rem; color: rgba(250,246,240,0.72); letter-spacing: 0.04em; line-height: 1; }
-
     .site-footer { border-top: 2px solid #1b2e4b; background: #faf6f0; padding: 2rem 40px; flex-shrink: 0; }
     .site-footer-inner { max-width: 1280px; margin: 0 auto; display: flex; gap: 3rem; }
     .footer-copy, .footer-legal { flex: 1; font-size: 0.75rem; color: #9a8e83; line-height: 1.65; }
@@ -42,7 +31,7 @@
     main {
       flex: 1;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
       padding: 48px 20px;
     }
@@ -53,20 +42,63 @@
       box-shadow: 0 2px 16px rgba(27, 46, 75, 0.08), 0 1px 4px rgba(0, 0, 0, 0.05);
       padding: 44px 40px;
       width: 100%;
-      max-width: 480px;
+      max-width: 520px;
+    }
+
+    /* ── Card header — matches login.html exactly ── */
+    .login-header { text-align: center; margin-bottom: 28px; }
+
+    .login-logo {
+      width: 270px;
+      height: auto;
+      display: block;
+      margin: 0 auto 2px;
+    }
+
+    .co-name-line1 {
+      font-family: 'Alta', Georgia, serif;
+      font-size: 1.2rem;
+      color: #B5622A;
+      letter-spacing: 0.22em;
+      line-height: 1;
+      margin-bottom: 28px;
+      text-transform: uppercase;
+    }
+
+    .co-name-line2 {
+      font-family: 'Linden Hill';
+      font-size: 2.34rem;
+      color: #1B2E4B;
+      letter-spacing: 0.15em;
+      line-height: 1;
+      margin-bottom: 0;
+      text-transform: uppercase;
+    }
+
+    .header-rule {
+      border: none;
+      border-top: 1px solid #ede8e1;
+      margin: 24px 0 28px;
     }
 
     h1 {
-      font-size: 1.4rem;
+      font-size: 1.1rem;
       font-weight: 600;
       color: #1B2E4B;
-      margin-bottom: 28px;
+      margin-bottom: 8px;
       letter-spacing: -0.01em;
+      text-align: center;
     }
 
-    .form-group {
-      margin-bottom: 20px;
+    .subtitle {
+      font-size: 0.88rem;
+      color: #7a7069;
+      margin-bottom: 28px;
+      line-height: 1.55;
+      text-align: center;
     }
+
+    .form-group { margin-bottom: 20px; }
 
     label {
       display: block;
@@ -78,7 +110,9 @@
       margin-bottom: 7px;
     }
 
-    input {
+    .required-mark { color: #B5622A; margin-left: 2px; }
+
+    input, select, textarea {
       width: 100%;
       padding: 10px 13px;
       border: 1.5px solid #dfd9d1;
@@ -89,13 +123,30 @@
       background: #ffffff;
       outline: none;
       transition: border-color 0.15s, box-shadow 0.15s;
+      appearance: none;
     }
 
-    input::placeholder { color: #b5ada4; }
+    input::placeholder, textarea::placeholder { color: #b5ada4; }
 
-    input:focus {
+    input:focus, select:focus, textarea:focus {
       border-color: #1B2E4B;
       box-shadow: 0 0 0 3px rgba(27, 46, 75, 0.07);
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 13px center;
+      padding-right: 38px;
+      cursor: pointer;
+    }
+
+    select option[value=''] { color: #b5ada4; }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.55;
     }
 
     .btn {
@@ -128,17 +179,8 @@
       display: none;
     }
 
-    .alert-error {
-      background: #fdf0ef;
-      border: 1px solid #e57373;
-      color: #b71c1c;
-    }
-
-    .alert-success {
-      background: #f0f7f1;
-      border: 1px solid #81c784;
-      color: #1b5e20;
-    }
+    .alert-error { background: #fdf0ef; border: 1px solid #e57373; color: #b71c1c; }
+    .alert-success { background: #f0f7f1; border: 1px solid #81c784; color: #1b5e20; }
 
     hr {
       border: none;
@@ -152,109 +194,174 @@
       color: #7a7069;
     }
 
-    .footer-text a {
-      color: #B5622A;
-      text-decoration: none;
-    }
-
+    .footer-text a { color: #B5622A; text-decoration: none; }
     .footer-text a:hover { text-decoration: underline; }
 
-    /* ── Login card header ─────────────────────────────────────────────────── */
-    .login-header { text-align: center; margin-bottom: 24px; }
-
-    .login-logo {
-      width: 135px;
-      height: auto;
-      display: block;
-      margin: 0 auto 14px;
-    }
-
-    .co-name-line1 {
-      font-family: 'Alta', Georgia, serif;
-      font-size: 1.6rem;
-      color: #B5622A;
-      letter-spacing: 0.22em;
-      line-height: 1;
-      margin-bottom: 5px;
-      text-transform: uppercase;
-    }
-
-    .co-name-line2 {
+    .invite-note {
+      text-align: center;
       font-size: 0.78rem;
-      color: #1B2E4B;
-      letter-spacing: 0.28em;
-      line-height: 1;
-      margin-bottom: 20px;
-      text-transform: uppercase;
+      color: #9a8e83;
+      margin-top: 16px;
+      line-height: 1.6;
     }
 
-    .login-wordmark {
+    #success-state { display: none; }
+
+    .success-icon {
+      width: 48px;
+      height: 48px;
+      background: #f0f7f1;
+      border: 1.5px solid #81c784;
+      border-radius: 50%;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 2px;
-      padding-bottom: 22px;
-      border-bottom: 1px solid #ede8e1;
+      justify-content: center;
+      margin: 0 auto 20px;
     }
 
-    .lwm-line1 {
-      font-family: 'Linden Hill', Georgia, serif;
-      font-size: 3.7rem;
+    .success-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: #2e7d32;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .success-heading {
+      text-align: center;
+      font-size: 1.15rem;
+      font-weight: 600;
       color: #1B2E4B;
-      letter-spacing: 0.01em;
-      line-height: 1;
+      margin-bottom: 10px;
     }
 
-    .lwm-line2 {
-      font-family: 'Runtime', sans-serif;
-      font-size: 1.64rem;
-      color: #B5622A;
-      letter-spacing: 0.04em;
-      line-height: 1;
+    .success-body {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #5a5450;
+      line-height: 1.65;
     }
   </style>
 </head>
 <body>
-
-<header>
-  <a href="login.html" class="wordmark">
-    <span class="wm-line1">The Repertory</span>
-    <span class="wm-line2">a Collective effort</span>
-  </a>
-</header>
 
 <main>
   <div class="card">
 
     <div class="login-header">
       <img src="AHC_Logo.png" alt="Ardor House Collective" class="login-logo">
-      <p class="co-name-line1">ARDOR HOUSE</p>
-      <p class="co-name-line2">COLLECTIVE</p>
-      <div class="login-wordmark">
-        <span class="lwm-line1">The Repertory</span>
-        <span class="lwm-line2">a Collective effort</span>
-      </div>
+      <p class="co-name-line1">PRESENTS</p>
+      <p class="co-name-line2">THE REPERTORY</p>
     </div>
 
-    <div id="alert" class="alert"></div>
+    <hr class="header-rule">
 
-    <form id="login-form" novalidate>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="you@example.com" autocomplete="email" required>
+    <!-- Form state -->
+    <div id="form-state">
+      <h1>Residence Application</h1>
+      <p class="subtitle">
+        Tell us about your background and expertise. We review all applications
+        manually and will be in touch.
+      </p>
+
+      <div id="alert" class="alert"></div>
+
+      <form id="access-form" novalidate>
+        <div class="form-group">
+          <label for="full-name">Full Name <span class="required-mark">*</span></label>
+          <input type="text" id="full-name" placeholder="Your full name" autocomplete="name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email <span class="required-mark">*</span></label>
+          <input type="email" id="email" placeholder="you@example.com" autocomplete="email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="credentials">Professional Credentials <span class="required-mark">*</span></label>
+          <textarea
+            id="credentials"
+            placeholder="Describe your experience with luxury goods, your professional credentials, and why you want to contribute to The Repertory…"
+            required
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="expertise">Area of Expertise <span class="required-mark">*</span></label>
+          <select id="expertise" required>
+            <option value="">Select your primary area…</option>
+            <optgroup label="Pricing & Sales">
+              <option value="Pricing">Pricing</option>
+              <option value="Sales Analysis">Sales Analysis</option>
+            </optgroup>
+            <optgroup label="Research">
+              <option value="Source Research">Source Research</option>
+              <option value="Research Analysis">Research Analysis</option>
+              <option value="Trend Analysis">Trend Analysis</option>
+            </optgroup>
+            <optgroup label="Product">
+              <option value="Product Knowledge">Product Knowledge</option>
+              <option value="Authentication">Authentication</option>
+            </optgroup>
+            <optgroup label="Brand">
+              <option value="Brand Expertise">Brand Expertise</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <div class="form-group" id="brand-expertise-group" style="display:none;">
+          <label for="brand-expertise">Brand Expertise – Top 3 Brands <span class="required-mark">*</span></label>
+          <input
+            type="text"
+            id="brand-expertise"
+            placeholder="Enter your top 3 brands"
+            autocomplete="off"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="referral">How Did You Hear About GNS?</label>
+          <input
+            type="text"
+            id="referral"
+            placeholder="Social media, a colleague, editorial… (optional)"
+            autocomplete="off"
+          >
+        </div>
+
+        <button type="submit" class="btn" id="submit-btn">Submit Application</button>
+      </form>
+
+      <hr>
+      <p class="footer-text">
+        Already have an account? <a href="login.html">Sign in</a>
+      </p>
+      <p class="invite-note">
+        The Repertory is currently invite-only. Access is granted based on expertise
+        and contribution potential.
+      </p>
+    </div>
+
+    <!-- Success state -->
+    <div id="success-state">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
       </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" placeholder="••••••••" autocomplete="current-password" required>
-      </div>
-      <button type="submit" class="btn" id="submit-btn">Sign In</button>
-    </form>
+      <p class="success-heading">Application Received</p>
+      <p class="success-body">
+        Your application has been received. We review all submissions manually
+        and will be in touch.
+      </p>
+      <p class="invite-note" style="margin-top: 24px;">
+        The Repertory is currently invite-only. Access is granted based on expertise
+        and contribution potential.
+      </p>
+    </div>
 
-    <hr>
-
-    <p class="footer-text">
-      Don't have an account? <a href="request-access.html">Request access</a>
-    </p>
   </div>
 </main>
 
@@ -262,66 +369,94 @@
   const SUPABASE_URL = 'https://hsseypuhqdlcvepgyrtd.supabase.co'
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhzc2V5cHVocWRsY3ZlcGd5cnRkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTc3NTk0MSwiZXhwIjoyMDkxMzUxOTQxfQ.mGNhUtPSCJWNDTVY1dlhwROsUMTAw-1dHkvRHYV0M0c'
 
-  const alertEl   = document.getElementById('alert')
-  const form      = document.getElementById('login-form')
-  const submitBtn = document.getElementById('submit-btn')
+  const alertEl     = document.getElementById('alert')
+  const submitBtn   = document.getElementById('submit-btn')
+  const formState   = document.getElementById('form-state')
+  const successState = document.getElementById('success-state')
+  const expertiseSelect = document.getElementById('expertise')
+  const brandExpertiseGroup = document.getElementById('brand-expertise-group')
+  const brandExpertiseInput = document.getElementById('brand-expertise')
 
-  // Show a success message if redirected here from signup
-  const params = new URLSearchParams(window.location.search)
-  const redirectMsg = params.get('message')
-  if (redirectMsg) {
-    alertEl.className = 'alert alert-success'
-    alertEl.textContent = redirectMsg
-    alertEl.style.display = 'block'
-  }
+  expertiseSelect.addEventListener('change', () => {
+    const showBrand = expertiseSelect.value === 'Brand Expertise'
+    brandExpertiseGroup.style.display = showBrand ? 'block' : 'none'
+    if (!showBrand) {
+      brandExpertiseInput.value = ''
+    }
+  })
 
   function showError(msg) {
     alertEl.className = 'alert alert-error'
     alertEl.textContent = msg
     alertEl.style.display = 'block'
+    alertEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
   }
 
   function setLoading(loading) {
     submitBtn.disabled = loading
-    submitBtn.textContent = loading ? 'Signing in…' : 'Sign In'
+    submitBtn.textContent = loading ? 'Submitting…' : 'Submit Application'
   }
 
-  form.addEventListener('submit', async (e) => {
+  document.getElementById('access-form').addEventListener('submit', async (e) => {
     e.preventDefault()
     alertEl.style.display = 'none'
 
-    const email    = document.getElementById('email').value.trim()
-    const password = document.getElementById('password').value
+    const fullName       = document.getElementById('full-name').value.trim()
+    const email          = document.getElementById('email').value.trim()
+    const credentials    = document.getElementById('credentials').value.trim()
+    const expertise      = document.getElementById('expertise').value
+    const brandExpertise = brandExpertiseInput.value.trim()
+    const referral       = document.getElementById('referral').value.trim()
 
-    if (!email || !password) {
-      showError('Please enter your email and password.')
+    if (!fullName)    { showError('Please enter your full name.'); return }
+    if (!email)       { showError('Please enter your email address.'); return }
+    if (!credentials) { showError('Please describe your professional background.'); return }
+    if (!expertise)   { showError('Please select your area of expertise.'); return }
+    if (expertise === 'Brand Expertise' && !brandExpertise) {
+      showError('Please list your top 3 brands for Brand Expertise.');
+      return
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showError('Please enter a valid email address.')
       return
     }
 
     setLoading(true)
 
     try {
-      const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/access_requests`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'apikey': SUPABASE_KEY
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`,
+          'Prefer': 'return=minimal'
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({
+          full_name:      fullName,
+          email:          email,
+          credentials:    credentials,
+          expertise:      expertise,
+          brand_expertise: expertise === 'Brand Expertise' ? brandExpertise : null,
+          referral:       referral || null,
+          status:         'pending'
+        })
       })
 
-      const data = await res.json()
-
       if (!res.ok) {
-        showError(data.error_description || data.msg || 'Sign in failed. Please check your credentials.')
+        const err = await res.json().catch(() => ({}))
+        if (res.status === 409 || (err.code && err.code === '23505')) {
+          showError('An application from this email address already exists.')
+        } else {
+          showError(err.message || 'Something went wrong. Please try again.')
+        }
         return
       }
 
-      localStorage.setItem('gns_access_token', data.access_token)
-      localStorage.setItem('gns_refresh_token', data.refresh_token)
-      localStorage.setItem('gns_user', JSON.stringify(data.user))
+      formState.style.display = 'none'
+      successState.style.display = 'block'
 
-      window.location.href = 'dashboard.html'
     } catch {
       showError('A network error occurred. Please try again.')
     } finally {
@@ -415,7 +550,7 @@
 <script>
 (function(){
   var SB_URL='https://hsseypuhqdlcvepgyrtd.supabase.co'
-  var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhzc2V5cHVocWRsY3ZlcGd5cnRkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTc3NTk0MSwiZXhwIjoyMDkxMzUxOTQxfQ.mGNhUtPSCJWNDTVY1dlhwROsUMTAw-1dHkvRHYV0M0c'
+  var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ0.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhzc2V5cHVocWRsY3ZlcGd5cnRkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTc3NTk0MSwiZXhwIjoyMDkxMzUxOTQxfQ.mGNhUtPSCJWNDTVY1dlhwROsUMTAw-1dHkvRHYV0M0c'
   var SB_HDR={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}
   var overlay=document.getElementById('fbw-overlay')
   var formBody=document.getElementById('fbw-form-body')

@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GNS Glossary — Admin</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #FAF6F0;
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill.otf') format('opentype'); font-weight: normal; font-style: normal; }
+    @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
+    @font-face { font-family: 'Runtime'; src: url('Runtime.otf') format('opentype'); font-weight: normal; font-style: normal; }
+
+    header {
+      background: #1B2E4B;
+      color: #fff;
+      padding: 14px 2rem;
+      height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+    .wordmark { display: flex; flex-direction: column; gap: 1px; line-height: 1; text-decoration: none; }
+    .wm-line1 { font-family: 'Linden Hill', Georgia, serif; font-size: 2.22rem; font-style: normal; color: #FAF6F0; letter-spacing: 0.01em; line-height: 1; }
+    .wm-line2 { font-family: 'Runtime', sans-serif; font-size: 0.98rem; color: rgba(250,246,240,0.72); letter-spacing: 0.04em; line-height: 1; }
+    .header-nav { display: flex; align-items: center; }
+    .header-nav a {
+      color: rgba(255,255,255,.6);
+      text-decoration: none;
+      font-size: .82rem;
+      font-weight: 500;
+      padding: 0 16px;
+      min-height: 87px;
+      display: flex;
+      align-items: center;
+      border-bottom: 2px solid transparent;
+      transition: color .15s;
+    }
+    .header-nav a:hover { color: #fff; }
+    .header-nav a.active { color: #fff; border-bottom-color: #B5622A; }
+
+    .site-footer { border-top: 2px solid #1b2e4b; background: #faf6f0; padding: 2rem 40px; flex-shrink: 0; }
+    .site-footer-inner { max-width: 1280px; margin: 0 auto; display: flex; gap: 3rem; }
+    .footer-copy, .footer-legal { flex: 1; font-size: 0.75rem; color: #9a8e83; line-height: 1.65; }
+    .footer-copy a { color: #9a8e83; text-decoration: underline; text-underline-offset: 2px; }
+    .footer-copy a:hover { color: #b5622a; }
+    @media (max-width: 680px) { .site-footer { padding: 1.5rem 20px; } .site-footer-inner { flex-direction: column; gap: 1.2rem; } }
+
+    /* ── Layout ── */
+    main { max-width: 1400px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; }
+
+    /* ── Tab bar ── */
+    .tab-bar {
+      display: flex;
+      align-items: flex-end;
+      gap: 0;
+      border-bottom: 2px solid #E2DBD2;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      padding: .65rem 1.1rem;
+      font-size: .875rem;
+      font-weight: 500;
+      font-family: inherit;
+      color: #7a7069;
+      cursor: pointer;
+      transition: color .15s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+    .tab-btn:hover { color: #1B2E4B; }
+    .tab-btn.active { color: #1B2E4B; border-bottom-color: #B5622A; font-weight: 600; }
+    .tab-remove {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: .8rem;
+      color: #bbb;
+      padding: 0 1px;
+      line-height: 1;
+      transition: color .15s;
+    }
+    .tab-remove:hover { color: #c0392b; }
+    .add-tab-btn {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      padding: .65rem .8rem;
+      font-size: .8rem;
+      font-family: inherit;
+      color: #B5622A;
+      cursor: pointer;
+      opacity: .7;
+      transition: opacity .15s;
+    }
+    .add-tab-btn:hover { opacity: 1; }
+
+    /* ── Tab panel ── */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── Toolbar ── */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .toolbar select {
+      padding: .38rem .75rem;
+      border: 1.5px solid #E2DBD2;
+      border-radius: 6px;
+      font-size: .82rem;
+      font-family: inherit;
+      background: #fff;
+      color: #1a1a1a;
+      cursor: pointer;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23999'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 9px center;
+      padding-right: 26px;
+    }
+    .toolbar select:focus { border-color: #1B2E4B; }
+    .filter-toggle {
+      padding: .38rem .85rem;
+      border: 1.5px solid #E2DBD2;
+      border-radius: 6px;
+      font-size: .82rem;
+      font-family: inherit;
+      background: #fff;
+      color: #7a7069;
+      cursor: pointer;
+      transition: border-color .15s, color .15s, background .15s;
+    }
+    .filter-toggle.active { border-color: #B5622A; color: #B5622A; background: rgba(181,98,42,.06); }
+    .toolbar-spacer { flex: 1; }
+    .add-col-btn {
+      padding: .38rem .85rem;
+      border: 1.5px dashed #D0C8BE;
+      border-radius: 6px;
+      background: none;
+      color: #9a8e83;
+      font-size: .78rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: border-color .15s, color .15s;
+    }
+    .add-col-btn:hover { border-color: #B5622A; color: #B5622A; }
+    .add-row-btn {
+      padding: .38rem .95rem;
+      background: #1B2E4B;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: .82rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .add-row-btn:hover { background: #253d63; }
+
+    /* ── Table ── */
+    .table-wrap {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(27,46,75,.07), 0 1px 3px rgba(0,0,0,.04);
+      overflow: hidden;
+    }
+    .table-scroll { overflow-x: auto; max-height: calc(100vh - 220px); overflow-y: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: .84rem; }
+    thead th {
+      background: #F4EFE8;
+      padding: .65rem 1rem;
+      text-align: left;
+      font-size: .65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #7a7069;
+      position: sticky;
+      top: 0;
+      white-space: nowrap;
+    }
+    tbody tr { border-top: 1px solid #F0EBE4; transition: background .1s; }
+    tbody tr:hover { background: #FDFAF7; }
+    tbody td { padding: .55rem 1rem; vertical-align: middle; color: #2c2c2c; cursor: pointer; }
+    tbody td.no-edit { cursor: default; }
+    tbody td input, tbody td select {
+      width: 100%;
+      padding: 4px 7px;
+      border: 1.5px solid #1B2E4B;
+      border-radius: 5px;
+      font-size: .84rem;
+      font-family: inherit;
+      color: #2c2c2c;
+      background: #fff;
+      outline: none;
+    }
+    tbody td select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23999'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 7px center;
+      padding-right: 24px;
+      -webkit-appearance: none;
+      appearance: none;
+      cursor: pointer;
+    }
+    .mono { font-family: 'SF Mono', 'Fira Code', monospace; font-size: .78rem; color: #7a7069; }
+    .swatch-cell { display: flex; align-items: center; gap: 7px; }
+    .swatch {
+      display: inline-block;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,.13);
+      flex-shrink: 0;
+    }
+    .bool-cell { text-align: center; }
+    .bool-cell input[type="checkbox"] { width: 15px; height: 15px; cursor: pointer; accent-color: #B5622A; }
+    .custom-col-badge {
+      display: inline-block;
+      font-size: .52rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: #B5622A;
+      background: rgba(181,98,42,.1);
+      padding: 1px 4px;
+      border-radius: 3px;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
+    /* ── Row flash ── */
+    @keyframes flashGreen { 0% { background: rgba(76,175,80,.22); } 100% { background: transparent; } }
+    @keyframes flashRed   { 0% { background: rgba(229,115,115,.22); } 100% { background: transparent; } }
+    .row-saved { animation: flashGreen 1.3s ease-out forwards; }
+    .row-error { animation: flashRed   1.3s ease-out forwards; }
+
+    /* ── Status ── */
+    #status-msg {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: #7a7069;
+      font-size: .9rem;
+      display: none;
+    }
+
+    /* ── Modal ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.42);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 500;
+    }
+    .modal-overlay.hidden { display: none; }
+    .modal-box {
+      background: #fff;
+      border-radius: 10px;
+      padding: 28px 30px 24px;
+      width: 390px;
+      max-width: 92vw;
+      box-shadow: 0 10px 40px rgba(27,46,75,.18);
+    }
+    .modal-box h3 { font-size: 1rem; font-weight: 600; color: #1B2E4B; margin-bottom: 18px; }
+    .modal-info {
+      background: #FFF8F2;
+      border: 1px solid #F0C8A0;
+      border-radius: 6px;
+      padding: 9px 12px;
+      font-size: .78rem;
+      color: #7a4010;
+      margin-bottom: 16px;
+      line-height: 1.55;
+    }
+    .modal-field { margin-bottom: 13px; }
+    .modal-field label {
+      display: block;
+      font-size: .65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #7a7069;
+      margin-bottom: 5px;
+    }
+    .modal-field input, .modal-field select {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1.5px solid #E2DBD2;
+      border-radius: 6px;
+      font-size: .875rem;
+      font-family: inherit;
+      color: #1a1a1a;
+      outline: none;
+      background: #fff;
+    }
+    .modal-field input:focus, .modal-field select:focus { border-color: #1B2E4B; }
+    .modal-field select {
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23999'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 28px;
+      cursor: pointer;
+    }
+    .modal-actions { display: flex; justify-content: flex-end; gap: .55rem; margin-top: 20px; }
+    .btn-cancel {
+      padding: .4rem 1rem;
+      border: 1.5px solid #E2DBD2;
+      border-radius: 6px;
+      background: #fff;
+      color: #7a7069;
+      font-size: .82rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: border-color .15s;
+    }
+    .btn-cancel:hover { border-color: #aaa; }
+    .btn-confirm {
+      padding: .4rem 1.1rem;
+      border: none;
+      border-radius: 6px;
+      background: #1B2E4B;
+      color: #fff;
+      font-size: .82rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-confirm:hover { background: #253d63; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div style="display:flex;align-items:center;">
+    <a href="dashboard.html" class="wordmark" style="margin-right:1.5rem;">
+      <span class="wm-line1">The Repertory</span>
+      <span class="wm-line2">a Collective effort</span>
+    </a>
+    <nav class="header-nav">
+      <a href="admin-review.html">Queue</a>
+      <a href="admin-glossary.html" class="active">Glossary</a>
+      <a href="resources.html">Resources</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="tab-bar" id="tab-bar"></div>
+  <div id="status-msg"></div>
+  <div id="panels-container"></div>
+</main>
+
+<div class="modal-overlay hidden" id="modal-overlay">
+  <div class="modal-box">
+    <h3 id="modal-title"></h3>
+    <div class="modal-info" id="modal-info" style="display:none"></div>
+    <div id="modal-fields"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" id="modal-cancel">Cancel</button>
+      <button class="btn-confirm" id="modal-confirm">Add</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const SUPABASE_URL = 'https://hsseypuhqdlcvepgyrtd.supabase.co'
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhzc2V5cHVocWRsY3ZlcGd5cnRkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTc3NTk0MSwiZXhwIjoyMDkxMzUxOTQxfQ.mGNhUtPSCJWNDTVY1dlhwROsUMTAw-1dHkvRHYV0M0c'
+
+  const DB_HEADERS = {
+    'apikey':        SUPABASE_KEY,
+    'Authorization': `Bearer ${SUPABASE_KEY}`,
+    'Content-Type':  'application/json'
+  }
+
+  const SCHEMA_HEADERS = { ...DB_HEADERS, 'Accept-Profile': 'information_schema' }
+
+  // ── Table label map ──────────────────────────────────────────────────────────
+  const TABLE_LABELS = {
+    glossary_color:        'Colors',
+    glossary_material:     'Materials',
+    glossary_hardware:     'Hardware',
+    glossary_size:         'Sizes',
+    brand_color_alias:     'Color Aliases',
+    brand_material_alias:  'Material Aliases',
+    brand_size_alias:      'Size Aliases',
+    brand:                 'Brands',
+    industry:              'Industries',
+    class:                 'Classes',
+    family:                'Families',
+    style:                 'Styles'
+  }
+
+  function tableToLabel(name) {
+    return TABLE_LABELS[name] ||
+      name.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+  }
+
+  function shouldAutoInclude(name) {
+    if (name.startsWith('glossary_')) return true
+    if (/^brand_.+_alias$/.test(name)) return true
+    if (['brand','industry','class','family','style'].includes(name)) return true
+    return false
+  }
+
+  // ── LocalStorage helpers ─────────────────────────────────────────────────────
+  function lsGet(key, fallback) {
+    try { return JSON.parse(localStorage.getItem(key)) ?? fallback } catch { return fallback }
+  }
+  function lsSet(key, val) {
+    try { localStorage.setItem(key, JSON.stringify(val)) } catch {}
+  }
+  const CUSTOM_TABS_KEY = 'gns_custom_tabs'
+  const customColsKey = tabId => `gns_custom_cols_${tabId}`
+
+  // ── Column inference ─────────────────────────────────────────────────────────
+  const EXCLUDED_COLS  = new Set(['id','created_at','updated_at'])
+  const NUMERIC_TYPES  = new Set(['integer','bigint','smallint','numeric','real','double precision'])
+
+  function inferColFromSchema(colInfo) {
+    const name  = colInfo.column_name
+    const dtype = colInfo.data_type
+    if (EXCLUDED_COLS.has(name)) return null
+    return makeColDef(name, dtype)
+  }
+
+  function inferColFromValue(name, val) {
+    if (EXCLUDED_COLS.has(name)) return null
+    let dtype = 'text'
+    if (typeof val === 'boolean')    dtype = 'boolean'
+    else if (typeof val === 'number') dtype = 'number'
+    return makeColDef(name, dtype)
+  }
+
+  function makeColDef(name, dtype) {
+    let type = 'text'
+    if (dtype === 'boolean') type = 'boolean'
+    else if (NUMERIC_TYPES.has(dtype)) type = 'number'
+    else if (dtype === 'date') type = 'date'
+    else if (name === 'hex_approx' || name.endsWith('_hex') || name.startsWith('hex_')) type = 'color-swatch'
+
+    const label   = name.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+    const isBool  = type === 'boolean'
+    const isSwatch = type === 'color-swatch'
+    const isDesc  = /description|notes|bio|about/.test(name)
+
+    return {
+      field:    name,
+      label,
+      type,
+      width:    isBool ? '70px' : isSwatch ? '120px' : name === 'slug' ? '150px' : isDesc ? '240px' : '160px',
+      mono:     name === 'slug',
+      truncate: isDesc ? 60 : undefined
+    }
+  }
+
+  // ── Schema discovery ─────────────────────────────────────────────────────────
+  const KNOWN_TABLES = [
+    'glossary_color','glossary_material','glossary_hardware','glossary_size',
+    'brand_color_alias','brand_material_alias','brand_size_alias',
+    'brand','industry','class','family','style'
+  ]
+
+  async function discoverTables() {
+    // Try information_schema
+    try {
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/tables?select=table_name&table_schema=eq.public&table_type=eq.BASE%20TABLE&order=table_name`,
+        { headers: SCHEMA_HEADERS }
+      )
+      if (res.ok) {
+        const rows = await res.json()
+        if (Array.isArray(rows) && rows.length) {
+          return rows.map(r => r.table_name).filter(shouldAutoInclude)
+        }
+      }
+    } catch {}
+
+    // Fallback: probe known tables
+    const results = await Promise.all(KNOWN_TABLES.map(async t => {
+      try {
+        const r = await fetch(`${SUPABASE_URL}/rest/v1/${t}?select=id&limit=0`, { headers: DB_HEADERS })
+        return r.ok ? t : null
+      } catch { return null }
+    }))
+    return results.filter(Boolean)
+  }
+
+  async function discoverColumns(tableName) {
+    // Try information_schema
+    try {
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/columns?select=column_name,data_type,ordinal_position&table_schema=eq.public&table_name=eq.${encodeURIComponent(tableName)}&order=ordinal_position`,
+        { headers: SCHEMA_HEADERS }
+      )
+      if (res.ok) {
+        const rows = await res.json()
+        if (Array.isArray(rows) && rows.length) {
+          return rows.map(inferColFromSchema).filter(Boolean)
+        }
+      }
+    } catch {}
+
+    // Fallback: fetch one row and infer
+    try {
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/${tableName}?select=*&limit=1`,
+        { headers: DB_HEADERS }
+      )
+      if (res.ok) {
+        const rows = await res.json()
+        if (Array.isArray(rows) && rows.length) {
+          return Object.entries(rows[0]).map(([k, v]) => inferColFromValue(k, v)).filter(Boolean)
+        }
+      }
+    } catch {}
+
+    return []
+  }
+
+  // ── State ────────────────────────────────────────────────────────────────────
+  const tabConfigs  = {}
+  const rowCache    = {}
+  let   activeTabId = null
+
+  // ── Build config ─────────────────────────────────────────────────────────────
+  function buildTabConfig(tabId, tableName, label, baseCols, isCustom) {
+    const customCols = lsGet(customColsKey(tabId), [])
+    const allCols    = [...baseCols, ...customCols.map(c => ({ ...c, isCustom: true }))]
+
+    const fields = baseCols.map(c => c.field)
+    let order = 'id'
+    if (fields.includes('color_family') && fields.includes('canonical_name')) order = 'color_family,canonical_name'
+    else if (fields.includes('canonical_name')) order = 'canonical_name'
+    else if (fields.includes('name')) order = 'name'
+
+    const newRecord = {}
+    baseCols.forEach(c => { if (c.type === 'boolean') newRecord[c.field] = false })
+    const primaryText = baseCols.find(c => c.type === 'text' && c.field !== 'slug')
+    if (primaryText) newRecord[primaryText.field] = `New ${label.replace(/s$/, '')}`
+
+    tabConfigs[tabId] = { tabId, label, tableName, order, columns: allCols, baseCols, customCols, newRecord, isCustom }
+  }
+
+  // ── Build panel DOM ──────────────────────────────────────────────────────────
+  function buildTabPanel(tabId) {
+    const cfg = tabConfigs[tabId]
+
+    const panel = document.createElement('div')
+    panel.className = 'tab-panel'
+    panel.id = `panel-${tabId}`
+
+    const toolbar = document.createElement('div')
+    toolbar.className = 'toolbar'
+    toolbar.id = `toolbar-${tabId}`
+
+    const spacer = document.createElement('div')
+    spacer.className = 'toolbar-spacer'
+
+    const addColBtn = document.createElement('button')
+    addColBtn.className = 'add-col-btn'
+    addColBtn.textContent = '+ Add Column'
+    addColBtn.addEventListener('click', () => showAddColumnModal(tabId))
+
+    const addRowBtn = document.createElement('button')
+    addRowBtn.className = 'add-row-btn'
+    addRowBtn.textContent = `+ New ${cfg.label.replace(/s$/, '')}`
+    addRowBtn.addEventListener('click', () => addRow(tabId))
+
+    toolbar.appendChild(spacer)
+    toolbar.appendChild(addColBtn)
+    toolbar.appendChild(addRowBtn)
+
+    const tableWrap   = document.createElement('div')
+    tableWrap.className = 'table-wrap'
+    const tableScroll = document.createElement('div')
+    tableScroll.className = 'table-scroll'
+    const table = document.createElement('table')
+    table.id = `table-${tabId}`
+    table.innerHTML = '<thead></thead><tbody></tbody>'
+
+    tableScroll.appendChild(table)
+    tableWrap.appendChild(tableScroll)
+    panel.appendChild(toolbar)
+    panel.appendChild(tableWrap)
+    document.getElementById('panels-container').appendChild(panel)
+  }
+
+  // ── Tab bar ──────────────────────────────────────────────────────────────────
+  function buildTabBar() {
+    const tabBar = document.getElementById('tab-bar')
+    tabBar.innerHTML = ''
+
+    Object.values(tabConfigs).forEach(cfg => {
+      const btn = document.createElement('button')
+      btn.className = 'tab-btn' + (cfg.tabId === activeTabId ? ' active' : '')
+      btn.dataset.tabId = cfg.tabId
+
+      const labelSpan = document.createElement('span')
+      labelSpan.textContent = cfg.label
+      btn.appendChild(labelSpan)
+
+      if (cfg.isCustom) {
+        const rem = document.createElement('button')
+        rem.className = 'tab-remove'
+        rem.title = 'Remove tab'
+        rem.textContent = '×'
+        rem.addEventListener('click', e => { e.stopPropagation(); removeCustomTab(cfg.tabId) })
+        btn.appendChild(rem)
+      }
+
+      btn.addEventListener('click', () => switchTab(cfg.tabId))
+      tabBar.appendChild(btn)
+    })
+
+    const addTabBtn = document.createElement('button')
+    addTabBtn.className = 'add-tab-btn'
+    addTabBtn.textContent = '+ Tab'
+    addTabBtn.addEventListener('click', showAddTabModal)
+    tabBar.appendChild(addTabBtn)
+  }
+
+  function switchTab(tabId) {
+    activeTabId = tabId
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tabId === tabId))
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'))
+    document.getElementById(`panel-${tabId}`)?.classList.add('active')
+    if (!rowCache[tabId]) loadTab(tabId)
+  }
+
+  // ── Load & render ────────────────────────────────────────────────────────────
+  async function loadTab(tabId) {
+    const cfg = tabConfigs[tabId]
+    if (!cfg) return
+    setStatus('Loading…')
+    try {
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/${cfg.tableName}?select=*&order=${cfg.order}`,
+        { headers: DB_HEADERS }
+      )
+      if (!res.ok) throw new Error()
+      const rows = await res.json()
+      rowCache[tabId] = rows
+      renderTable(tabId, rows)
+      buildFilters(tabId, cfg.columns, rows)
+      setStatus('')
+    } catch {
+      setStatus(`Failed to load "${cfg.label}". Check the table name and credentials.`)
+    }
+  }
+
+  function renderTable(tabId, rows) {
+    const cfg   = tabConfigs[tabId]
+    const table = document.getElementById(`table-${tabId}`)
+    if (!table) return
+
+    table.querySelector('thead').innerHTML =
+      '<tr>' + cfg.columns.map(c =>
+        `<th style="min-width:${c.width}">${c.label}${c.isCustom ? ' <span class="custom-col-badge">custom</span>' : ''}</th>`
+      ).join('') + '</tr>'
+
+    const tbody = table.querySelector('tbody')
+    tbody.innerHTML = ''
+    rows.forEach(row => tbody.appendChild(buildRow(tabId, row)))
+  }
+
+  function buildRow(tabId, row) {
+    const cfg = tabConfigs[tabId]
+    const tr  = document.createElement('tr')
+    tr.dataset.id = row.id
+    tr._rowData   = row
+    cfg.columns.forEach(col => {
+      const td = document.createElement('td')
+      renderCell(td, row, col, tabId, tr)
+      tr.appendChild(td)
+    })
+    return tr
+  }
+
+  function renderCell(td, row, col, tabId, tr) {
+    const val = row[col.field] ?? null
+    const cfg = tabConfigs[tabId]
+
+    if (col.type === 'boolean') {
+      td.className = 'bool-cell no-edit'
+      const cb = document.createElement('input')
+      cb.type = 'checkbox'
+      cb.checked = !!val
+      if (!col.isCustom) {
+        cb.addEventListener('change', () => {
+          row[col.field] = cb.checked
+          saveField(cfg.tableName, row.id, col.field, cb.checked, tr)
+          applyFilter(tabId)
+        })
+      }
+      td.appendChild(cb)
+    } else if (col.type === 'color-swatch') {
+      setSwatchDisplay(td, val)
+      td.addEventListener('click', () => makeCellEditable(td, row, col, tabId, tr))
+    } else {
+      setTextDisplay(td, col, val)
+      td.addEventListener('click', () => makeCellEditable(td, row, col, tabId, tr))
+    }
+  }
+
+  function setTextDisplay(td, col, val) {
+    const s = val ?? ''
+    td.className = col.mono ? 'mono' : ''
+    if (col.truncate && s.length > col.truncate) {
+      td.title = s
+      td.textContent = s.substring(0, col.truncate) + '…'
+    } else {
+      td.title = ''
+      td.textContent = s
+    }
+  }
+
+  function setSwatchDisplay(td, val) {
+    td.innerHTML = ''
+    if (val) {
+      const wrap = document.createElement('span')
+      wrap.className = 'swatch-cell'
+      const sw = document.createElement('span')
+      sw.className = 'swatch'
+      sw.style.background = val
+      wrap.appendChild(sw)
+      wrap.appendChild(document.createTextNode(val))
+      td.appendChild(wrap)
+    } else {
+      td.textContent = '—'
+    }
+  }
+
+  // ── Inline edit ──────────────────────────────────────────────────────────────
+  function makeCellEditable(td, row, col, tabId, tr) {
+    if (td.querySelector('input, select')) return
+    const val = row[col.field] ?? ''
+    const cfg = tabConfigs[tabId]
+
+    const input = document.createElement('input')
+    input.type  = col.type === 'number' ? 'number' : col.type === 'date' ? 'date' : 'text'
+    input.value = val
+    td.innerHTML = ''
+    td.appendChild(input)
+    input.focus()
+    input.select()
+
+    let escaped = false
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') { e.preventDefault(); input.blur() }
+      else if (e.key === 'Escape') {
+        escaped = true
+        col.type === 'color-swatch' ? setSwatchDisplay(td, val) : setTextDisplay(td, col, val)
+      }
+    })
+    input.addEventListener('blur', () => {
+      if (escaped) return
+      const newVal = input.value.trim() || null
+      col.type === 'color-swatch' ? setSwatchDisplay(td, newVal) : setTextDisplay(td, col, newVal)
+      if (newVal !== (val || null)) {
+        row[col.field] = newVal
+        applyFilter(tabId)
+        if (!col.isCustom) saveField(cfg.tableName, row.id, col.field, newVal, tr)
+      }
+    })
+  }
+
+  // ── Save ─────────────────────────────────────────────────────────────────────
+  async function saveField(dbTable, id, field, value, tr) {
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${dbTable}?id=eq.${id}`, {
+        method:  'PATCH',
+        headers: { ...DB_HEADERS, 'Prefer': 'return=minimal' },
+        body:    JSON.stringify({ [field]: value })
+      })
+      flashRow(tr, res.ok)
+    } catch { flashRow(tr, false) }
+  }
+
+  function flashRow(tr, ok) {
+    tr.classList.remove('row-saved','row-error')
+    void tr.offsetWidth
+    tr.classList.add(ok ? 'row-saved' : 'row-error')
+    setTimeout(() => tr.classList.remove('row-saved','row-error'), 1400)
+  }
+
+  // ── Add row ──────────────────────────────────────────────────────────────────
+  async function addRow(tabId) {
+    const cfg = tabConfigs[tabId]
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${cfg.tableName}`, {
+        method:  'POST',
+        headers: { ...DB_HEADERS, 'Prefer': 'return=representation' },
+        body:    JSON.stringify(cfg.newRecord)
+      })
+      if (!res.ok) throw new Error()
+      const data   = await res.json()
+      const newRow = Array.isArray(data) ? data[0] : data
+      if (!rowCache[tabId]) rowCache[tabId] = []
+      rowCache[tabId].unshift(newRow)
+      const tbody = document.querySelector(`#table-${tabId} tbody`)
+      const tr    = buildRow(tabId, newRow)
+      tbody.prepend(tr)
+      flashRow(tr, true)
+      tr.querySelector('td:not(.no-edit)')?.click()
+    } catch {
+      setStatus(`Failed to create row in "${tabConfigs[tabId]?.label}".`)
+      setTimeout(() => setStatus(''), 3000)
+    }
+  }
+
+  // ── Dynamic filters ──────────────────────────────────────────────────────────
+  function buildFilters(tabId, columns, rows) {
+    const toolbar = document.getElementById(`toolbar-${tabId}`)
+    if (!toolbar) return
+    toolbar.querySelectorAll('.filter-ctl').forEach(el => el.remove())
+    const spacer = toolbar.querySelector('.toolbar-spacer')
+
+    // Select filters for *_type and color_family
+    columns.filter(c => c.field.endsWith('_type') || c.field === 'color_family').forEach(col => {
+      const vals = [...new Set(rows.map(r => r[col.field]).filter(v => v != null && v !== ''))].sort()
+      if (!vals.length) return
+      const sel = document.createElement('select')
+      sel.className = 'filter-ctl'
+      sel.dataset.filterField = col.field
+      const blank = document.createElement('option')
+      blank.value = ''
+      blank.textContent = `All ${col.label.toLowerCase()}`
+      sel.appendChild(blank)
+      vals.forEach(v => {
+        const o = document.createElement('option')
+        o.value = v; o.textContent = v
+        sel.appendChild(o)
+      })
+      sel.addEventListener('change', () => applyFilter(tabId))
+      toolbar.insertBefore(sel, spacer)
+    })
+
+    // Toggle filters for is_* boolean columns
+    columns.filter(c => c.type === 'boolean' && c.field.startsWith('is_')).forEach(col => {
+      const btn = document.createElement('button')
+      btn.className = 'filter-toggle filter-ctl'
+      btn.textContent = col.label + ' only'
+      btn.dataset.filterField = col.field
+      btn.dataset.on = '0'
+      btn.addEventListener('click', () => {
+        const wasOn = btn.dataset.on === '1'
+        btn.dataset.on = wasOn ? '0' : '1'
+        btn.classList.toggle('active', !wasOn)
+        applyFilter(tabId)
+      })
+      toolbar.insertBefore(btn, spacer)
+    })
+  }
+
+  function applyFilter(tabId) {
+    const toolbar = document.getElementById(`toolbar-${tabId}`)
+    if (!toolbar) return
+    const selects  = {}
+    const toggles  = new Set()
+    toolbar.querySelectorAll('select[data-filter-field]').forEach(s => { if (s.value) selects[s.dataset.filterField] = s.value })
+    toolbar.querySelectorAll('.filter-toggle[data-on="1"]').forEach(b => toggles.add(b.dataset.filterField))
+
+    document.querySelectorAll(`#table-${tabId} tbody tr`).forEach(tr => {
+      const row = tr._rowData
+      if (!row) return
+      let show = true
+      for (const [f, v] of Object.entries(selects)) { if ((row[f] ?? '') !== v) { show = false; break } }
+      if (show) for (const f of toggles) { if (!row[f]) { show = false; break } }
+      tr.style.display = show ? '' : 'none'
+    })
+  }
+
+  // ── Add Column ───────────────────────────────────────────────────────────────
+  async function showAddColumnModal(tabId) {
+    const vals = await openModal({
+      title:        'Add Column',
+      confirmLabel: 'Add Column',
+      info:         'To make this column permanent, run the migration in your database.',
+      fields: [
+        { id: 'col-label', label: 'Column Label', type: 'text',   placeholder: 'e.g. Brand Code' },
+        { id: 'col-field', label: 'Field Name',   type: 'text',   placeholder: 'e.g. brand_code' },
+        { id: 'col-type',  label: 'Field Type',   type: 'select', options: ['text','number','boolean','date'] }
+      ]
+    })
+    if (!vals || !vals['col-label'] || !vals['col-field']) return
+
+    const colDef = {
+      label:    vals['col-label'],
+      field:    vals['col-field'],
+      type:     vals['col-type'] || 'text',
+      width:    '160px',
+      isCustom: true
+    }
+
+    const cfg = tabConfigs[tabId]
+    cfg.columns.push(colDef)
+    cfg.customCols.push(colDef)
+    lsSet(customColsKey(tabId), cfg.customCols)
+
+    const table = document.getElementById(`table-${tabId}`)
+    if (!table) return
+
+    const headerRow = table.querySelector('thead tr')
+    if (headerRow) {
+      const th = document.createElement('th')
+      th.style.minWidth = colDef.width
+      th.innerHTML = `${colDef.label} <span class="custom-col-badge">custom</span>`
+      headerRow.appendChild(th)
+    }
+
+    table.querySelectorAll('tbody tr').forEach(tr => {
+      const td  = document.createElement('td')
+      const row = tr._rowData || {}
+      row[colDef.field] = null
+      renderCell(td, row, colDef, tabId, tr)
+      tr.appendChild(td)
+    })
+  }
+
+  // ── Add / Remove Custom Tab ───────────────────────────────────────────────────
+  async function showAddTabModal() {
+    const vals = await openModal({
+      title:        'Add Tab',
+      confirmLabel: 'Add Tab',
+      fields: [
+        { id: 'tab-label',   label: 'Tab Label',              type: 'text', placeholder: 'e.g. Seasons' },
+        { id: 'tab-table',   label: 'Table Name',             type: 'text', placeholder: 'e.g. glossary_season' },
+        { id: 'tab-primary', label: 'Primary Display Column', type: 'text', placeholder: 'e.g. canonical_name' }
+      ]
+    })
+    if (!vals || !vals['tab-label'] || !vals['tab-table']) return
+    await addCustomTab(vals['tab-label'], vals['tab-table'], vals['tab-primary'])
+  }
+
+  async function addCustomTab(label, tableName, primaryCol) {
+    const tabId = `ct_${Date.now()}`
+    setStatus('Discovering columns…')
+
+    let cols = await discoverColumns(tableName)
+    if (primaryCol && !cols.find(c => c.field === primaryCol)) {
+      cols.unshift(makeColDef(primaryCol, 'text'))
+    }
+    if (!cols.length && primaryCol) cols.push(makeColDef(primaryCol, 'text'))
+
+    buildTabConfig(tabId, tableName, label, cols, true)
+    buildTabPanel(tabId)
+
+    const saved = lsGet(CUSTOM_TABS_KEY, [])
+    saved.push({ tabId, label, tableName, primaryCol })
+    lsSet(CUSTOM_TABS_KEY, saved)
+
+    buildTabBar()
+    switchTab(tabId)
+    setStatus('')
+  }
+
+  function removeCustomTab(tabId) {
+    delete tabConfigs[tabId]
+    delete rowCache[tabId]
+    const saved = lsGet(CUSTOM_TABS_KEY, []).filter(t => t.tabId !== tabId)
+    lsSet(CUSTOM_TABS_KEY, saved)
+    localStorage.removeItem(customColsKey(tabId))
+    document.getElementById(`panel-${tabId}`)?.remove()
+    buildTabBar()
+    const first = Object.keys(tabConfigs)[0]
+    if (first) switchTab(first)
+  }
+
+  // ── Modal ─────────────────────────────────────────────────────────────────────
+  let _modalResolve = null
+
+  function openModal({ title, fields, info, confirmLabel = 'Add' }) {
+    return new Promise(resolve => {
+      _modalResolve = resolve
+      document.getElementById('modal-title').textContent   = title
+      document.getElementById('modal-confirm').textContent = confirmLabel
+
+      const infoEl = document.getElementById('modal-info')
+      if (info) { infoEl.textContent = info; infoEl.style.display = 'block' }
+      else       { infoEl.style.display = 'none' }
+
+      const fieldsEl = document.getElementById('modal-fields')
+      fieldsEl.innerHTML = ''
+      fields.forEach(f => {
+        const div = document.createElement('div')
+        div.className = 'modal-field'
+        const lbl = document.createElement('label')
+        lbl.textContent = f.label
+        lbl.htmlFor = f.id
+        div.appendChild(lbl)
+
+        let input
+        if (f.type === 'select') {
+          input = document.createElement('select')
+          f.options.forEach(opt => {
+            const o = document.createElement('option')
+            o.value = opt
+            o.textContent = opt.charAt(0).toUpperCase() + opt.slice(1)
+            input.appendChild(o)
+          })
+        } else {
+          input = document.createElement('input')
+          input.type = f.type || 'text'
+          if (f.placeholder) input.placeholder = f.placeholder
+        }
+        input.id = f.id
+        div.appendChild(input)
+        fieldsEl.appendChild(div)
+      })
+
+      document.getElementById('modal-overlay').classList.remove('hidden')
+      setTimeout(() => fieldsEl.querySelector('input, select')?.focus(), 50)
+    })
+  }
+
+  function closeModal(confirmed) {
+    document.getElementById('modal-overlay').classList.add('hidden')
+    if (!_modalResolve) return
+    if (confirmed) {
+      const vals = {}
+      document.querySelectorAll('#modal-fields input, #modal-fields select').forEach(el => {
+        vals[el.id] = typeof el.value === 'string' ? el.value.trim() : el.value
+      })
+      _modalResolve(vals)
+    } else {
+      _modalResolve(null)
+    }
+    _modalResolve = null
+  }
+
+  document.getElementById('modal-cancel').addEventListener('click', () => closeModal(false))
+  document.getElementById('modal-confirm').addEventListener('click', () => closeModal(true))
+  document.getElementById('modal-overlay').addEventListener('click', e => {
+    if (e.target.id === 'modal-overlay') closeModal(false)
+  })
+  document.addEventListener('keydown', e => {
+    if (document.getElementById('modal-overlay').classList.contains('hidden')) return
+    if (e.key === 'Escape') closeModal(false)
+    else if (e.key === 'Enter' && e.target.tagName !== 'SELECT') { e.preventDefault(); closeModal(true) }
+  })
+
+  // ── Status ────────────────────────────────────────────────────────────────────
+  function setStatus(msg) {
+    const el = document.getElementById('status-msg')
+    el.textContent    = msg
+    el.style.display  = msg ? 'block' : 'none'
+  }
+
+  // ── Boot ──────────────────────────────────────────────────────────────────────
+  async function boot() {
+    setStatus('Discovering tables…')
+
+    let tableNames = []
+    try { tableNames = await discoverTables() } catch {}
+
+    if (!tableNames.length) {
+      setStatus('No matching tables found. Check your credentials or add a tab manually.')
+      buildTabBar()
+      return
+    }
+
+    // Discover columns for all tables in parallel
+    const colResults = await Promise.all(tableNames.map(t => discoverColumns(t).catch(() => [])))
+
+    tableNames.forEach((t, i) => {
+      buildTabConfig(t, t, tableToLabel(t), colResults[i], false)
+      buildTabPanel(t)
+    })
+
+    // Restore persisted custom tabs
+    for (const ct of lsGet(CUSTOM_TABS_KEY, [])) {
+      if (tabConfigs[ct.tabId]) continue
+      const cols = await discoverColumns(ct.tableName).catch(() => [])
+      buildTabConfig(ct.tabId, ct.tableName, ct.label, cols, true)
+      buildTabPanel(ct.tabId)
+    }
+
+    buildTabBar()
+
+    const firstId = Object.keys(tabConfigs)[0]
+    if (firstId) switchTab(firstId)
+    setStatus('')
+  }
+
+  // ─── Admin access guard ────────────────────────────────────────────────────
+  async function checkAdminAccess() {
+    const token = localStorage.getItem('gns_access_token')
+    if (!token) { window.location.replace('dashboard.html'); return false }
+    try {
+      const parts = token.split('.')
+      const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')))
+      const userId = payload.sub
+      if (!userId) throw new Error('no sub')
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/contributor_profile?auth_user_id=eq.${userId}&select=contributor_id,membership_tier&limit=1`,
+        { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } }
+      )
+      if (!res.ok) throw new Error('fetch failed')
+      const rows = await res.json()
+      const p = rows[0]
+      if (!p || p.contributor_id !== 'GNS-00001' || p.membership_tier !== 'founding') {
+        window.location.replace('dashboard.html'); return false
+      }
+      return true
+    } catch {
+      window.location.replace('dashboard.html'); return false
+    }
+  }
+
+  checkAdminAccess().then(ok => { if (ok) boot() })
+</script>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <p class="footer-copy">The Repertory is a collective effort to build the world's most complete authenticated goods database. Under the care of <a href="https://ardorhousecollective.com" target="_blank" rel="noopener">Ardor House Collective</a>.</p>
+    <p class="footer-legal">The Repertory is an independent platform. All brand names and trademarks are the property of their respective owners. We are not affiliated with, authorized by, or associated with any brand referenced in this database.</p>
+  </div>
+</footer>
+
+<!-- ── Feedback Widget ──────────────────────────────────────────────────────── -->
+<style>
+#fbw-btn{position:fixed;bottom:24px;right:24px;z-index:9000;background:#1B2E4B;color:#FAF6F0;border:2px solid #B5622A;border-radius:24px;padding:9px 18px 9px 14px;font-size:.82rem;font-weight:600;font-family:inherit;letter-spacing:.04em;cursor:pointer;display:flex;align-items:center;gap:7px;box-shadow:0 4px 16px rgba(27,46,75,.28);transition:background .15s,box-shadow .15s}
+#fbw-btn:hover{background:#253d63;box-shadow:0 6px 20px rgba(27,46,75,.38)}
+#fbw-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:9001;align-items:center;justify-content:center;padding:1rem}
+#fbw-overlay.open{display:flex}
+#fbw-modal{background:#1B2E4B;border:1.5px solid #B5622A;border-radius:14px;padding:28px 30px 24px;width:100%;max-width:480px;box-shadow:0 20px 60px rgba(0,0,0,.45);position:relative;color:#FAF6F0}
+#fbw-close{position:absolute;top:14px;right:16px;background:none;border:none;color:rgba(250,246,240,.55);font-size:1.3rem;line-height:1;cursor:pointer;padding:4px 6px;border-radius:4px;transition:color .15s}
+#fbw-close:hover{color:#FAF6F0}
+#fbw-modal h2{font-family:'Linden Hill',Georgia,serif;font-size:1.45rem;color:#FAF6F0;margin-bottom:20px;letter-spacing:.01em}
+.fbw-group{margin-bottom:16px}
+.fbw-label{display:block;font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:rgba(250,246,240,.6);margin-bottom:6px}
+.fbw-input,.fbw-select,.fbw-textarea{width:100%;background:rgba(250,246,240,.07);border:1.5px solid rgba(181,98,42,.45);border-radius:7px;padding:9px 12px;font-size:.88rem;font-family:inherit;color:#FAF6F0;outline:none;transition:border-color .15s}
+.fbw-input::placeholder,.fbw-textarea::placeholder{color:rgba(250,246,240,.3)}
+.fbw-input:focus,.fbw-select:focus,.fbw-textarea:focus{border-color:#B5622A}
+.fbw-input[readonly]{opacity:.55;cursor:default}
+.fbw-select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B5622A' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.fbw-select option{background:#1B2E4B;color:#FAF6F0}
+.fbw-textarea{resize:vertical;min-height:88px;line-height:1.55}
+#fbw-error{font-size:.8rem;color:#f87171;margin-bottom:12px;display:none}
+#fbw-success{text-align:center;padding:24px 0 8px;display:none}
+#fbw-success .fbw-check{font-size:2.4rem;margin-bottom:10px;color:#B5622A}
+#fbw-success p{color:rgba(250,246,240,.8);font-size:.95rem}
+#fbw-submit{width:100%;background:#B5622A;color:#FAF6F0;border:none;border-radius:7px;padding:11px 16px;font-size:.9rem;font-weight:600;font-family:inherit;letter-spacing:.03em;cursor:pointer;transition:background .15s;margin-top:4px}
+#fbw-submit:hover:not(:disabled){background:#9a501f}
+#fbw-submit:disabled{opacity:.5;cursor:not-allowed}
+</style>
+
+<button id="fbw-btn" aria-label="Send feedback">
+  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M14 1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h3l3 3 3-3h3a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" stroke="#B5622A" stroke-width="1.5" stroke-linejoin="round"/></svg>
+  Feedback
+</button>
+
+<div id="fbw-overlay" role="dialog" aria-modal="true" aria-labelledby="fbw-title">
+  <div id="fbw-modal">
+    <button id="fbw-close" aria-label="Close">&times;</button>
+    <h2 id="fbw-title">Send Feedback</h2>
+    <div id="fbw-form-body">
+      <div class="fbw-group">
+        <label class="fbw-label" for="fbw-page">Page</label>
+        <input class="fbw-input" type="text" id="fbw-page" readonly>
+      </div>
+      <div class="fbw-group">
+        <label class="fbw-label" for="fbw-type">Type</label>
+        <select class="fbw-select" id="fbw-type">
+          <option value="bug">Bug / Something looks wrong</option>
+          <option value="suggestion">Suggestion</option>
+          <option value="question">Question</option>
+          <option value="content_issue">Content Issue</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="fbw-group">
+        <label class="fbw-label" for="fbw-desc">Description <span style="color:#f87171;font-weight:400;text-transform:none;letter-spacing:0">*</span></label>
+        <textarea class="fbw-textarea" id="fbw-desc" placeholder="Briefly describe what you noticed&hellip;"></textarea>
+      </div>
+      <div class="fbw-group">
+        <label class="fbw-label" for="fbw-screenshot">Screenshot <span style="font-weight:400;text-transform:none;letter-spacing:0;color:rgba(250,246,240,.4)">(optional)</span></label>
+        <input class="fbw-input" type="file" id="fbw-screenshot" accept="image/*" style="padding:6px 12px">
+      </div>
+      <div class="fbw-group">
+        <label class="fbw-label" for="fbw-name">Your Name <span style="font-weight:400;text-transform:none;letter-spacing:0;color:rgba(250,246,240,.4)">(optional)</span></label>
+        <input class="fbw-input" type="text" id="fbw-name" placeholder="e.g. Jane Smith" autocomplete="name">
+      </div>
+      <div id="fbw-error"></div>
+      <button id="fbw-submit">Submit Feedback</button>
+    </div>
+    <div id="fbw-success">
+      <div class="fbw-check">&#10003;</div>
+      <p>Thanks &mdash; logged!</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var SB_URL='https://hsseypuhqdlcvepgyrtd.supabase.co'
+  var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhzc2V5cHVocWRsY3ZlcGd5cnRkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTc3NTk0MSwiZXhwIjoyMDkxMzUxOTQxfQ.mGNhUtPSCJWNDTVY1dlhwROsUMTAw-1dHkvRHYV0M0c'
+  var SB_HDR={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}
+  var overlay=document.getElementById('fbw-overlay')
+  var formBody=document.getElementById('fbw-form-body')
+  var successEl=document.getElementById('fbw-success')
+  var errEl=document.getElementById('fbw-error')
+  var submitBtn=document.getElementById('fbw-submit')
+
+  document.getElementById('fbw-page').value=document.title||location.pathname.split('/').pop()||'Unknown'
+
+  try{
+    var u=JSON.parse(localStorage.getItem('gns_user')||'null')
+    if(u&&u.id)fetch(SB_URL+'/rest/v1/contributor_profile?auth_user_id=eq.'+u.id+'&select=display_name&limit=1',{headers:SB_HDR})
+      .then(function(r){return r.ok?r.json():[]}).then(function(rows){if(rows[0]&&rows[0].display_name)document.getElementById('fbw-name').value=rows[0].display_name}).catch(function(){})
+  }catch(e){}
+
+  function openModal(){overlay.classList.add('open');document.getElementById('fbw-desc').focus()}
+  function closeModal(){
+    overlay.classList.remove('open')
+    setTimeout(function(){
+      document.getElementById('fbw-desc').value=''
+      document.getElementById('fbw-screenshot').value=''
+      errEl.style.display='none'
+      formBody.style.display='block'
+      successEl.style.display='none'
+      submitBtn.disabled=false
+      submitBtn.textContent='Submit Feedback'
+    },250)
+  }
+
+  document.getElementById('fbw-btn').addEventListener('click',openModal)
+  document.getElementById('fbw-close').addEventListener('click',closeModal)
+  overlay.addEventListener('click',function(e){if(e.target===overlay)closeModal()})
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&overlay.classList.contains('open'))closeModal()})
+
+  function uploadScreenshot(file){
+    var ext=file.name.split('.').pop()||'png'
+    var path=Date.now()+'-'+Math.random().toString(36).slice(2)+'.'+ext
+    return fetch(SB_URL+'/storage/v1/object/feedback-screenshots/'+path,{
+      method:'POST',headers:Object.assign({},SB_HDR,{'Content-Type':file.type}),body:file
+    }).then(function(r){
+      if(!r.ok)throw new Error('Screenshot upload failed')
+      return SB_URL+'/storage/v1/object/public/feedback-screenshots/'+path
+    })
+  }
+
+  submitBtn.addEventListener('click',function(){
+    var desc=document.getElementById('fbw-desc').value.trim()
+    errEl.style.display='none'
+    if(!desc){errEl.textContent='Description is required.';errEl.style.display='block';document.getElementById('fbw-desc').focus();return}
+    submitBtn.disabled=true;submitBtn.textContent='Submitting…'
+    var filePromise=document.getElementById('fbw-screenshot').files[0]
+      ?uploadScreenshot(document.getElementById('fbw-screenshot').files[0])
+      :Promise.resolve(null)
+    filePromise.then(function(screenshot_url){
+      var storedUser=null
+      try{storedUser=JSON.parse(localStorage.getItem('gns_user')||'null')}catch(e){}
+      return fetch(SB_URL+'/rest/v1/feedback',{
+        method:'POST',
+        headers:Object.assign({},SB_HDR,{'Content-Type':'application/json','Prefer':'return=minimal'}),
+        body:JSON.stringify({
+          page:document.getElementById('fbw-page').value,
+          feedback_type:document.getElementById('fbw-type').value,
+          description:desc,
+          screenshot_url:screenshot_url,
+          submitted_by:document.getElementById('fbw-name').value.trim()||null,
+          contributor_id:storedUser?storedUser.id:null,
+          status:'new'
+        })
+      })
+    }).then(function(r){
+      if(!r.ok)throw new Error('Submission failed')
+      formBody.style.display='none';successEl.style.display='block'
+      setTimeout(closeModal,2000)
+    }).catch(function(err){
+      errEl.textContent=err.message||'Something went wrong. Please try again.'
+      errEl.style.display='block'
+      submitBtn.disabled=false;submitBtn.textContent='Submit Feedback'
+    })
+  })
+})()
+</script>
+<!-- ── /Feedback Widget ─────────────────────────────────────────────────────── -->
+
+</body>
+</html>

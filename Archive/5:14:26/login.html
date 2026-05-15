@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Repertory | Login</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: #FAF6F0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #2c2c2c;
+      line-height: 1.5;
+    }
+
+    @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill.otf') format('opentype'); font-weight: normal; font-style: normal; }
+    @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
+    @font-face { font-family: 'Runtime'; src: url('Runtime.otf') format('opentype'); font-weight: normal; font-style: normal; }
+
+    .site-footer { border-top: 2px solid #1b2e4b; background: #faf6f0; padding: 2rem 40px; flex-shrink: 0; }
+    .site-footer-inner { max-width: 1280px; margin: 0 auto; display: flex; gap: 3rem; }
+    .footer-copy, .footer-legal { flex: 1; font-size: 0.75rem; color: #9a8e83; line-height: 1.65; }
+    .footer-copy a { color: #9a8e83; text-decoration: underline; text-underline-offset: 2px; }
+    .footer-copy a:hover { color: #b5622a; }
+    @media (max-width: 680px) { .site-footer { padding: 1.5rem 20px; } .site-footer-inner { flex-direction: column; gap: 1.2rem; } }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 20px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 16px rgba(27, 46, 75, 0.08), 0 1px 4px rgba(0, 0, 0, 0.05);
+      padding: 44px 40px;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #1B2E4B;
+      margin-bottom: 28px;
+      letter-spacing: -0.01em;
+    }
+
+    .form-group { margin-bottom: 20px; }
+
+    label {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #555;
+      margin-bottom: 7px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 13px;
+      border: 1.5px solid #dfd9d1;
+      border-radius: 6px;
+      font-size: 0.93rem;
+      font-family: inherit;
+      color: #2c2c2c;
+      background: #ffffff;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    input::placeholder { color: #b5ada4; }
+
+    input:focus {
+      border-color: #1B2E4B;
+      box-shadow: 0 0 0 3px rgba(27, 46, 75, 0.07);
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px 16px;
+      margin-top: 10px;
+      background: #B5622A;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.93rem;
+      font-weight: 600;
+      font-family: inherit;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .btn:hover:not(:disabled) { background: #9a501f; }
+    .btn:active:not(:disabled) { background: #7d3d11; }
+    .btn:disabled { background: rgba(181,98,42,0.45); cursor: not-allowed; }
+
+    .alert {
+      padding: 12px 15px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      line-height: 1.55;
+      margin-bottom: 22px;
+      display: none;
+    }
+
+    .alert-error { background: #fdf0ef; border: 1px solid #e57373; color: #b71c1c; }
+    .alert-success { background: #f0f7f1; border: 1px solid #81c784; color: #1b5e20; }
+
+    hr {
+      border: none;
+      border-top: 1px solid #ede8e1;
+      margin: 28px 0 20px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .footer-text {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #7a7069;
+    }
+
+    .footer-text a {
+      color: #B5622A;
+      text-decoration: none;
+    }
+
+    .footer-text a:hover { text-decoration: underline; }
+
+    .divider-text {
+      font-size: 0.75rem;
+      color: #c5bdb5;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── Login card header ── */
+    .login-header { text-align: center; margin-bottom: 24px; }
+
+    .login-logo {
+      width: 270px;
+      height: auto;
+      display: block;
+      margin: 0 auto 2px;
+    }
+
+    .co-name-line1 {
+      font-family: 'Alta', Georgia, serif;
+      font-size: 1.2rem;
+      color: #B5622A;
+      letter-spacing: 0.22em;
+      line-height: 1;
+      margin-bottom: 28px;
+      text-transform: uppercase;
+    }
+
+    .co-name-line2 {
+      font-family: 'Linden Hill';
+      font-size: 2.34rem;
+      color: #1B2E4B;
+      letter-spacing: 0.15em;
+      line-height: 1;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+<main>
+  <div class="card">
+
+    <div class="login-header">
+      <img src="AHC_Logo.png" alt="Ardor House Collective" class="login-logo">
+      <p class="co-name-line1">PRESENTS</p>
+      <p class="co-name-line2">THE REPERTORY</p>
+    </div>
+
+    <div id="alert" class="alert"></div>
+
+    <form id="login-form" novalidate>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="you@example.com" autocomplete="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="••••••••" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn" id="submit-btn">Sign In</button>
+    </form>
+
+    <hr>
+
+    <div class="footer-links">
+      <p class="footer-text">
+        Received an invitation? <a href="signup.html">Make yourself at home.</a>
+      </p>
+      <span class="divider-text">or</span>
+      <p class="footer-text">
+        <a href="request-access.html">Request An Introduction</a>
+      </p>
+    </div>
+
+  </div>
+</main>
+
+<script>
+  const SUPABASE_URL = 'https://hsseypuhqdlcvepgyrtd.supabase.co'
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhzc2V5cHVocWRsY3ZlcGd5cnRkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTc3NTk0MSwiZXhwIjoyMDkxMzUxOTQxfQ.mGNhUtPSCJWNDTVY1dlhwROsUMTAw-1dHkvRHYV0M0c'
+
+  const alertEl   = document.getElementById('alert')
+  const form      = document.getElementById('login-form')
+  const submitBtn = document.getElementById('submit-btn')
+
+  const params = new URLSearchParams(window.location.search)
+  const redirectMsg = params.get('message')
+  if (redirectMsg) {
+    alertEl.className = 'alert alert-success'
+    alertEl.textContent = redirectMsg
+    alertEl.style.display = 'block'
+  }
+
+  function showError(msg) {
+    alertEl.className = 'alert alert-error'
+    alertEl.textContent = msg
+    alertEl.style.display = 'block'
+  }
+
+  function setLoading(loading) {
+    submitBtn.disabled = loading
+    submitBtn.textContent = loading ? 'Signing in…' : 'Sign In'
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    alertEl.style.display = 'none'
+
+    const email    = document.getElementById('email').value.trim()
+    const password = document.getElementById('password').value
+
+    if (!email || !password) {
+      showError('Please enter your email and password.')
+      return
+    }
+
+    setLoading(true)
+
+    try {
+      const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_KEY
+        },
+        body: JSON.stringify({ email, password })
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        showError(data.error_description || data.msg || 'Sign in failed. Please check your credentials.')
+        return
+      }
+
+      localStorage.setItem('gns_access_token', data.access_token)
+      localStorage.setItem('gns_refresh_token', data.refresh_token)
+      localStorage.setItem('gns_user', JSON.stringify(data.user))
+
+      window.location.href = 'dashboard.html'
+    } catch {
+      showError('A network error occurred. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  })
+</script>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <p class="footer-copy">The Repertory is a collective effort to build the world's most complete authenticated goods database. Under the care of <a href="https://ardorhousecollective.com" target="_blank" rel="noopener">Ardor House Collective</a>.</p>
+    <p class="footer-legal">The Repertory is an independent platform. All brand names and trademarks are the property of their respective owners. We are not affiliated with, authorized by, or associated with any brand referenced in this database.</p>
+  </div>
+</footer>
+
+</body>
+</html>

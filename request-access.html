@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Repertory | Request For Residence</title>
+  <title>GNS — Request Access</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -20,6 +20,17 @@
     @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill.otf') format('opentype'); font-weight: normal; font-style: normal; }
     @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
     @font-face { font-family: 'Runtime'; src: url('Runtime.otf') format('opentype'); font-weight: normal; font-style: normal; }
+
+    header {
+      background: #1B2E4B;
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+    }
+
+    .wordmark { display: flex; flex-direction: column; gap: 1px; line-height: 1; text-decoration: none; }
+    .wm-line1 { font-family: 'Linden Hill', Georgia, serif; font-size: 2.22rem; font-style: normal; color: #FAF6F0; letter-spacing: 0.01em; line-height: 1; }
+    .wm-line2 { font-family: 'Runtime', sans-serif; font-size: 0.98rem; color: rgba(250,246,240,0.72); letter-spacing: 0.04em; line-height: 1; }
 
     .site-footer { border-top: 2px solid #1b2e4b; background: #faf6f0; padding: 2rem 40px; flex-shrink: 0; }
     .site-footer-inner { max-width: 1280px; margin: 0 auto; display: flex; gap: 3rem; }
@@ -45,60 +56,24 @@
       max-width: 520px;
     }
 
-    /* ── Card header — matches login.html exactly ── */
-    .login-header { text-align: center; margin-bottom: 28px; }
-
-    .login-logo {
-      width: 270px;
-      height: auto;
-      display: block;
-      margin: 0 auto 2px;
-    }
-
-    .co-name-line1 {
-      font-family: 'Alta', Georgia, serif;
-      font-size: 1.2rem;
-      color: #B5622A;
-      letter-spacing: 0.22em;
-      line-height: 1;
-      margin-bottom: 28px;
-      text-transform: uppercase;
-    }
-
-    .co-name-line2 {
-      font-family: 'Linden Hill';
-      font-size: 2.34rem;
-      color: #1B2E4B;
-      letter-spacing: 0.15em;
-      line-height: 1;
-      margin-bottom: 0;
-      text-transform: uppercase;
-    }
-
-    .header-rule {
-      border: none;
-      border-top: 1px solid #ede8e1;
-      margin: 24px 0 28px;
-    }
-
     h1 {
-      font-size: 1.1rem;
+      font-size: 1.4rem;
       font-weight: 600;
       color: #1B2E4B;
       margin-bottom: 8px;
       letter-spacing: -0.01em;
-      text-align: center;
     }
 
     .subtitle {
       font-size: 0.88rem;
       color: #7a7069;
-      margin-bottom: 28px;
+      margin-bottom: 30px;
       line-height: 1.55;
-      text-align: center;
     }
 
-    .form-group { margin-bottom: 20px; }
+    .form-group {
+      margin-bottom: 20px;
+    }
 
     label {
       display: block;
@@ -110,9 +85,14 @@
       margin-bottom: 7px;
     }
 
-    .required-mark { color: #B5622A; margin-left: 2px; }
+    .required-mark {
+      color: #B5622A;
+      margin-left: 2px;
+    }
 
-    input, select, textarea {
+    input,
+    select,
+    textarea {
       width: 100%;
       padding: 10px 13px;
       border: 1.5px solid #dfd9d1;
@@ -126,9 +106,12 @@
       appearance: none;
     }
 
-    input::placeholder, textarea::placeholder { color: #b5ada4; }
+    input::placeholder,
+    textarea::placeholder { color: #b5ada4; }
 
-    input:focus, select:focus, textarea:focus {
+    input:focus,
+    select:focus,
+    textarea:focus {
       border-color: #1B2E4B;
       box-shadow: 0 0 0 3px rgba(27, 46, 75, 0.07);
     }
@@ -179,8 +162,17 @@
       display: none;
     }
 
-    .alert-error { background: #fdf0ef; border: 1px solid #e57373; color: #b71c1c; }
-    .alert-success { background: #f0f7f1; border: 1px solid #81c784; color: #1b5e20; }
+    .alert-error {
+      background: #fdf0ef;
+      border: 1px solid #e57373;
+      color: #b71c1c;
+    }
+
+    .alert-success {
+      background: #f0f7f1;
+      border: 1px solid #81c784;
+      color: #1b5e20;
+    }
 
     hr {
       border: none;
@@ -194,7 +186,11 @@
       color: #7a7069;
     }
 
-    .footer-text a { color: #B5622A; text-decoration: none; }
+    .footer-text a {
+      color: #B5622A;
+      text-decoration: none;
+    }
+
     .footer-text a:hover { text-decoration: underline; }
 
     .invite-note {
@@ -205,6 +201,7 @@
       line-height: 1.6;
     }
 
+    /* Success state replaces the form */
     #success-state { display: none; }
 
     .success-icon {
@@ -247,20 +244,19 @@
 </head>
 <body>
 
+<header>
+  <a href="login.html" class="wordmark">
+    <span class="wm-line1">The Repertory</span>
+    <span class="wm-line2">a Collective effort</span>
+  </a>
+</header>
+
 <main>
   <div class="card">
 
-    <div class="login-header">
-      <img src="AHC_Logo.png" alt="Ardor House Collective" class="login-logo">
-      <p class="co-name-line1">PRESENTS</p>
-      <p class="co-name-line2">THE REPERTORY</p>
-    </div>
-
-    <hr class="header-rule">
-
     <!-- Form state -->
     <div id="form-state">
-      <h1>Residence Application</h1>
+      <h1>Request Access</h1>
       <p class="subtitle">
         Tell us about your background and expertise. We review all applications
         manually and will be in touch.
@@ -280,10 +276,12 @@
         </div>
 
         <div class="form-group">
-          <label for="credentials">Professional Credentials <span class="required-mark">*</span></label>
+          <label for="credentials">
+            Professional Credentials <span class="required-mark">*</span>
+          </label>
           <textarea
             id="credentials"
-            placeholder="Describe your experience with luxury goods, your professional credentials, and why you want to contribute to The Repertory…"
+            placeholder="Describe your experience with luxury goods, your background, and why you want to contribute to the GNS…"
             required
           ></textarea>
         </div>
@@ -292,33 +290,15 @@
           <label for="expertise">Area of Expertise <span class="required-mark">*</span></label>
           <select id="expertise" required>
             <option value="">Select your primary area…</option>
-            <optgroup label="Pricing & Sales">
-              <option value="Pricing">Pricing</option>
-              <option value="Sales Analysis">Sales Analysis</option>
-            </optgroup>
-            <optgroup label="Research">
-              <option value="Source Research">Source Research</option>
-              <option value="Research Analysis">Research Analysis</option>
-              <option value="Trend Analysis">Trend Analysis</option>
-            </optgroup>
-            <optgroup label="Product">
-              <option value="Product Knowledge">Product Knowledge</option>
-              <option value="Authentication">Authentication</option>
-            </optgroup>
-            <optgroup label="Brand">
-              <option value="Brand Expertise">Brand Expertise</option>
-            </optgroup>
+            <option value="Hermès">Hermès</option>
+            <option value="Chanel">Chanel</option>
+            <option value="Louis Vuitton">Louis Vuitton</option>
+            <option value="Multi-brand">Multi-brand</option>
+            <option value="Jewelry">Jewelry</option>
+            <option value="Watches">Watches</option>
+            <option value="General Luxury">General Luxury</option>
+            <option value="Other">Other</option>
           </select>
-        </div>
-
-        <div class="form-group" id="brand-expertise-group" style="display:none;">
-          <label for="brand-expertise">Brand Expertise – Top 3 Brands <span class="required-mark">*</span></label>
-          <input
-            type="text"
-            id="brand-expertise"
-            placeholder="Enter your top 3 brands"
-            autocomplete="off"
-          >
         </div>
 
         <div class="form-group">
@@ -331,7 +311,7 @@
           >
         </div>
 
-        <button type="submit" class="btn" id="submit-btn">Submit Application</button>
+        <button type="submit" class="btn" id="submit-btn">Submit Request</button>
       </form>
 
       <hr>
@@ -339,7 +319,7 @@
         Already have an account? <a href="login.html">Sign in</a>
       </p>
       <p class="invite-note">
-        The Repertory is currently invite-only. Access is granted based on expertise
+        GNS is currently invite-only. Access is granted based on expertise
         and contribution potential.
       </p>
     </div>
@@ -351,13 +331,13 @@
           <polyline points="20 6 9 17 4 12"></polyline>
         </svg>
       </div>
-      <p class="success-heading">Application Received</p>
+      <p class="success-heading">Request Received</p>
       <p class="success-body">
-        Your application has been received. We review all submissions manually
+        Your request has been received. We review all applications manually
         and will be in touch.
       </p>
       <p class="invite-note" style="margin-top: 24px;">
-        The Repertory is currently invite-only. Access is granted based on expertise
+        GNS is currently invite-only. Access is granted based on expertise
         and contribution potential.
       </p>
     </div>
@@ -369,21 +349,10 @@
   const SUPABASE_URL = 'https://hsseypuhqdlcvepgyrtd.supabase.co'
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhzc2V5cHVocWRsY3ZlcGd5cnRkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTc3NTk0MSwiZXhwIjoyMDkxMzUxOTQxfQ.mGNhUtPSCJWNDTVY1dlhwROsUMTAw-1dHkvRHYV0M0c'
 
-  const alertEl     = document.getElementById('alert')
-  const submitBtn   = document.getElementById('submit-btn')
-  const formState   = document.getElementById('form-state')
+  const alertEl    = document.getElementById('alert')
+  const submitBtn  = document.getElementById('submit-btn')
+  const formState  = document.getElementById('form-state')
   const successState = document.getElementById('success-state')
-  const expertiseSelect = document.getElementById('expertise')
-  const brandExpertiseGroup = document.getElementById('brand-expertise-group')
-  const brandExpertiseInput = document.getElementById('brand-expertise')
-
-  expertiseSelect.addEventListener('change', () => {
-    const showBrand = expertiseSelect.value === 'Brand Expertise'
-    brandExpertiseGroup.style.display = showBrand ? 'block' : 'none'
-    if (!showBrand) {
-      brandExpertiseInput.value = ''
-    }
-  })
 
   function showError(msg) {
     alertEl.className = 'alert alert-error'
@@ -394,29 +363,26 @@
 
   function setLoading(loading) {
     submitBtn.disabled = loading
-    submitBtn.textContent = loading ? 'Submitting…' : 'Submit Application'
+    submitBtn.textContent = loading ? 'Submitting…' : 'Submit Request'
   }
 
   document.getElementById('access-form').addEventListener('submit', async (e) => {
     e.preventDefault()
     alertEl.style.display = 'none'
 
-    const fullName       = document.getElementById('full-name').value.trim()
-    const email          = document.getElementById('email').value.trim()
-    const credentials    = document.getElementById('credentials').value.trim()
-    const expertise      = document.getElementById('expertise').value
-    const brandExpertise = brandExpertiseInput.value.trim()
-    const referral       = document.getElementById('referral').value.trim()
+    const fullName    = document.getElementById('full-name').value.trim()
+    const email       = document.getElementById('email').value.trim()
+    const credentials = document.getElementById('credentials').value.trim()
+    const expertise   = document.getElementById('expertise').value
+    const referral    = document.getElementById('referral').value.trim()
 
-    if (!fullName)    { showError('Please enter your full name.'); return }
-    if (!email)       { showError('Please enter your email address.'); return }
+    // Client-side validation
+    if (!fullName) { showError('Please enter your full name.'); return }
+    if (!email)    { showError('Please enter your email address.'); return }
     if (!credentials) { showError('Please describe your professional background.'); return }
-    if (!expertise)   { showError('Please select your area of expertise.'); return }
-    if (expertise === 'Brand Expertise' && !brandExpertise) {
-      showError('Please list your top 3 brands for Brand Expertise.');
-      return
-    }
+    if (!expertise) { showError('Please select your area of expertise.'); return }
 
+    // Basic email format check
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       showError('Please enter a valid email address.')
       return
@@ -434,18 +400,18 @@
           'Prefer': 'return=minimal'
         },
         body: JSON.stringify({
-          full_name:      fullName,
-          email:          email,
-          credentials:    credentials,
-          expertise:      expertise,
-          brand_expertise: expertise === 'Brand Expertise' ? brandExpertise : null,
-          referral:       referral || null,
-          status:         'pending'
+          full_name:   fullName,
+          email:       email,
+          credentials: credentials,
+          expertise:   expertise,
+          referral:    referral || null,
+          status:      'pending'
         })
       })
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}))
+        // Duplicate email returns a 409 / unique violation
         if (res.status === 409 || (err.code && err.code === '23505')) {
           showError('An application from this email address already exists.')
         } else {
@@ -454,6 +420,7 @@
         return
       }
 
+      // Show success state
       formState.style.display = 'none'
       successState.style.display = 'block'
 
@@ -550,7 +517,7 @@
 <script>
 (function(){
   var SB_URL='https://hsseypuhqdlcvepgyrtd.supabase.co'
-  var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ0.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhzc2V5cHVocWRsY3ZlcGd5cnRkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTc3NTk0MSwiZXhwIjoyMDkxMzUxOTQxfQ.mGNhUtPSCJWNDTVY1dlhwROsUMTAw-1dHkvRHYV0M0c'
+  var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhzc2V5cHVocWRsY3ZlcGd5cnRkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTc3NTk0MSwiZXhwIjoyMDkxMzUxOTQxfQ.mGNhUtPSCJWNDTVY1dlhwROsUMTAw-1dHkvRHYV0M0c'
   var SB_HDR={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}
   var overlay=document.getElementById('fbw-overlay')
   var formBody=document.getElementById('fbw-form-body')

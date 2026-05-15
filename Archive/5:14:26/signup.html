@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GNS — Create Account</title>
+  <title>The Repertory | Accept Invitation</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -20,17 +20,6 @@
     @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill.otf') format('opentype'); font-weight: normal; font-style: normal; }
     @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
     @font-face { font-family: 'Runtime'; src: url('Runtime.otf') format('opentype'); font-weight: normal; font-style: normal; }
-
-    header {
-      background: #1B2E4B;
-      padding: 14px 40px;
-      display: flex;
-      align-items: center;
-    }
-
-    .wordmark { display: flex; flex-direction: column; gap: 1px; line-height: 1; text-decoration: none; }
-    .wm-line1 { font-family: 'Linden Hill', Georgia, serif; font-size: 2.22rem; font-style: normal; color: #FAF6F0; letter-spacing: 0.01em; line-height: 1; }
-    .wm-line2 { font-family: 'Runtime', sans-serif; font-size: 0.98rem; color: rgba(250,246,240,0.72); letter-spacing: 0.04em; line-height: 1; }
 
     .site-footer { border-top: 2px solid #1b2e4b; background: #faf6f0; padding: 2rem 40px; flex-shrink: 0; }
     .site-footer-inner { max-width: 1280px; margin: 0 auto; display: flex; gap: 3rem; }
@@ -53,20 +42,56 @@
       box-shadow: 0 2px 16px rgba(27, 46, 75, 0.08), 0 1px 4px rgba(0, 0, 0, 0.05);
       padding: 44px 40px;
       width: 100%;
-      max-width: 440px;
+      max-width: 480px;
+    }
+
+    /* ── Card header — matches login.html exactly ── */
+    .login-header { text-align: center; margin-bottom: 28px; }
+
+    .login-logo {
+      width: 270px;
+      height: auto;
+      display: block;
+      margin: 0 auto 2px;
+    }
+
+    .co-name-line1 {
+      font-family: 'Alta', Georgia, serif;
+      font-size: 1.2rem;
+      color: #B5622A;
+      letter-spacing: 0.22em;
+      line-height: 1;
+      margin-bottom: 28px;
+      text-transform: uppercase;
+    }
+
+    .co-name-line2 {
+      font-family: 'Linden Hill';
+      font-size: 2.34rem;
+      color: #1B2E4B;
+      letter-spacing: 0.15em;
+      line-height: 1;
+      margin-bottom: 0;
+      text-transform: uppercase;
+    }
+
+    /* ── Divider between header and form ── */
+    .header-rule {
+      border: none;
+      border-top: 1px solid #ede8e1;
+      margin: 24px 0 28px;
     }
 
     h1 {
-      font-size: 1.4rem;
+      font-size: 1.1rem;
       font-weight: 600;
       color: #1B2E4B;
-      margin-bottom: 28px;
+      margin-bottom: 22px;
       letter-spacing: -0.01em;
+      text-align: center;
     }
 
-    .form-group {
-      margin-bottom: 20px;
-    }
+    .form-group { margin-bottom: 20px; }
 
     label {
       display: block;
@@ -128,22 +153,10 @@
       display: none;
     }
 
-    .alert-error {
-      background: #fdf0ef;
-      border: 1px solid #e57373;
-      color: #b71c1c;
-    }
+    .alert-error { background: #fdf0ef; border: 1px solid #e57373; color: #b71c1c; }
+    .alert-success { background: #f0f7f1; border: 1px solid #81c784; color: #1b5e20; }
 
-    .alert-success {
-      background: #f0f7f1;
-      border: 1px solid #81c784;
-      color: #1b5e20;
-    }
-
-    /* State panels */
-    #state-loading,
-    #state-invalid,
-    #state-form { display: none; }
+    #state-loading, #state-invalid, #state-form { display: none; }
 
     .loading-text {
       color: #7a7069;
@@ -164,18 +177,10 @@
       color: #7a7069;
     }
 
-    .footer-text a {
-      color: #B5622A;
-      text-decoration: none;
-    }
-
+    .footer-text a { color: #B5622A; text-decoration: none; }
     .footer-text a:hover { text-decoration: underline; }
 
-    .hint {
-      font-size: 0.78rem;
-      color: #9a8e83;
-      margin-top: 6px;
-    }
+    .hint { font-size: 0.78rem; color: #9a8e83; margin-top: 6px; }
 
     .name-row {
       display: grid;
@@ -194,15 +199,16 @@
 </head>
 <body>
 
-<header>
-  <a href="login.html" class="wordmark">
-    <span class="wm-line1">The Repertory</span>
-    <span class="wm-line2">a Collective effort</span>
-  </a>
-</header>
-
 <main>
   <div class="card">
+
+    <div class="login-header">
+      <img src="AHC_Logo.png" alt="Ardor House Collective" class="login-logo">
+      <p class="co-name-line1">PRESENTS</p>
+      <p class="co-name-line2">THE REPERTORY</p>
+    </div>
+
+    <hr class="header-rule">
 
     <!-- Validating invite token -->
     <div id="state-loading">
@@ -213,17 +219,17 @@
     <div id="state-invalid">
       <h1>Invite Link Invalid</h1>
       <div class="alert alert-error" style="display:block">
-        This invite link is invalid or has already been used. Please contact <a href="mailto:koyaana@ardorhousecollective.com">koyaana@ardorhousecollective.com</a>.
+        This invite link is invalid or has already been used. Please contact <a href="mailto:info@ardorhousecollective.com">info@ardorhousecollective.com</a>.
       </div>
       <hr>
       <p class="footer-text">
-        <a href="request-access.html">Request access instead</a>
+        <a href="request-access.html">Submit a residence application instead</a>
       </p>
     </div>
 
     <!-- Signup form (shown after token validated) -->
     <div id="state-form">
-      <h1>Create Account</h1>
+      <h1>Create Your Account</h1>
       <div id="alert" class="alert"></div>
 
       <form id="signup-form" novalidate>
@@ -238,8 +244,7 @@
           </div>
         </div>
         <p class="privacy-note">
-          Your legal name is kept private and is only used for identity
-          verification. It will never be displayed publicly.
+          Your legal name is kept private and used for identity verification only. It will never be displayed publicly.
         </p>
         <div class="form-group">
           <label for="display-name">Display Name</label>
@@ -309,7 +314,6 @@
     submitBtn.textContent = loading ? 'Creating account…' : 'Create Account'
   }
 
-  // Step 1: validate invite token on page load
   async function validateToken() {
     showState(stateLoading)
 
@@ -341,7 +345,6 @@
     }
   }
 
-  // Step 2: generate contributor_id from current row count
   async function generateContributorId() {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/contributor_profile`, {
       method: 'HEAD',
@@ -352,7 +355,6 @@
     return 'GNS-' + String(total + 1).padStart(5, '0')
   }
 
-  // Step 3: handle form submission
   document.getElementById('signup-form').addEventListener('submit', async (e) => {
     e.preventDefault()
     alertEl.style.display = 'none'
@@ -364,7 +366,6 @@
     const password         = document.getElementById('password').value
     const confirmPassword  = document.getElementById('confirm-password').value
 
-    // Client-side validation
     if (!legalFirstName || !legalLastName || !displayName || !email || !password || !confirmPassword) {
       showError('All fields are required.')
       return
@@ -381,7 +382,6 @@
     setLoading(true)
 
     try {
-      // 3a. Create auth user via admin API (email auto-confirmed)
       const authRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/users`, {
         method: 'POST',
         headers: DB_HEADERS,
@@ -399,11 +399,8 @@
       }
 
       const authUserId = authData.id
-
-      // 3b. Generate sequential contributor_id
       const contributorId = await generateContributorId()
 
-      // 3c. Mark the invite token as used
       const patchTokenRes = await fetch(
         `${SUPABASE_URL}/rest/v1/invite_tokens?token=eq.${encodeURIComponent(token)}`,
         {
@@ -422,7 +419,6 @@
         return
       }
 
-      // 3d. Insert new contributor_profile row
       const profileRes = await fetch(
         `${SUPABASE_URL}/rest/v1/contributor_profile`,
         {
@@ -448,7 +444,6 @@
         return
       }
 
-      // Success — redirect to login
       window.location.href = 'login.html?message=Account created — please sign in'
 
     } catch {
@@ -458,7 +453,6 @@
     }
   })
 
-  // Kick off token validation immediately
   validateToken()
 </script>
 
@@ -468,168 +462,6 @@
     <p class="footer-legal">The Repertory is an independent platform. All brand names and trademarks are the property of their respective owners. We are not affiliated with, authorized by, or associated with any brand referenced in this database.</p>
   </div>
 </footer>
-
-
-<!-- ── Feedback Widget ──────────────────────────────────────────────────────── -->
-<style>
-#fbw-btn{position:fixed;bottom:24px;right:24px;z-index:9000;background:#1B2E4B;color:#FAF6F0;border:2px solid #B5622A;border-radius:24px;padding:9px 18px 9px 14px;font-size:.82rem;font-weight:600;font-family:inherit;letter-spacing:.04em;cursor:pointer;display:flex;align-items:center;gap:7px;box-shadow:0 4px 16px rgba(27,46,75,.28);transition:background .15s,box-shadow .15s}
-#fbw-btn:hover{background:#253d63;box-shadow:0 6px 20px rgba(27,46,75,.38)}
-#fbw-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:9001;align-items:center;justify-content:center;padding:1rem}
-#fbw-overlay.open{display:flex}
-#fbw-modal{background:#1B2E4B;border:1.5px solid #B5622A;border-radius:14px;padding:28px 30px 24px;width:100%;max-width:480px;box-shadow:0 20px 60px rgba(0,0,0,.45);position:relative;color:#FAF6F0}
-#fbw-close{position:absolute;top:14px;right:16px;background:none;border:none;color:rgba(250,246,240,.55);font-size:1.3rem;line-height:1;cursor:pointer;padding:4px 6px;border-radius:4px;transition:color .15s}
-#fbw-close:hover{color:#FAF6F0}
-#fbw-modal h2{font-family:'Linden Hill',Georgia,serif;font-size:1.45rem;color:#FAF6F0;margin-bottom:20px;letter-spacing:.01em}
-.fbw-group{margin-bottom:16px}
-.fbw-label{display:block;font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:rgba(250,246,240,.6);margin-bottom:6px}
-.fbw-input,.fbw-select,.fbw-textarea{width:100%;background:rgba(250,246,240,.07);border:1.5px solid rgba(181,98,42,.45);border-radius:7px;padding:9px 12px;font-size:.88rem;font-family:inherit;color:#FAF6F0;outline:none;transition:border-color .15s}
-.fbw-input::placeholder,.fbw-textarea::placeholder{color:rgba(250,246,240,.3)}
-.fbw-input:focus,.fbw-select:focus,.fbw-textarea:focus{border-color:#B5622A}
-.fbw-input[readonly]{opacity:.55;cursor:default}
-.fbw-select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B5622A' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
-.fbw-select option{background:#1B2E4B;color:#FAF6F0}
-.fbw-textarea{resize:vertical;min-height:88px;line-height:1.55}
-#fbw-error{font-size:.8rem;color:#f87171;margin-bottom:12px;display:none}
-#fbw-success{text-align:center;padding:24px 0 8px;display:none}
-#fbw-success .fbw-check{font-size:2.4rem;margin-bottom:10px;color:#B5622A}
-#fbw-success p{color:rgba(250,246,240,.8);font-size:.95rem}
-#fbw-submit{width:100%;background:#B5622A;color:#FAF6F0;border:none;border-radius:7px;padding:11px 16px;font-size:.9rem;font-weight:600;font-family:inherit;letter-spacing:.03em;cursor:pointer;transition:background .15s;margin-top:4px}
-#fbw-submit:hover:not(:disabled){background:#9a501f}
-#fbw-submit:disabled{opacity:.5;cursor:not-allowed}
-</style>
-
-<button id="fbw-btn" aria-label="Send feedback">
-  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M14 1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h3l3 3 3-3h3a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" stroke="#B5622A" stroke-width="1.5" stroke-linejoin="round"/></svg>
-  Feedback
-</button>
-
-<div id="fbw-overlay" role="dialog" aria-modal="true" aria-labelledby="fbw-title">
-  <div id="fbw-modal">
-    <button id="fbw-close" aria-label="Close">&times;</button>
-    <h2 id="fbw-title">Send Feedback</h2>
-    <div id="fbw-form-body">
-      <div class="fbw-group">
-        <label class="fbw-label" for="fbw-page">Page</label>
-        <input class="fbw-input" type="text" id="fbw-page" readonly>
-      </div>
-      <div class="fbw-group">
-        <label class="fbw-label" for="fbw-type">Type</label>
-        <select class="fbw-select" id="fbw-type">
-          <option value="bug">Bug / Something looks wrong</option>
-          <option value="suggestion">Suggestion</option>
-          <option value="question">Question</option>
-          <option value="content_issue">Content Issue</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-      <div class="fbw-group">
-        <label class="fbw-label" for="fbw-desc">Description <span style="color:#f87171;font-weight:400;text-transform:none;letter-spacing:0">*</span></label>
-        <textarea class="fbw-textarea" id="fbw-desc" placeholder="Briefly describe what you noticed&hellip;"></textarea>
-      </div>
-      <div class="fbw-group">
-        <label class="fbw-label" for="fbw-screenshot">Screenshot <span style="font-weight:400;text-transform:none;letter-spacing:0;color:rgba(250,246,240,.4)">(optional)</span></label>
-        <input class="fbw-input" type="file" id="fbw-screenshot" accept="image/*" style="padding:6px 12px">
-      </div>
-      <div class="fbw-group">
-        <label class="fbw-label" for="fbw-name">Your Name <span style="font-weight:400;text-transform:none;letter-spacing:0;color:rgba(250,246,240,.4)">(optional)</span></label>
-        <input class="fbw-input" type="text" id="fbw-name" placeholder="e.g. Jane Smith" autocomplete="name">
-      </div>
-      <div id="fbw-error"></div>
-      <button id="fbw-submit">Submit Feedback</button>
-    </div>
-    <div id="fbw-success">
-      <div class="fbw-check">&#10003;</div>
-      <p>Thanks &mdash; logged!</p>
-    </div>
-  </div>
-</div>
-
-<script>
-(function(){
-  var SB_URL='https://hsseypuhqdlcvepgyrtd.supabase.co'
-  var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhzc2V5cHVocWRsY3ZlcGd5cnRkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTc3NTk0MSwiZXhwIjoyMDkxMzUxOTQxfQ.mGNhUtPSCJWNDTVY1dlhwROsUMTAw-1dHkvRHYV0M0c'
-  var SB_HDR={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}
-  var overlay=document.getElementById('fbw-overlay')
-  var formBody=document.getElementById('fbw-form-body')
-  var successEl=document.getElementById('fbw-success')
-  var errEl=document.getElementById('fbw-error')
-  var submitBtn=document.getElementById('fbw-submit')
-
-  document.getElementById('fbw-page').value=document.title||location.pathname.split('/').pop()||'Unknown'
-
-  try{
-    var u=JSON.parse(localStorage.getItem('gns_user')||'null')
-    if(u&&u.id)fetch(SB_URL+'/rest/v1/contributor_profile?auth_user_id=eq.'+u.id+'&select=display_name&limit=1',{headers:SB_HDR})
-      .then(function(r){return r.ok?r.json():[]}).then(function(rows){if(rows[0]&&rows[0].display_name)document.getElementById('fbw-name').value=rows[0].display_name}).catch(function(){})
-  }catch(e){}
-
-  function openModal(){overlay.classList.add('open');document.getElementById('fbw-desc').focus()}
-  function closeModal(){
-    overlay.classList.remove('open')
-    setTimeout(function(){
-      document.getElementById('fbw-desc').value=''
-      document.getElementById('fbw-screenshot').value=''
-      errEl.style.display='none'
-      formBody.style.display='block'
-      successEl.style.display='none'
-      submitBtn.disabled=false
-      submitBtn.textContent='Submit Feedback'
-    },250)
-  }
-
-  document.getElementById('fbw-btn').addEventListener('click',openModal)
-  document.getElementById('fbw-close').addEventListener('click',closeModal)
-  overlay.addEventListener('click',function(e){if(e.target===overlay)closeModal()})
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&overlay.classList.contains('open'))closeModal()})
-
-  function uploadScreenshot(file){
-    var ext=file.name.split('.').pop()||'png'
-    var path=Date.now()+'-'+Math.random().toString(36).slice(2)+'.'+ext
-    return fetch(SB_URL+'/storage/v1/object/feedback-screenshots/'+path,{
-      method:'POST',headers:Object.assign({},SB_HDR,{'Content-Type':file.type}),body:file
-    }).then(function(r){
-      if(!r.ok)throw new Error('Screenshot upload failed')
-      return SB_URL+'/storage/v1/object/public/feedback-screenshots/'+path
-    })
-  }
-
-  submitBtn.addEventListener('click',function(){
-    var desc=document.getElementById('fbw-desc').value.trim()
-    errEl.style.display='none'
-    if(!desc){errEl.textContent='Description is required.';errEl.style.display='block';document.getElementById('fbw-desc').focus();return}
-    submitBtn.disabled=true;submitBtn.textContent='Submitting…'
-    var filePromise=document.getElementById('fbw-screenshot').files[0]
-      ?uploadScreenshot(document.getElementById('fbw-screenshot').files[0])
-      :Promise.resolve(null)
-    filePromise.then(function(screenshot_url){
-      var storedUser=null
-      try{storedUser=JSON.parse(localStorage.getItem('gns_user')||'null')}catch(e){}
-      return fetch(SB_URL+'/rest/v1/feedback',{
-        method:'POST',
-        headers:Object.assign({},SB_HDR,{'Content-Type':'application/json','Prefer':'return=minimal'}),
-        body:JSON.stringify({
-          page:document.getElementById('fbw-page').value,
-          feedback_type:document.getElementById('fbw-type').value,
-          description:desc,
-          screenshot_url:screenshot_url,
-          submitted_by:document.getElementById('fbw-name').value.trim()||null,
-          contributor_id:storedUser?storedUser.id:null,
-          status:'new'
-        })
-      })
-    }).then(function(r){
-      if(!r.ok)throw new Error('Submission failed')
-      formBody.style.display='none';successEl.style.display='block'
-      setTimeout(closeModal,2000)
-    }).catch(function(err){
-      errEl.textContent=err.message||'Something went wrong. Please try again.'
-      errEl.style.display='block'
-      submitBtn.disabled=false;submitBtn.textContent='Submit Feedback'
-    })
-  })
-})()
-</script>
-<!-- ── /Feedback Widget ─────────────────────────────────────────────────────── -->
 
 </body>
 </html>

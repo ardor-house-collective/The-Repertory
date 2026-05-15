@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GNS Submission Queue — Admin Review</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #FAF6F0;
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill.otf') format('opentype'); font-weight: normal; font-style: normal; }
+    @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
+    @font-face { font-family: 'Runtime'; src: url('Runtime.otf') format('opentype'); font-weight: normal; font-style: normal; }
+
+    header {
+      background: #1B2E4B;
+      color: #fff;
+      padding: 14px 2rem;
+      height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+    .wordmark { display: flex; flex-direction: column; gap: 1px; line-height: 1; text-decoration: none; }
+    .wm-line1 { font-family: 'Linden Hill', Georgia, serif; font-size: 2.22rem; font-style: normal; color: #FAF6F0; letter-spacing: 0.01em; line-height: 1; }
+    .wm-line2 { font-family: 'Runtime', sans-serif; font-size: 0.98rem; color: rgba(250,246,240,0.72); letter-spacing: 0.04em; line-height: 1; }
+    #last-refresh {
+      font-size: .75rem;
+      color: rgba(255,255,255,.55);
+    }
+    #refresh-btn {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      color: #fff;
+      padding: .35rem .8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: .8rem;
+      transition: background .15s;
+    }
+    #refresh-btn:hover { background: rgba(255,255,255,.2); }
+    .header-nav { display: flex; align-items: center; }
+    .header-nav a {
+      color: rgba(255,255,255,.6);
+      text-decoration: none;
+      font-size: .82rem;
+      font-weight: 500;
+      padding: 0 16px;
+      min-height: 87px;
+      display: flex;
+      align-items: center;
+      border-bottom: 2px solid transparent;
+      transition: color .15s;
+    }
+    .header-nav a:hover { color: #fff; }
+    .header-nav a.active { color: #fff; border-bottom-color: #B5622A; }
+
+    .site-footer { border-top: 2px solid #1b2e4b; background: #faf6f0; padding: 2rem 40px; flex-shrink: 0; }
+    .site-footer-inner { max-width: 1280px; margin: 0 auto; display: flex; gap: 3rem; }
+    .footer-copy, .footer-legal { flex: 1; font-size: 0.75rem; color: #9a8e83; line-height: 1.65; }
+    .footer-copy a { color: #9a8e83; text-decoration: underline; text-underline-offset: 2px; }
+    .footer-copy a:hover { color: #b5622a; }
+    @media (max-width: 680px) { .site-footer { padding: 1.5rem 20px; } .site-footer-inner { flex-direction: column; gap: 1.2rem; } }
+
+    /* ── Layout ── */
+    main { max-width: 1200px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; }
+
+    /* ── Filter Tabs ── */
+    .tabs {
+      display: flex;
+      gap: .4rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    .tab {
+      background: #fff;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      padding: .45rem 1rem;
+      cursor: pointer;
+      font-size: .82rem;
+      font-weight: 500;
+      color: #555;
+      transition: all .15s;
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+    }
+    .tab:hover { border-color: #B5622A; color: #B5622A; }
+    .tab.active {
+      background: #1B2E4B;
+      border-color: #1B2E4B;
+      color: #fff;
+    }
+    .tab .badge {
+      background: rgba(0,0,0,.1);
+      border-radius: 999px;
+      padding: .1rem .5rem;
+      font-size: .72rem;
+      font-weight: 600;
+      min-width: 1.4rem;
+      text-align: center;
+    }
+    .tab.active .badge { background: rgba(255,255,255,.2); }
+
+    /* ── State messages ── */
+    #status-msg {
+      text-align: center;
+      padding: 3rem;
+      color: #888;
+      font-size: .95rem;
+    }
+
+    /* ── Cards grid ── */
+    #cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+      gap: 1.2rem;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08), 0 0 0 1px rgba(0,0,0,.05);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow .15s;
+    }
+    .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.12), 0 0 0 1px rgba(0,0,0,.07); }
+
+    .card-header {
+      padding: 1rem 1.2rem .7rem;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: .5rem;
+      border-bottom: 1px solid #f0ebe4;
+    }
+    .card-header-left { display: flex; flex-direction: column; gap: .3rem; }
+    .submission-type {
+      font-size: .95rem;
+      font-weight: 700;
+      color: #1B2E4B;
+      text-transform: capitalize;
+    }
+    .card-meta {
+      font-size: .75rem;
+      color: #888;
+      display: flex;
+      gap: .8rem;
+      flex-wrap: wrap;
+    }
+
+    /* Priority badges */
+    .priority-badge {
+      padding: .25rem .65rem;
+      border-radius: 6px;
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      white-space: nowrap;
+    }
+    .priority-critical  { background: #fee2e2; color: #b91c1c; }
+    .priority-important { background: #ffedd5; color: #c2410c; }
+    .priority-standard  { background: #f3f4f6; color: #6b7280; }
+    .priority-batch     { background: #dbeafe; color: #1d4ed8; }
+
+    /* Status badge */
+    .status-badge {
+      padding: .2rem .6rem;
+      border-radius: 6px;
+      font-size: .7rem;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+    .status-pending      { background: #fef9c3; color: #854d0e; }
+    .status-under_review { background: #e0e7ff; color: #3730a3; }
+    .status-approved     { background: #dcfce7; color: #166534; }
+    .status-rejected     { background: #fee2e2; color: #991b1b; }
+    .status-flagged      { background: #ffe4e6; color: #9f1239; }
+
+    /* Card body */
+    .card-body { padding: .9rem 1.2rem; flex: 1; display: flex; flex-direction: column; gap: .75rem; }
+
+    .field-label {
+      font-size: .68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: #aaa;
+      margin-bottom: .25rem;
+    }
+
+    .payload-block {
+      background: #f8f5f1;
+      border: 1px solid #e8e0d5;
+      border-radius: 8px;
+      padding: .7rem .9rem;
+      overflow-x: auto;
+    }
+    .payload-block pre {
+      font-family: 'SF Mono', 'Fira Code', Menlo, monospace;
+      font-size: .72rem;
+      line-height: 1.6;
+      color: #334155;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .evidence-link {
+      font-size: .8rem;
+      color: #B5622A;
+      text-decoration: none;
+      word-break: break-all;
+    }
+    .evidence-link:hover { text-decoration: underline; }
+
+    /* Card footer / actions */
+    .card-footer {
+      padding: .8rem 1.2rem;
+      border-top: 1px solid #f0ebe4;
+      display: flex;
+      gap: .5rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      flex: 1;
+      min-width: 90px;
+      padding: .45rem .8rem;
+      border: none;
+      border-radius: 8px;
+      font-size: .8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: filter .15s, opacity .15s;
+    }
+    .btn:hover { filter: brightness(1.08); }
+    .btn:active { filter: brightness(.95); }
+    .btn:disabled { opacity: .45; cursor: not-allowed; filter: none; }
+
+    .btn-approve { background: #B5622A; color: #fff; }
+    .btn-reject  { background: #1B2E4B; color: #fff; }
+    .btn-flag    { background: #fff; color: #9f1239; border: 1.5px solid #fca5a5; }
+    .btn-flag:hover { background: #fff1f2; }
+
+    /* ── Modal ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-overlay.hidden { display: none; }
+    .modal {
+      background: #fff;
+      border-radius: 14px;
+      padding: 1.8rem;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    }
+    .modal h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #1B2E4B;
+      margin-bottom: .4rem;
+    }
+    .modal p {
+      font-size: .83rem;
+      color: #666;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+    .modal textarea {
+      width: 100%;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      padding: .65rem .8rem;
+      font-size: .85rem;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 90px;
+      color: #1a1a1a;
+      outline: none;
+      transition: border-color .15s;
+    }
+    .modal textarea:focus { border-color: #B5622A; }
+    .modal-actions {
+      display: flex;
+      gap: .6rem;
+      margin-top: 1rem;
+      justify-content: flex-end;
+    }
+    .btn-cancel {
+      background: #f3f4f6;
+      color: #555;
+      border: none;
+      border-radius: 8px;
+      padding: .5rem 1.1rem;
+      font-size: .83rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-cancel:hover { background: #e5e7eb; }
+    .btn-confirm {
+      background: #B5622A;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: .5rem 1.2rem;
+      font-size: .83rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-confirm:hover { filter: brightness(1.08); }
+
+    /* ── Toast ── */
+    #toast {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      padding: .75rem 1.2rem;
+      border-radius: 10px;
+      font-size: .85rem;
+      font-weight: 500;
+      color: #fff;
+      z-index: 300;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .25s, transform .25s;
+      pointer-events: none;
+      max-width: 340px;
+    }
+    #toast.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    #toast.success { background: #166534; }
+    #toast.error   { background: #991b1b; }
+
+    @media (max-width: 600px) {
+      #cards-grid { grid-template-columns: 1fr; }
+      .tabs { gap: .3rem; }
+    }
+
+    /* ── Feedback section ── */
+    .section-empty { text-align: center; padding: 3rem; color: #888; font-size: .95rem; }
+    .fb-filters { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .fb-grid { display: flex; flex-direction: column; gap: 1rem; }
+
+    .fb-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08), 0 0 0 1px rgba(0,0,0,.05);
+      padding: 1.1rem 1.3rem;
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+      transition: box-shadow .15s;
+    }
+    .fb-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.12), 0 0 0 1px rgba(0,0,0,.07); }
+    .fb-card-main { flex: 1; min-width: 0; }
+    .fb-card-thumb { flex-shrink: 0; }
+    .fb-card-thumb img { width: 88px; height: 66px; border-radius: 6px; object-fit: cover; border: 1px solid #e8e0d5; display: block; }
+
+    .fb-type-badge {
+      display: inline-block;
+      padding: .2rem .65rem;
+      border-radius: 6px;
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-bottom: .5rem;
+    }
+    .fb-type-bug            { background: #fee2e2; color: #b91c1c; }
+    .fb-type-suggestion     { background: #dbeafe; color: #1d4ed8; }
+    .fb-type-question       { background: #fef9c3; color: #854d0e; }
+    .fb-type-content_issue  { background: #ffedd5; color: #c2410c; }
+    .fb-type-other          { background: #f3f4f6; color: #6b7280; }
+
+    .fb-meta { font-size: .75rem; color: #888; margin-bottom: .55rem; display: flex; gap: .7rem; flex-wrap: wrap; }
+    .fb-desc { font-size: .88rem; color: #1a1a1a; line-height: 1.55; margin-bottom: .8rem; word-break: break-word; }
+
+    .fb-status-row { display: flex; align-items: center; gap: .55rem; }
+    .fb-status-label { font-size: .67rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: #aaa; }
+    .fb-status-select {
+      border: 1.5px solid #ddd;
+      border-radius: 6px;
+      padding: .28rem .65rem;
+      font-size: .78rem;
+      font-family: inherit;
+      color: #1a1a1a;
+      background: #fff;
+      cursor: pointer;
+      outline: none;
+      transition: border-color .15s;
+    }
+    .fb-status-select:focus { border-color: #B5622A; }
+    .fb-status-select:disabled { opacity: .5; cursor: not-allowed; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div style="display:flex;align-items:center;">
+    <a href="dashboard.html" class="wordmark" style="margin-right:1.5rem;">
+      <span class="wm-line1">The Repertory</span>
+      <span class="wm-line2">a Collective effort</span>
+    </a>
+    <nav class="header-nav">
+      <a href="admin-review.html" class="active" id="nav-queue">Queue</a>
+      <a href="admin-glossary.html">Glossary</a>
+      <a href="#" id="nav-feedback">Feedback</a>
+      <a href="resources.html">Resources</a>
+    </nav>
+  </div>
+  <div style="display:flex;align-items:center;gap:.9rem;">
+    <span id="last-refresh"></span>
+    <button id="refresh-btn">&#8635; Refresh</button>
+  </div>
+</header>
+
+<main>
+  <div id="queue-section">
+    <div class="tabs" id="tabs"></div>
+    <div id="status-msg">Loading submissions&hellip;</div>
+    <div id="cards-grid" style="display:none;"></div>
+  </div>
+  <div id="feedback-section" style="display:none">
+    <div class="fb-filters" id="fb-filters"></div>
+    <div id="fb-status-msg" class="section-empty"></div>
+    <div class="fb-grid" id="fb-grid"></div>
+  </div>
+</main>
+
+<!-- Action modal -->
+<div class="modal-overlay hidden" id="modal-overlay">
+  <div class="modal">
+    <h2 id="modal-title"></h2>
+    <p id="modal-desc"></p>
+    <textarea id="modal-notes" placeholder="Enter notes&hellip;"></textarea>
+    <div class="modal-actions">
+      <button class="btn-cancel" id="modal-cancel">Cancel</button>
+      <button class="btn-confirm" id="modal-confirm">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast notification -->
+<div id="toast"></div>
+
+<script>
+  // ─── Configuration ─────────────────────────────────────────────────────────
+  const SUPABASE_URL = 'https://hsseypuhqdlcvepgyrtd.supabase.co'
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhzc2V5cHVocWRsY3ZlcGd5cnRkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTc3NTk0MSwiZXhwIjoyMDkxMzUxOTQxfQ.mGNhUtPSCJWNDTVY1dlhwROsUMTAw-1dHkvRHYV0M0c'
+
+  // ─── State ─────────────────────────────────────────────────────────────────
+  let allSubmissions = []
+  let activeFilter   = 'all'
+
+  const FILTER_TABS = ['all', 'pending', 'under_review', 'approved', 'rejected', 'flagged']
+  const TAB_LABELS  = {
+    all: 'All', pending: 'Pending', under_review: 'Under Review',
+    approved: 'Approved', rejected: 'Rejected', flagged: 'Flagged'
+  }
+
+  // ─── API helpers ───────────────────────────────────────────────────────────
+  function apiHeaders() {
+    return {
+      'Content-Type':  'application/json',
+      'apikey':        SUPABASE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'Prefer':        'return=representation'
+    }
+  }
+
+  async function fetchSubmissions() {
+    const res = await fetch(
+      SUPABASE_URL + '/rest/v1/submission_queue?select=*&order=priority.asc,submitted_at.asc',
+      { headers: apiHeaders() }
+    )
+    if (!res.ok) throw new Error('Fetch failed: ' + res.status + ' ' + res.statusText)
+    return res.json()
+  }
+
+  async function patchSubmission(id, fields) {
+    const res = await fetch(
+      SUPABASE_URL + '/rest/v1/submission_queue?id=eq.' + encodeURIComponent(id),
+      { method: 'PATCH', headers: apiHeaders(), body: JSON.stringify(fields) }
+    )
+    if (!res.ok) throw new Error('Update failed: ' + res.status + ' ' + res.statusText)
+  }
+
+  async function insertAuditLog(entry) {
+    const res = await fetch(
+      SUPABASE_URL + '/rest/v1/submission_audit_log',
+      { method: 'POST', headers: apiHeaders(), body: JSON.stringify(entry) }
+    )
+    if (!res.ok) throw new Error('Audit insert failed: ' + res.status + ' ' + res.statusText)
+  }
+
+  // ─── Load & render ─────────────────────────────────────────────────────────
+  async function loadSubmissions() {
+    setStatus('Loading submissions…')
+    try {
+      allSubmissions = await fetchSubmissions()
+      setLastRefresh()
+      renderTabs()
+      renderCards()
+    } catch (err) {
+      setStatus('Error loading submissions: ' + err.message)
+    }
+  }
+
+  function setStatus(msg) {
+    const el   = document.getElementById('status-msg')
+    const grid = document.getElementById('cards-grid')
+    el.textContent    = msg
+    el.style.display  = 'block'
+    grid.style.display = 'none'
+  }
+
+  function setLastRefresh() {
+    document.getElementById('last-refresh').textContent =
+      'Refreshed ' + new Date().toLocaleTimeString()
+  }
+
+  function filteredSubmissions() {
+    if (activeFilter === 'all') return allSubmissions
+    return allSubmissions.filter(function(s) { return s.status === activeFilter })
+  }
+
+  function countFor(filter) {
+    if (filter === 'all') return allSubmissions.length
+    return allSubmissions.filter(function(s) { return s.status === filter }).length
+  }
+
+  function renderTabs() {
+    const container = document.getElementById('tabs')
+    container.innerHTML = ''
+    FILTER_TABS.forEach(function(f) {
+      const btn = document.createElement('button')
+      btn.className = 'tab' + (f === activeFilter ? ' active' : '')
+      btn.innerHTML = TAB_LABELS[f] + ' <span class="badge">' + countFor(f) + '</span>'
+      btn.addEventListener('click', function() { activeFilter = f; renderTabs(); renderCards() })
+      container.appendChild(btn)
+    })
+  }
+
+  function renderCards() {
+    const grid  = document.getElementById('cards-grid')
+    const msg   = document.getElementById('status-msg')
+    const items = filteredSubmissions()
+
+    if (items.length === 0) {
+      msg.textContent    = 'No submissions found' + (activeFilter !== 'all' ? ' for this filter' : '') + '.'
+      msg.style.display  = 'block'
+      grid.style.display = 'none'
+      return
+    }
+
+    msg.style.display  = 'none'
+    grid.style.display = 'grid'
+    grid.innerHTML     = ''
+    items.forEach(function(s) { grid.appendChild(buildCard(s)) })
+  }
+
+  // ─── Card builder ──────────────────────────────────────────────────────────
+  function buildCard(s) {
+    const card = document.createElement('div')
+    card.className = 'card'
+    card.dataset.id = s.id
+
+    const priority = ((s.priority || 'standard') + '').toLowerCase()
+    const status   = ((s.status   || 'pending')  + '').toLowerCase()
+
+    const submittedAt = s.submitted_at
+      ? new Date(s.submitted_at).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })
+      : '—'
+
+    let payloadHTML = '—'
+    if (s.payload != null) {
+      try {
+        const obj = (typeof s.payload === 'string') ? JSON.parse(s.payload) : s.payload
+        payloadHTML = '<pre>' + escapeHtml(JSON.stringify(obj, null, 2)) + '</pre>'
+      } catch (_) {
+        payloadHTML = '<pre>' + escapeHtml(String(s.payload)) + '</pre>'
+      }
+    }
+
+    const evidenceSection = s.evidence_url
+      ? '<div><div class="field-label">Evidence</div>' +
+        '<a class="evidence-link" href="' + escapeAttr(s.evidence_url) + '" target="_blank" rel="noopener">' +
+        escapeHtml(s.evidence_url) + '</a></div>'
+      : ''
+
+    const isResolved = (status === 'approved' || status === 'rejected')
+    const isFlagged  = (status === 'flagged')
+
+    card.innerHTML =
+      '<div class="card-header">' +
+        '<div class="card-header-left">' +
+          '<div class="submission-type">' + escapeHtml(s.submission_type || 'Unknown') + '</div>' +
+          '<div class="card-meta">' +
+            '<span>👤 ' + escapeHtml(s.submitted_by || '—') + '</span>' +
+            '<span>🕒 ' + submittedAt + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:.4rem;">' +
+          '<span class="priority-badge priority-' + priority + '">' + priority + '</span>' +
+          '<span class="status-badge status-' + status + '">' + status.replace(/_/g, ' ') + '</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="card-body">' +
+        '<div><div class="field-label">Payload</div><div class="payload-block">' + payloadHTML + '</div></div>' +
+        evidenceSection +
+      '</div>' +
+      '<div class="card-footer">' +
+        '<button class="btn btn-approve"' + (isResolved ? ' disabled' : '') + '>Approve</button>' +
+        '<button class="btn btn-reject"'  + (isResolved ? ' disabled' : '') + '>Reject</button>' +
+        '<button class="btn btn-flag"'    + (isFlagged  ? ' disabled' : '') + '>Flag</button>' +
+      '</div>'
+
+    const buttons     = card.querySelectorAll('.btn')
+    const approveBtn  = buttons[0]
+    const rejectBtn   = buttons[1]
+    const flagBtn     = buttons[2]
+
+    approveBtn.addEventListener('click', function() {
+      openModal({
+        title:    'Approve Submission',
+        desc:     'Optionally add review notes, then confirm approval.',
+        required: false,
+        onConfirm: function(notes) { performAction(s.id, 'approved', notes, card) }
+      })
+    })
+
+    rejectBtn.addEventListener('click', function() {
+      openModal({
+        title:    'Reject Submission',
+        desc:     'Review notes are required when rejecting a submission.',
+        required: true,
+        onConfirm: function(notes) { performAction(s.id, 'rejected', notes, card) }
+      })
+    })
+
+    flagBtn.addEventListener('click', function() {
+      openModal({
+        title:    'Flag Submission',
+        desc:     'Optionally add a reason for flagging this submission.',
+        required: false,
+        onConfirm: function(notes) { performAction(s.id, 'flagged', notes, card) }
+      })
+    })
+
+    return card
+  }
+
+  // ─── Action handler ────────────────────────────────────────────────────────
+  async function performAction(id, newStatus, notes, card) {
+    const btns = card.querySelectorAll('.btn')
+    btns.forEach(function(b) { b.disabled = true })
+
+    try {
+      const patchFields = { status: newStatus }
+
+      if (newStatus === 'approved' || newStatus === 'rejected') {
+        patchFields.reviewed_at = new Date().toISOString()
+      }
+      if (notes) {
+        patchFields.review_notes = notes
+      }
+
+      await patchSubmission(id, patchFields)
+
+      const auditEntry = {
+        submission_id: id,
+        action:        newStatus,
+        acted_at:      new Date().toISOString()
+      }
+      if (notes) auditEntry.notes = notes
+
+      await insertAuditLog(auditEntry)
+
+      const idx = allSubmissions.findIndex(function(s) { return s.id === id })
+      if (idx !== -1) Object.assign(allSubmissions[idx], patchFields)
+
+      showToast('Submission ' + newStatus + '.', 'success')
+      renderTabs()
+      renderCards()
+
+    } catch (err) {
+      showToast('Action failed: ' + err.message, 'error')
+      btns.forEach(function(b) { b.disabled = false })
+    }
+  }
+
+  // ─── Modal ─────────────────────────────────────────────────────────────────
+  let modalCallback = null
+  let modalRequired = false
+
+  function openModal(opts) {
+    modalCallback = opts.onConfirm
+    modalRequired = opts.required
+
+    document.getElementById('modal-title').textContent = opts.title
+    document.getElementById('modal-desc').textContent  = opts.desc
+    const ta = document.getElementById('modal-notes')
+    ta.value             = ''
+    ta.style.borderColor = ''
+    document.getElementById('modal-overlay').classList.remove('hidden')
+    ta.focus()
+  }
+
+  document.getElementById('modal-cancel').addEventListener('click', closeModal)
+
+  document.getElementById('modal-overlay').addEventListener('click', function(e) {
+    if (e.target === e.currentTarget) closeModal()
+  })
+
+  document.getElementById('modal-confirm').addEventListener('click', function() {
+    const notes = document.getElementById('modal-notes').value.trim()
+    if (modalRequired && !notes) {
+      const ta = document.getElementById('modal-notes')
+      ta.style.borderColor = '#ef4444'
+      ta.focus()
+      return
+    }
+    const cb = modalCallback
+    closeModal()
+    if (cb) cb(notes || null)
+  })
+
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.add('hidden')
+    modalCallback = null
+  }
+
+  // ─── Toast ─────────────────────────────────────────────────────────────────
+  let toastTimer = null
+  function showToast(msg, type) {
+    const el = document.getElementById('toast')
+    el.textContent = msg
+    el.className   = 'show ' + (type || 'success')
+    clearTimeout(toastTimer)
+    toastTimer = setTimeout(function() { el.className = '' }, 3500)
+  }
+
+  // ─── Utilities ─────────────────────────────────────────────────────────────
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+  }
+  function escapeAttr(str) {
+    return String(str).replace(/"/g, '&quot;').replace(/'/g, '&#39;')
+  }
+
+  // ─── Feedback view ─────────────────────────────────────────────────────────
+  var currentView    = 'queue'
+  var allFeedback    = []
+  var fbFilter       = 'all'
+  var feedbackLoaded = false
+
+  var FB_STATUSES      = ['all', 'new', 'reviewed', 'actioned', 'dismissed']
+  var FB_STATUS_LABELS = { all: 'All', new: 'New', reviewed: 'Reviewed', actioned: 'Actioned', dismissed: 'Dismissed' }
+  var FB_TYPE_LABELS   = { bug: 'Bug', suggestion: 'Suggestion', question: 'Question', content_issue: 'Content Issue', other: 'Other' }
+
+  async function fetchFeedback() {
+    const res = await fetch(
+      SUPABASE_URL + '/rest/v1/feedback?select=*&order=created_at.desc',
+      { headers: apiHeaders() }
+    )
+    if (!res.ok) throw new Error('Fetch failed: ' + res.status)
+    return res.json()
+  }
+
+  async function patchFeedbackStatus(id, status) {
+    const res = await fetch(
+      SUPABASE_URL + '/rest/v1/feedback?id=eq.' + encodeURIComponent(id),
+      { method: 'PATCH', headers: apiHeaders(), body: JSON.stringify({ status }) }
+    )
+    if (!res.ok) throw new Error('Update failed: ' + res.status)
+  }
+
+  function filteredFeedback() {
+    if (fbFilter === 'all') return allFeedback
+    return allFeedback.filter(function(f) { return f.status === fbFilter })
+  }
+
+  function fbCountFor(f) {
+    if (f === 'all') return allFeedback.length
+    return allFeedback.filter(function(fb) { return fb.status === f }).length
+  }
+
+  function renderFeedbackFilters() {
+    const el = document.getElementById('fb-filters')
+    el.innerHTML = ''
+    FB_STATUSES.forEach(function(f) {
+      const btn = document.createElement('button')
+      btn.className = 'tab' + (f === fbFilter ? ' active' : '')
+      btn.innerHTML = FB_STATUS_LABELS[f] + ' <span class="badge">' + fbCountFor(f) + '</span>'
+      btn.addEventListener('click', function() { fbFilter = f; renderFeedbackFilters(); renderFeedbackGrid() })
+      el.appendChild(btn)
+    })
+  }
+
+  function buildFeedbackCard(fb) {
+    const card = document.createElement('div')
+    card.className = 'fb-card'
+
+    const typeKey   = (fb.feedback_type || 'other').toLowerCase()
+    const typeLabel = FB_TYPE_LABELS[typeKey] || typeKey
+    const date      = fb.created_at
+      ? new Date(fb.created_at).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })
+      : '—'
+
+    const thumbHTML = fb.screenshot_url
+      ? '<div class="fb-card-thumb"><a href="' + escapeAttr(fb.screenshot_url) + '" target="_blank" rel="noopener">' +
+        '<img src="' + escapeAttr(fb.screenshot_url) + '" alt="Screenshot"></a></div>'
+      : ''
+
+    const statusOptions = ['new', 'reviewed', 'actioned', 'dismissed'].map(function(s) {
+      return '<option value="' + s + '"' + (fb.status === s ? ' selected' : '') + '>' +
+        (s.charAt(0).toUpperCase() + s.slice(1)) + '</option>'
+    }).join('')
+
+    card.innerHTML =
+      '<div class="fb-card-main">' +
+        '<span class="fb-type-badge fb-type-' + escapeHtml(typeKey) + '">' + escapeHtml(typeLabel) + '</span>' +
+        '<div class="fb-meta">' +
+          '<span>&#128196; ' + escapeHtml(fb.page || '—') + '</span>' +
+          '<span>&#128100; ' + escapeHtml(fb.submitted_by || 'Anonymous') + '</span>' +
+          '<span>&#128336; ' + date + '</span>' +
+        '</div>' +
+        '<div class="fb-desc">' + escapeHtml(fb.description || '') + '</div>' +
+        '<div class="fb-status-row">' +
+          '<span class="fb-status-label">Status</span>' +
+          '<select class="fb-status-select" data-id="' + escapeAttr(fb.id) + '">' + statusOptions + '</select>' +
+        '</div>' +
+      '</div>' +
+      thumbHTML
+
+    card.querySelector('.fb-status-select').addEventListener('change', async function() {
+      const sel       = this
+      const newStatus = sel.value
+      const id        = sel.dataset.id
+      sel.disabled    = true
+      try {
+        await patchFeedbackStatus(id, newStatus)
+        const idx = allFeedback.findIndex(function(f) { return f.id === id })
+        if (idx !== -1) allFeedback[idx].status = newStatus
+        renderFeedbackFilters()
+        showToast('Status updated.', 'success')
+      } catch(err) {
+        showToast('Update failed: ' + err.message, 'error')
+        const orig = allFeedback.find(function(f) { return f.id === id })
+        if (orig) sel.value = orig.status
+      } finally {
+        sel.disabled = false
+      }
+    })
+
+    return card
+  }
+
+  function renderFeedbackGrid() {
+    const grid  = document.getElementById('fb-grid')
+    const msg   = document.getElementById('fb-status-msg')
+    const items = filteredFeedback()
+
+    if (items.length === 0) {
+      msg.textContent   = 'No feedback' + (fbFilter !== 'all' ? ' with status "' + FB_STATUS_LABELS[fbFilter] + '"' : '') + '.'
+      msg.style.display = 'block'
+      grid.innerHTML    = ''
+      return
+    }
+
+    msg.style.display = 'none'
+    grid.innerHTML    = ''
+    items.forEach(function(fb) { grid.appendChild(buildFeedbackCard(fb)) })
+  }
+
+  async function loadFeedback() {
+    const msg = document.getElementById('fb-status-msg')
+    msg.textContent   = 'Loading feedback…'
+    msg.style.display = 'block'
+    document.getElementById('fb-grid').innerHTML = ''
+    try {
+      allFeedback    = await fetchFeedback()
+      feedbackLoaded = true
+      renderFeedbackFilters()
+      renderFeedbackGrid()
+    } catch(err) {
+      msg.textContent = 'Error loading feedback: ' + err.message
+    }
+  }
+
+  document.getElementById('nav-feedback').addEventListener('click', function(e) {
+    e.preventDefault()
+    if (currentView === 'feedback') return
+    currentView = 'feedback'
+    document.getElementById('queue-section').style.display    = 'none'
+    document.getElementById('feedback-section').style.display = 'block'
+    document.getElementById('nav-queue').classList.remove('active')
+    this.classList.add('active')
+    if (!feedbackLoaded) loadFeedback()
+  })
+
+  document.getElementById('nav-queue').addEventListener('click', function(e) {
+    if (currentView !== 'queue') {
+      e.preventDefault()
+      currentView = 'queue'
+      document.getElementById('feedback-section').style.display = 'none'
+      document.getElementById('queue-section').style.display    = 'block'
+      document.getElementById('nav-feedback').classList.remove('active')
+      this.classList.add('active')
+    }
+  })
+
+  // ─── Admin access guard ────────────────────────────────────────────────────
+  async function checkAdminAccess() {
+    const token = localStorage.getItem('gns_access_token')
+    if (!token) { window.location.replace('dashboard.html'); return false }
+    try {
+      const parts = token.split('.')
+      const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')))
+      const userId = payload.sub
+      if (!userId) throw new Error('no sub')
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/contributor_profile?auth_user_id=eq.${userId}&select=contributor_id,membership_tier&limit=1`,
+        { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } }
+      )
+      if (!res.ok) throw new Error('fetch failed')
+      const rows = await res.json()
+      const p = rows[0]
+      if (!p || p.contributor_id !== 'GNS-00001' || p.membership_tier !== 'founding') {
+        window.location.replace('dashboard.html'); return false
+      }
+      return true
+    } catch {
+      window.location.replace('dashboard.html'); return false
+    }
+  }
+
+  // ─── Init ──────────────────────────────────────────────────────────────────
+  document.getElementById('refresh-btn').addEventListener('click', loadSubmissions)
+  checkAdminAccess().then(ok => { if (ok) loadSubmissions() })
+</script>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <p class="footer-copy">The Repertory is a collective effort to build the world's most complete authenticated goods database. Under the care of <a href="https://ardorhousecollective.com" target="_blank" rel="noopener">Ardor House Collective</a>.</p>
+    <p class="footer-legal">The Repertory is an independent platform. All brand names and trademarks are the property of their respective owners. We are not affiliated with, authorized by, or associated with any brand referenced in this database.</p>
+  </div>
+</footer>
+
+<!-- ── Feedback Widget ──────────────────────────────────────────────────────── -->
+<style>
+#fbw-btn{position:fixed;bottom:24px;right:24px;z-index:9000;background:#1B2E4B;color:#FAF6F0;border:2px solid #B5622A;border-radius:24px;padding:9px 18px 9px 14px;font-size:.82rem;font-weight:600;font-family:inherit;letter-spacing:.04em;cursor:pointer;display:flex;align-items:center;gap:7px;box-shadow:0 4px 16px rgba(27,46,75,.28);transition:background .15s,box-shadow .15s}
+#fbw-btn:hover{background:#253d63;box-shadow:0 6px 20px rgba(27,46,75,.38)}
+#fbw-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:9001;align-items:center;justify-content:center;padding:1rem}
+#fbw-overlay.open{display:flex}
+#fbw-modal{background:#1B2E4B;border:1.5px solid #B5622A;border-radius:14px;padding:28px 30px 24px;width:100%;max-width:480px;box-shadow:0 20px 60px rgba(0,0,0,.45);position:relative;color:#FAF6F0}
+#fbw-close{position:absolute;top:14px;right:16px;background:none;border:none;color:rgba(250,246,240,.55);font-size:1.3rem;line-height:1;cursor:pointer;padding:4px 6px;border-radius:4px;transition:color .15s}
+#fbw-close:hover{color:#FAF6F0}
+#fbw-modal h2{font-family:'Linden Hill',Georgia,serif;font-size:1.45rem;color:#FAF6F0;margin-bottom:20px;letter-spacing:.01em}
+.fbw-group{margin-bottom:16px}
+.fbw-label{display:block;font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:rgba(250,246,240,.6);margin-bottom:6px}
+.fbw-input,.fbw-select,.fbw-textarea{width:100%;background:rgba(250,246,240,.07);border:1.5px solid rgba(181,98,42,.45);border-radius:7px;padding:9px 12px;font-size:.88rem;font-family:inherit;color:#FAF6F0;outline:none;transition:border-color .15s}
+.fbw-input::placeholder,.fbw-textarea::placeholder{color:rgba(250,246,240,.3)}
+.fbw-input:focus,.fbw-select:focus,.fbw-textarea:focus{border-color:#B5622A}
+.fbw-input[readonly]{opacity:.55;cursor:default}
+.fbw-select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B5622A' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.fbw-select option{background:#1B2E4B;color:#FAF6F0}
+.fbw-textarea{resize:vertical;min-height:88px;line-height:1.55}
+#fbw-error{font-size:.8rem;color:#f87171;margin-bottom:12px;display:none}
+#fbw-success{text-align:center;padding:24px 0 8px;display:none}
+#fbw-success .fbw-check{font-size:2.4rem;margin-bottom:10px;color:#B5622A}
+#fbw-success p{color:rgba(250,246,240,.8);font-size:.95rem}
+#fbw-submit{width:100%;background:#B5622A;color:#FAF6F0;border:none;border-radius:7px;padding:11px 16px;font-size:.9rem;font-weight:600;font-family:inherit;letter-spacing:.03em;cursor:pointer;transition:background .15s;margin-top:4px}
+#fbw-submit:hover:not(:disabled){background:#9a501f}
+#fbw-submit:disabled{opacity:.5;cursor:not-allowed}
+</style>
+
+<button id="fbw-btn" aria-label="Send feedback">
+  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M14 1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h3l3 3 3-3h3a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" stroke="#B5622A" stroke-width="1.5" stroke-linejoin="round"/></svg>
+  Feedback
+</button>
+
+<div id="fbw-overlay" role="dialog" aria-modal="true" aria-labelledby="fbw-title">
+  <div id="fbw-modal">
+    <button id="fbw-close" aria-label="Close">&times;</button>
+    <h2 id="fbw-title">Send Feedback</h2>
+    <div id="fbw-form-body">
+      <div class="fbw-group">
+        <label class="fbw-label" for="fbw-page">Page</label>
+        <input class="fbw-input" type="text" id="fbw-page" readonly>
+      </div>
+      <div class="fbw-group">
+        <label class="fbw-label" for="fbw-type">Type</label>
+        <select class="fbw-select" id="fbw-type">
+          <option value="bug">Bug / Something looks wrong</option>
+          <option value="suggestion">Suggestion</option>
+          <option value="question">Question</option>
+          <option value="content_issue">Content Issue</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="fbw-group">
+        <label class="fbw-label" for="fbw-desc">Description <span style="color:#f87171;font-weight:400;text-transform:none;letter-spacing:0">*</span></label>
+        <textarea class="fbw-textarea" id="fbw-desc" placeholder="Briefly describe what you noticed&hellip;"></textarea>
+      </div>
+      <div class="fbw-group">
+        <label class="fbw-label" for="fbw-screenshot">Screenshot <span style="font-weight:400;text-transform:none;letter-spacing:0;color:rgba(250,246,240,.4)">(optional)</span></label>
+        <input class="fbw-input" type="file" id="fbw-screenshot" accept="image/*" style="padding:6px 12px">
+      </div>
+      <div class="fbw-group">
+        <label class="fbw-label" for="fbw-name">Your Name <span style="font-weight:400;text-transform:none;letter-spacing:0;color:rgba(250,246,240,.4)">(optional)</span></label>
+        <input class="fbw-input" type="text" id="fbw-name" placeholder="e.g. Jane Smith" autocomplete="name">
+      </div>
+      <div id="fbw-error"></div>
+      <button id="fbw-submit">Submit Feedback</button>
+    </div>
+    <div id="fbw-success">
+      <div class="fbw-check">&#10003;</div>
+      <p>Thanks &mdash; logged!</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var SB_URL='https://hsseypuhqdlcvepgyrtd.supabase.co'
+  var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhzc2V5cHVocWRsY3ZlcGd5cnRkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTc3NTk0MSwiZXhwIjoyMDkxMzUxOTQxfQ.mGNhUtPSCJWNDTVY1dlhwROsUMTAw-1dHkvRHYV0M0c'
+  var SB_HDR={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}
+  var overlay=document.getElementById('fbw-overlay')
+  var formBody=document.getElementById('fbw-form-body')
+  var successEl=document.getElementById('fbw-success')
+  var errEl=document.getElementById('fbw-error')
+  var submitBtn=document.getElementById('fbw-submit')
+
+  document.getElementById('fbw-page').value=document.title||location.pathname.split('/').pop()||'Unknown'
+
+  try{
+    var u=JSON.parse(localStorage.getItem('gns_user')||'null')
+    if(u&&u.id)fetch(SB_URL+'/rest/v1/contributor_profile?auth_user_id=eq.'+u.id+'&select=display_name&limit=1',{headers:SB_HDR})
+      .then(function(r){return r.ok?r.json():[]}).then(function(rows){if(rows[0]&&rows[0].display_name)document.getElementById('fbw-name').value=rows[0].display_name}).catch(function(){})
+  }catch(e){}
+
+  function openModal(){overlay.classList.add('open');document.getElementById('fbw-desc').focus()}
+  function closeModal(){
+    overlay.classList.remove('open')
+    setTimeout(function(){
+      document.getElementById('fbw-desc').value=''
+      document.getElementById('fbw-screenshot').value=''
+      errEl.style.display='none'
+      formBody.style.display='block'
+      successEl.style.display='none'
+      submitBtn.disabled=false
+      submitBtn.textContent='Submit Feedback'
+    },250)
+  }
+
+  document.getElementById('fbw-btn').addEventListener('click',openModal)
+  document.getElementById('fbw-close').addEventListener('click',closeModal)
+  overlay.addEventListener('click',function(e){if(e.target===overlay)closeModal()})
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&overlay.classList.contains('open'))closeModal()})
+
+  function uploadScreenshot(file){
+    var ext=file.name.split('.').pop()||'png'
+    var path=Date.now()+'-'+Math.random().toString(36).slice(2)+'.'+ext
+    return fetch(SB_URL+'/storage/v1/object/feedback-screenshots/'+path,{
+      method:'POST',headers:Object.assign({},SB_HDR,{'Content-Type':file.type}),body:file
+    }).then(function(r){
+      if(!r.ok)throw new Error('Screenshot upload failed')
+      return SB_URL+'/storage/v1/object/public/feedback-screenshots/'+path
+    })
+  }
+
+  submitBtn.addEventListener('click',function(){
+    var desc=document.getElementById('fbw-desc').value.trim()
+    errEl.style.display='none'
+    if(!desc){errEl.textContent='Description is required.';errEl.style.display='block';document.getElementById('fbw-desc').focus();return}
+    submitBtn.disabled=true;submitBtn.textContent='Submitting…'
+    var filePromise=document.getElementById('fbw-screenshot').files[0]
+      ?uploadScreenshot(document.getElementById('fbw-screenshot').files[0])
+      :Promise.resolve(null)
+    filePromise.then(function(screenshot_url){
+      var storedUser=null
+      try{storedUser=JSON.parse(localStorage.getItem('gns_user')||'null')}catch(e){}
+      return fetch(SB_URL+'/rest/v1/feedback',{
+        method:'POST',
+        headers:Object.assign({},SB_HDR,{'Content-Type':'application/json','Prefer':'return=minimal'}),
+        body:JSON.stringify({
+          page:document.getElementById('fbw-page').value,
+          feedback_type:document.getElementById('fbw-type').value,
+          description:desc,
+          screenshot_url:screenshot_url,
+          submitted_by:document.getElementById('fbw-name').value.trim()||null,
+          contributor_id:storedUser?storedUser.id:null,
+          status:'new'
+        })
+      })
+    }).then(function(r){
+      if(!r.ok)throw new Error('Submission failed')
+      formBody.style.display='none';successEl.style.display='block'
+      setTimeout(closeModal,2000)
+    }).catch(function(err){
+      errEl.textContent=err.message||'Something went wrong. Please try again.'
+      errEl.style.display='block'
+      submitBtn.disabled=false;submitBtn.textContent='Submit Feedback'
+    })
+  })
+})()
+</script>
+<!-- ── /Feedback Widget ─────────────────────────────────────────────────────── -->
+
+</body>
+</html>

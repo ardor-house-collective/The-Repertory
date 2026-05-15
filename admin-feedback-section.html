@@ -1,0 +1,461 @@
+<!--
+  ============================================================
+  GNS ADMIN FEEDBACK TAB — admin-feedback-section.html
+  Inject this into admin-review.html:
+    1. Add a "Feedback" tab button alongside your existing tabs
+    2. Paste this block as a new tab panel (same pattern as your
+       existing review panels)
+    3. Call initFeedbackAdmin() after your existing page init
+  ============================================================
+-->
+
+<!-- ── Feedback admin styles ── -->
+<style>
+  /* ── feedback tab panel ── */
+  #feedback-panel {
+    display: none; /* toggled by tab logic */
+  }
+  #feedback-panel.active {
+    display: block;
+  }
+
+  .fb-admin-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .fb-admin-header h2 {
+    font-family: 'Linden Hill', Palatino, serif;
+    font-size: 22px;
+    font-weight: normal;
+    color: #FAF6F0;
+    margin: 0;
+  }
+  .fb-admin-count {
+    font-family: 'Fanwood Text', Georgia, serif;
+    font-size: 13px;
+    color: rgba(250,246,240,0.5);
+  }
+
+  /* ── filter bar ── */
+  .fb-filter-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .fb-filter-bar select {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(181,98,42,0.35);
+    border-radius: 4px;
+    color: #FAF6F0;
+    font-family: 'Fanwood Text', Georgia, serif;
+    font-size: 13px;
+    padding: 7px 28px 7px 10px;
+    cursor: pointer;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23B5622A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 9px center;
+  }
+  .fb-filter-bar select option { background: #1B2E4B; }
+  .fb-filter-bar select:focus { border-color: #B5622A; }
+
+  /* ── table ── */
+  .fb-table-wrap {
+    overflow-x: auto;
+  }
+  table.fb-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Fanwood Text', Georgia, serif;
+    font-size: 13.5px;
+    color: #FAF6F0;
+  }
+  table.fb-table thead tr {
+    border-bottom: 1.5px solid rgba(181,98,42,0.4);
+  }
+  table.fb-table th {
+    text-align: left;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #B5622A;
+    padding: 0 12px 10px 0;
+    font-weight: normal;
+    white-space: nowrap;
+  }
+  table.fb-table td {
+    padding: 12px 12px 12px 0;
+    vertical-align: top;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  table.fb-table tr:last-child td { border-bottom: none; }
+  table.fb-table tbody tr:hover td {
+    background: rgba(255,255,255,0.03);
+  }
+
+  /* ── cell specifics ── */
+  .fb-cell-ts {
+    white-space: nowrap;
+    color: rgba(250,246,240,0.55);
+    font-size: 12px;
+    min-width: 110px;
+  }
+  .fb-cell-page {
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: rgba(250,246,240,0.75);
+  }
+  .fb-type-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    border: 1px solid rgba(181,98,42,0.4);
+    color: #B5622A;
+  }
+  .fb-cell-desc {
+    max-width: 220px;
+    color: rgba(250,246,240,0.88);
+    line-height: 1.45;
+  }
+  .fb-cell-sub {
+    white-space: nowrap;
+    color: rgba(250,246,240,0.6);
+    font-size: 12px;
+    font-style: italic;
+  }
+  .fb-thumb {
+    width: 52px;
+    height: 36px;
+    object-fit: cover;
+    border-radius: 3px;
+    border: 1px solid rgba(181,98,42,0.3);
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .fb-thumb:hover { opacity: 0.8; }
+
+  /* ── status dropdown ── */
+  .fb-status-select {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(181,98,42,0.35);
+    border-radius: 4px;
+    color: #FAF6F0;
+    font-family: 'Fanwood Text', Georgia, serif;
+    font-size: 12px;
+    padding: 4px 22px 4px 8px;
+    cursor: pointer;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='6' viewBox='0 0 9 6'%3E%3Cpath d='M1 1l3.5 3.5L8 1' stroke='%23B5622A' stroke-width='1.3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 7px center;
+    transition: border-color 0.15s;
+    min-width: 108px;
+  }
+  .fb-status-select option { background: #1B2E4B; }
+  .fb-status-select:focus { border-color: #B5622A; }
+  .fb-status-select[data-status="new"]       { border-left: 3px solid #6a9fd8; }
+  .fb-status-select[data-status="reviewed"]  { border-left: 3px solid #B5622A; }
+  .fb-status-select[data-status="actioned"]  { border-left: 3px solid #5dab7a; }
+  .fb-status-select[data-status="dismissed"] { border-left: 3px solid #888; }
+
+  /* ── empty / loading states ── */
+  .fb-state-row td {
+    text-align: center;
+    padding: 40px;
+    color: rgba(250,246,240,0.4);
+    font-style: italic;
+    border-bottom: none !important;
+  }
+
+  /* ── screenshot lightbox ── */
+  #fb-lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9500;
+    background: rgba(0,0,0,0.82);
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+  }
+  #fb-lightbox.open { display: flex; }
+  #fb-lightbox img {
+    max-width: 90vw;
+    max-height: 88vh;
+    border-radius: 4px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+  }
+</style>
+
+<!-- ─────────────────────────────────────────────────────── -->
+<!--  TAB BUTTON — add this alongside your existing tabs     -->
+<!-- ─────────────────────────────────────────────────────── -->
+<!--
+  Example — find your tab button group and add:
+
+  <button class="tab-btn" data-tab="feedback">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    </svg>
+    Feedback
+    <span id="fb-new-badge" style="
+      display:none;
+      background:#B5622A;
+      color:#FAF6F0;
+      font-size:10px;
+      border-radius:9px;
+      padding:1px 6px;
+      margin-left:4px;
+    "></span>
+  </button>
+-->
+
+<!-- ─────────────────────────────────────────────────────── -->
+<!--  TAB PANEL                                              -->
+<!-- ─────────────────────────────────────────────────────── -->
+<div id="feedback-panel">
+
+  <div class="fb-admin-header">
+    <h2>Feedback</h2>
+    <span class="fb-admin-count" id="fb-total-count"></span>
+  </div>
+
+  <!-- Filter bar -->
+  <div class="fb-filter-bar">
+    <select id="fb-filter-status">
+      <option value="">All statuses</option>
+      <option value="new">New</option>
+      <option value="reviewed">Reviewed</option>
+      <option value="actioned">Actioned</option>
+      <option value="dismissed">Dismissed</option>
+    </select>
+    <select id="fb-filter-type">
+      <option value="">All types</option>
+      <option value="Bug / Something looks wrong">Bug</option>
+      <option value="Suggestion">Suggestion</option>
+      <option value="Question">Question</option>
+      <option value="Content Issue">Content Issue</option>
+      <option value="Other">Other</option>
+    </select>
+  </div>
+
+  <!-- Table -->
+  <div class="fb-table-wrap">
+    <table class="fb-table" id="fb-admin-table">
+      <thead>
+        <tr>
+          <th>Timestamp</th>
+          <th>Page</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Submitted by</th>
+          <th>Screenshot</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="fb-table-body">
+        <tr class="fb-state-row"><td colspan="7">Loading feedback…</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Screenshot lightbox -->
+<div id="fb-lightbox">
+  <img id="fb-lightbox-img" src="" alt="Screenshot">
+</div>
+
+<!-- ── Admin feedback logic ── -->
+<script>
+// Call this after your existing page init (after supabase client is ready)
+window.initFeedbackAdmin = async function() {
+  const client = window._supabaseClient;
+  if (!client) { console.warn('initFeedbackAdmin: no supabase client'); return; }
+
+  const tbody       = document.getElementById('fb-table-body');
+  const totalCount  = document.getElementById('fb-total-count');
+  const filterStatus= document.getElementById('fb-filter-status');
+  const filterType  = document.getElementById('fb-filter-type');
+  const lightbox    = document.getElementById('fb-lightbox');
+  const lightboxImg = document.getElementById('fb-lightbox-img');
+  const newBadge    = document.getElementById('fb-new-badge');
+
+  let allRows = [];
+
+  // ── Load
+  async function loadFeedback() {
+    tbody.innerHTML = '<tr class="fb-state-row"><td colspan="7">Loading…</td></tr>';
+    const { data, error } = await client
+      .from('feedback')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      tbody.innerHTML = '<tr class="fb-state-row"><td colspan="7">Error loading feedback.</td></tr>';
+      console.error(error);
+      return;
+    }
+    allRows = data || [];
+
+    // Update new badge
+    const newCount = allRows.filter(r => r.status === 'new').length;
+    if (newBadge) {
+      if (newCount > 0) {
+        newBadge.style.display = 'inline';
+        newBadge.textContent = newCount;
+      } else {
+        newBadge.style.display = 'none';
+      }
+    }
+
+    renderTable();
+  }
+
+  // ── Render
+  function renderTable() {
+    const statusFilter = filterStatus.value;
+    const typeFilter   = filterType.value;
+
+    let rows = allRows;
+    if (statusFilter) rows = rows.filter(r => r.status === statusFilter);
+    if (typeFilter)   rows = rows.filter(r => r.feedback_type === typeFilter);
+
+    totalCount.textContent = rows.length === allRows.length
+      ? `${allRows.length} entr${allRows.length === 1 ? 'y' : 'ies'}`
+      : `${rows.length} of ${allRows.length}`;
+
+    if (rows.length === 0) {
+      tbody.innerHTML = '<tr class="fb-state-row"><td colspan="7">No entries match the current filters.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = rows.map(row => {
+      const ts = new Date(row.created_at);
+      const tsStr = ts.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' })
+        + ' ' + ts.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
+
+      const thumb = row.screenshot_url
+        ? `<img class="fb-thumb" src="${escHtml(row.screenshot_url)}"
+               alt="Screenshot" data-url="${escHtml(row.screenshot_url)}">`
+        : '<span style="color:rgba(250,246,240,0.25);font-size:12px">—</span>';
+
+      const subby = row.submitted_by
+        ? escHtml(row.submitted_by)
+        : '<span style="opacity:0.35">anonymous</span>';
+
+      return `
+        <tr data-id="${row.id}">
+          <td class="fb-cell-ts">${tsStr}</td>
+          <td class="fb-cell-page" title="${escHtml(row.page)}">${escHtml(row.page)}</td>
+          <td><span class="fb-type-badge">${escHtml(row.feedback_type)}</span></td>
+          <td class="fb-cell-desc">${escHtml(row.description)}</td>
+          <td class="fb-cell-sub">${subby}</td>
+          <td>${thumb}</td>
+          <td>
+            <select class="fb-status-select" data-id="${row.id}" data-status="${row.status}">
+              <option value="new"       ${row.status==='new'       ?'selected':''}>New</option>
+              <option value="reviewed"  ${row.status==='reviewed'  ?'selected':''}>Reviewed</option>
+              <option value="actioned"  ${row.status==='actioned'  ?'selected':''}>Actioned</option>
+              <option value="dismissed" ${row.status==='dismissed' ?'selected':''}>Dismissed</option>
+            </select>
+          </td>
+        </tr>`;
+    }).join('');
+
+    // Attach status change handlers
+    tbody.querySelectorAll('.fb-status-select').forEach(sel => {
+      sel.addEventListener('change', async function() {
+        const id        = this.dataset.id;
+        const newStatus = this.value;
+        this.dataset.status = newStatus;
+        const { error } = await client
+          .from('feedback')
+          .update({ status: newStatus })
+          .eq('id', id);
+        if (error) {
+          alert('Status update failed.');
+          console.error(error);
+        } else {
+          // Update local cache
+          const r = allRows.find(r => r.id === id);
+          if (r) r.status = newStatus;
+          // Refresh badge count
+          const newCount = allRows.filter(r => r.status === 'new').length;
+          if (newBadge) {
+            newBadge.style.display = newCount > 0 ? 'inline' : 'none';
+            newBadge.textContent = newCount;
+          }
+        }
+      });
+    });
+
+    // Screenshot lightbox
+    tbody.querySelectorAll('.fb-thumb').forEach(img => {
+      img.addEventListener('click', function() {
+        lightboxImg.src = this.dataset.url;
+        lightbox.classList.add('open');
+      });
+    });
+  }
+
+  // ── Filters
+  filterStatus.addEventListener('change', renderTable);
+  filterType.addEventListener('change', renderTable);
+
+  // ── Lightbox close
+  lightbox.addEventListener('click', function() {
+    lightbox.classList.remove('open');
+    lightboxImg.src = '';
+  });
+
+  // ── Tab activation hook — call loadFeedback when tab becomes visible
+  // Integrate with your existing tab switching logic like:
+  //   if (tab === 'feedback') { initFeedbackAdmin(); }
+  // Or use a MutationObserver:
+  const panel = document.getElementById('feedback-panel');
+  if (panel) {
+    const obs = new MutationObserver(function(muts) {
+      muts.forEach(m => {
+        if (m.attributeName === 'class' && panel.classList.contains('active')) {
+          loadFeedback();
+          obs.disconnect();
+        }
+      });
+    });
+    obs.observe(panel, { attributes: true });
+  }
+
+  // ── Kick off initial load if panel already active
+  if (panel && panel.classList.contains('active')) {
+    loadFeedback();
+  }
+};
+
+// ── HTML escape helper (shared, idempotent)
+if (!window._fbEscHtml) {
+  window._fbEscHtml = function(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;')
+      .replace(/'/g,'&#39;');
+  };
+}
+function escHtml(s) { return window._fbEscHtml(s); }
+</script>
+<!-- ── End admin feedback section ── -->
