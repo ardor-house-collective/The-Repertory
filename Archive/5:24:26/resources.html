@@ -8,18 +8,18 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy:        #1E2B22;
-      --cream:       #F0EDE4;
-      --copper:      #A8894E;
+      --navy:        #1b2e4b;
+      --cream:       #faf6f0;
+      --copper:      #b5622a;
       --copper-dark: #9a501f;
-      --text:        #1E2B22;
-      --muted:       #6B7A60;
-      --border:      #DDD8C8;
-      --card:        #FDFCF8;
+      --text:        #2c2c2c;
+      --muted:       #7a7069;
+      --border:      #e2dbd2;
+      --card:        #ffffff;
     }
 
     body {
-      font-family: 'Fanwood Text', 'Fanwood', Georgia, serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
       background: var(--cream);
       min-height: 100vh;
       display: flex;
@@ -31,10 +31,6 @@
     @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill.otf') format('opentype'); font-weight: normal; font-style: normal; }
     @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
     @font-face { font-family: 'Runtime'; src: url('Runtime.otf') format('opentype'); font-weight: normal; font-style: normal; }
-    @font-face { font-family: 'Fanwood Text'; src: url('Fanwood_Text.otf') format('opentype'); font-weight: normal; font-style: normal; }
-    @font-face { font-family: 'Fanwood Text'; src: url('Fanwood_Text_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
-    @font-face { font-family: 'Fanwood'; src: url('Fanwood.otf') format('opentype'); font-weight: normal; font-style: normal; }
-    @font-face { font-family: 'Fanwood'; src: url('Fanwood_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
 
     /* ── Header ── */
 
@@ -62,7 +58,7 @@
     }
 
     .wordmark { display: flex; flex-direction: column; gap: 1px; line-height: 1; text-decoration: none; }
-    .wm-line1 { font-family: 'Linden Hill', Georgia, serif; font-size: 2.22rem; font-style: normal; color: #F0EDE4; letter-spacing: 0.01em; line-height: 1; }
+    .wm-line1 { font-family: 'Linden Hill', Georgia, serif; font-size: 2.22rem; font-style: normal; color: #FAF6F0; letter-spacing: 0.01em; line-height: 1; }
     .wm-line2 { font-family: 'Runtime', sans-serif; font-size: 0.98rem; color: rgba(250,246,240,0.72); letter-spacing: 0.04em; line-height: 1; }
 
     .header-right {
@@ -80,8 +76,8 @@
       transition: color 0.15s;
       white-space: nowrap;
     }
-    .header-link:hover { color: #F0EDE4; }
-    .header-link.active { color: #F0EDE4; }
+    .header-link:hover { color: #FAF6F0; }
+    .header-link.active { color: #FAF6F0; }
 
     #header-identity {
       display: none;
@@ -105,29 +101,6 @@
       white-space: nowrap;
     }
     .sign-out-btn:hover { border-color: rgba(255,255,255,0.55); color: #fff; }
-
-    /* ── Site nav ── */
-    .site-nav { display: flex; align-items: center; gap: 4px; margin: 0 20px; }
-    .nav-enter { display: inline-flex; align-items: center; color: #A8894E; border: 1.5px solid #A8894E; border-radius: 20px; padding: 6px 14px; font-size: 13px; font-weight: 500; letter-spacing: 0.03em; text-decoration: none; white-space: nowrap; background: transparent; transition: background 0.2s ease, color 0.2s ease; margin-right: 4px; }
-    .nav-enter:hover { background: #A8894E; color: #F0EDE4; }
-    .nav-link { color: rgba(250,246,240,0.65); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.03em; white-space: nowrap; padding: 4px 10px; border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s; background: none; border-top: none; border-left: none; border-right: none; cursor: pointer; font-family: inherit; line-height: inherit; }
-    .nav-link:hover { color: #F0EDE4; }
-    .nav-link.active { color: #F0EDE4; border-bottom-color: #A8894E; }
-    .nav-founding { visibility: hidden; }
-    .nav-founding.nav-visible { visibility: visible; }
-    .nav-dropdown { position: relative; display: flex; align-items: center; }
-    .nav-dropdown::after { content: ''; position: absolute; left: 0; right: 0; top: 100%; height: 10px; }
-    .nav-dropdown-trigger { display: inline-flex; align-items: center; cursor: pointer; }
-    .nav-dropdown-trigger::after { content: ''; display: inline-block; width: 0; height: 0; border-left: 3px solid transparent; border-right: 3px solid transparent; border-top: 4px solid currentColor; margin-left: 5px; opacity: 0.5; transition: transform 0.15s; }
-    .nav-dropdown:hover .nav-dropdown-trigger { color: #F0EDE4; }
-    .nav-dropdown:hover .nav-dropdown-trigger::after { transform: rotate(180deg); opacity: 1; }
-    .nav-dropdown-menu { position: absolute; top: calc(100% + 10px); left: 0; background: #1E2B22; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); padding: 6px 0; min-width: 190px; opacity: 0; visibility: hidden; transform: translateY(-4px); transition: opacity 0.15s ease, visibility 0.15s, transform 0.15s ease; z-index: 300; }
-    .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
-    .nav-dropdown-item { display: block; color: rgba(250,246,240,0.72); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.02em; padding: 9px 18px; white-space: nowrap; transition: color 0.12s; }
-    .nav-dropdown-item:hover { color: #A8894E; }
-    .nav-dropdown-item.active { color: #F0EDE4; font-weight: 600; }
-    .nav-dropdown-disabled { display: flex; align-items: center; gap: 8px; color: rgba(250,246,240,0.28); cursor: not-allowed; font-size: 13px; font-weight: 500; letter-spacing: 0.02em; padding: 9px 18px; white-space: nowrap; }
-    .nav-dropdown-soon { font-size: 0.68rem; color: #6B7A60; }
 
     /* ── Page shell ── */
 
@@ -258,11 +231,11 @@
 
     /* ── Footer ── */
 
-    .site-footer { border-top: 2px solid #1E2B22; background: #F0EDE4; padding: 2rem 40px; flex-shrink: 0; }
+    .site-footer { border-top: 2px solid #1b2e4b; background: #faf6f0; padding: 2rem 40px; flex-shrink: 0; }
     .site-footer-inner { max-width: 1280px; margin: 0 auto; display: flex; gap: 3rem; }
-    .footer-copy, .footer-legal { flex: 1; font-size: 0.75rem; color: #6B7A60; line-height: 1.65; }
-    .footer-copy a { color: #6B7A60; text-decoration: underline; text-underline-offset: 2px; }
-    .footer-copy a:hover { color: #A8894E; }
+    .footer-copy, .footer-legal { flex: 1; font-size: 0.75rem; color: #9a8e83; line-height: 1.65; }
+    .footer-copy a { color: #9a8e83; text-decoration: underline; text-underline-offset: 2px; }
+    .footer-copy a:hover { color: #b5622a; }
     @media (max-width: 680px) { .site-footer { padding: 1.5rem 20px; } .site-footer-inner { flex-direction: column; gap: 1.2rem; } }
   </style>
 </head>
@@ -274,20 +247,8 @@
       <span class="wm-line1">The Repertory</span>
       <span class="wm-line2">a Collective effort</span>
     </a>
-    <nav class="site-nav">
-      <a href="#" class="nav-enter"><img src="keyhole.png" alt="" width="14" height="20" style="vertical-align:middle; margin-right:6px;">Enter The Repertory</a>
-      <a href="contributor-form.html" class="nav-link">Submit</a>
-      <div class="nav-dropdown">
-        <span class="nav-link nav-dropdown-trigger active">Resources</span>
-        <div class="nav-dropdown-menu">
-          <a href="condition-standard.html" class="nav-dropdown-item">Condition Standard</a>
-          <a href="repertory-index.html" class="nav-dropdown-item">Index</a>
-          <a href="admin-glossary.html" class="nav-dropdown-item nav-founding">Glossary</a>
-          <span class="nav-dropdown-disabled">Tools <span class="nav-dropdown-soon">Coming Soon</span></span>
-        </div>
-      </div>
-    </nav>
     <div class="header-right">
+      <a href="resources.html" class="header-link active">Resources</a>
       <div id="header-identity">
         <span class="header-cid"  id="header-cid"></span>
         <span class="header-name" id="header-name"></span>
@@ -340,24 +301,6 @@
       </div>
     </div>
 
-    <!-- The Repertory Index -->
-    <div class="resource-card">
-      <svg class="resource-card-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="5" y="3" width="26" height="30" rx="3" stroke="currentColor" stroke-width="1.8" fill="none"/>
-        <line x1="11" y1="11" x2="25" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="11" y1="16" x2="19" y2="16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="11" y1="21" x2="22" y2="21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="11" y1="26" x2="17" y2="26" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
-      <h2 class="resource-card-title">The Repertory Index</h2>
-      <p class="resource-card-desc">A complete reference of all designations, tiers, reviewer roles, certifications, and collective terms used across The Repertory. The canonical definition document for the platform&rsquo;s internal language.</p>
-      <div class="resource-card-footer">
-        <a href="repertory-index.html" class="resource-open-link">Open
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
-    </div>
-
   </div>
 
 </main>
@@ -371,7 +314,13 @@
 
 <script>
   const SUPABASE_URL = 'https://hsseypuhqdlcvepgyrtd.supabase.co'
-  const SUPABASE_KEY = 'sb_publishable_WOh4vQeiGzrN9CoICfiUTQ_XB5MQJw0'
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhzc2V5cHVocWRsY3ZlcGd5cnRkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTc3NTk0MSwiZXhwIjoyMDkxMzUxOTQxfQ.mGNhUtPSCJWNDTVY1dlhwROsUMTAw-1dHkvRHYV0M0c'
+
+  const DB_HEADERS = {
+    'apikey': SUPABASE_KEY,
+    'Authorization': `Bearer ${SUPABASE_KEY}`,
+    'Content-Type': 'application/json'
+  }
 
   // ── Auth guard ──────────────────────────────────────────────────────────────
 
@@ -380,32 +329,6 @@
 
   if (!accessToken || !storedUser?.id) {
     window.location.replace('login.html')
-  }
-
-  const DB_HEADERS = {
-    'apikey': SUPABASE_KEY,
-    'Authorization': `Bearer ${accessToken}`,
-    'Content-Type': 'application/json'
-  }
-
-  async function refreshAccessToken() {
-    const rt = localStorage.getItem('gns_refresh_token')
-    if (!rt) return null
-    try {
-      const r = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
-        body: JSON.stringify({ refresh_token: rt })
-      })
-      if (!r.ok) return null
-      const d = await r.json()
-      if (!d.access_token) return null
-      localStorage.setItem('gns_access_token', d.access_token)
-      localStorage.setItem('gns_refresh_token', d.refresh_token)
-      localStorage.setItem('gns_user', JSON.stringify(d.user))
-      DB_HEADERS['Authorization'] = 'Bearer ' + d.access_token
-      return d.access_token
-    } catch { return null }
   }
 
   // ── Sign out ────────────────────────────────────────────────────────────────
@@ -423,37 +346,19 @@
     document.getElementById('header-cid').textContent  = p.contributor_id || ''
     document.getElementById('header-name').textContent = p.display_name   || ''
     document.getElementById('header-identity').style.display = 'flex'
-    const isFoundingUser = p.membership_tier === 'founding' || p.is_curator_general
-    if (isFoundingUser) {
-      document.querySelectorAll('.nav-founding').forEach(function(el) { el.classList.add('nav-visible') })
-    }
-    if (p.reviewer_role) {
-      document.querySelectorAll('.nav-reviewer').forEach(function(el) { el.classList.add('nav-visible') })
-    }
   }
 
-  ;(async function loadProfile() {
-    let r = await fetch(
-      `${SUPABASE_URL}/rest/v1/contributor_profile?auth_user_id=eq.${storedUser.id}&select=contributor_id,display_name,membership_tier&limit=1`,
-      { headers: DB_HEADERS }
-    ).catch(() => null)
-    if (r && r.status === 401) {
-      const newToken = await refreshAccessToken()
-      if (newToken) r = await fetch(
-        `${SUPABASE_URL}/rest/v1/contributor_profile?auth_user_id=eq.${storedUser.id}&select=contributor_id,display_name,membership_tier&limit=1`,
-        { headers: DB_HEADERS }
-      ).catch(() => null)
-    }
-    if (r && r.ok) {
-      const rows = await r.json().catch(() => [])
-      if (rows[0]) populateHeader(rows[0])
-    }
-  })()
+  fetch(
+    `${SUPABASE_URL}/rest/v1/contributor_profile?auth_user_id=eq.${storedUser.id}&select=contributor_id,display_name&limit=1`,
+    { headers: DB_HEADERS }
+  )
+    .then(r => r.ok ? r.json() : [])
+    .then(rows => { if (rows[0]) populateHeader(rows[0]) })
+    .catch(() => {})
 </script>
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script>window._supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);</script>
+
 <!--
   ============================================================
   GNS FEEDBACK WIDGET  — feedback-widget.html  (v2)
@@ -470,9 +375,9 @@
 
 <style>
   :root {
-    --fb-navy:    #1E2B22;
-    --fb-copper:  #A8894E;
-    --fb-cream:   #F0EDE4;
+    --fb-navy:    #1B2E4B;
+    --fb-copper:  #B5622A;
+    --fb-cream:   #FAF6F0;
     --fb-overlay: rgba(15, 22, 36, 0.72);
   }
 
@@ -964,6 +869,512 @@
 </script>
 <!-- End GNS Feedback Widget v2 -->
 
+</body>
+  on every page.
+
+  Requires window._supabaseClient already initialized.
+  Authentication is required to submit. Unauthenticated users
+  see a login prompt instead of the submit button.
+  Name is auto-populated from contributor_profile.display_name
+  and is read-only — it cannot be edited by the user.
+  ============================================================
+-->
+
+<style>
+  :root {
+    --fb-navy:    #1B2E4B;
+    --fb-copper:  #B5622A;
+    --fb-cream:   #FAF6F0;
+    --fb-overlay: rgba(15, 22, 36, 0.72);
+  }
+
+  #gns-feedback-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 18px 10px 14px;
+    background: var(--fb-navy);
+    color: var(--fb-cream);
+    border: 1.5px solid var(--fb-copper);
+    border-radius: 6px;
+    font-family: 'Fanwood Text', Georgia, serif;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+    transition: background 0.18s, border-color 0.18s, transform 0.12s;
+    user-select: none;
+  }
+  #gns-feedback-btn:hover {
+    background: #22395c;
+    border-color: #d07535;
+    transform: translateY(-1px);
+  }
+  #gns-feedback-btn svg { flex-shrink: 0; color: var(--fb-copper); }
+
+  #gns-feedback-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9100;
+    background: var(--fb-overlay);
+    backdrop-filter: blur(3px);
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  #gns-feedback-overlay.open { display: flex; }
+
+  #gns-feedback-modal {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    background: var(--fb-navy);
+    border: 1.5px solid var(--fb-copper);
+    border-radius: 8px;
+    padding: 32px 28px 28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+    font-family: 'Fanwood Text', Georgia, serif;
+    color: var(--fb-cream);
+    animation: fb-slide-up 0.22s ease;
+  }
+  @keyframes fb-slide-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  #gns-feedback-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: var(--fb-cream);
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+    opacity: 0.65;
+    transition: opacity 0.15s;
+    padding: 2px 4px;
+  }
+  #gns-feedback-close:hover { opacity: 1; }
+
+  #gns-feedback-modal h2 {
+    font-family: 'Linden Hill', 'Palatino Linotype', Palatino, serif;
+    font-size: 20px;
+    font-weight: normal;
+    color: var(--fb-cream);
+    margin: 0 0 22px;
+    letter-spacing: 0.03em;
+    border-bottom: 1px solid rgba(181,98,42,0.35);
+    padding-bottom: 12px;
+  }
+
+  .fb-field { margin-bottom: 16px; }
+  .fb-field label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fb-copper);
+    margin-bottom: 5px;
+  }
+  .fb-field input[type="text"],
+  .fb-field select,
+  .fb-field textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(181,98,42,0.4);
+    border-radius: 4px;
+    color: var(--fb-cream);
+    font-family: 'Fanwood Text', Georgia, serif;
+    font-size: 14px;
+    padding: 9px 11px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.15s, background 0.15s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .fb-field input[readonly] {
+    opacity: 0.55;
+    cursor: default;
+  }
+  .fb-field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B5622A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 11px center;
+    padding-right: 30px;
+    cursor: pointer;
+  }
+  .fb-field select option { background: var(--fb-navy); color: var(--fb-cream); }
+  .fb-field input:not([readonly]):focus,
+  .fb-field select:focus,
+  .fb-field textarea:focus {
+    border-color: var(--fb-copper);
+    background: rgba(255,255,255,0.09);
+  }
+  .fb-field textarea { resize: vertical; min-height: 88px; }
+
+  .fb-file-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 13px;
+    border: 1px dashed rgba(181,98,42,0.5);
+    border-radius: 4px;
+    font-size: 13px;
+    color: rgba(250,246,240,0.7);
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .fb-file-label:hover { border-color: var(--fb-copper); color: var(--fb-cream); }
+  .fb-file-label svg { color: var(--fb-copper); flex-shrink: 0; }
+  #gns-fb-screenshot { display: none; }
+  #fb-file-name {
+    font-size: 12px;
+    color: rgba(250,246,240,0.5);
+    margin-top: 5px;
+    font-style: italic;
+  }
+
+  #gns-fb-submit {
+    width: 100%;
+    margin-top: 6px;
+    padding: 11px;
+    background: var(--fb-copper);
+    color: var(--fb-cream);
+    border: none;
+    border-radius: 5px;
+    font-family: 'Fanwood Text', Georgia, serif;
+    font-size: 15px;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: background 0.17s, transform 0.1s;
+  }
+  #gns-fb-submit:hover:not(:disabled) { background: #c96e31; transform: translateY(-1px); }
+  #gns-fb-submit:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  /* shown when not authenticated */
+  #gns-fb-login-prompt {
+    display: none;
+    margin-top: 6px;
+    padding: 13px 16px;
+    border: 1px solid rgba(181,98,42,0.4);
+    border-radius: 5px;
+    background: rgba(181,98,42,0.08);
+    font-size: 13.5px;
+    color: rgba(250,246,240,0.75);
+    text-align: center;
+    line-height: 1.6;
+  }
+  #gns-fb-login-prompt a {
+    color: var(--fb-copper);
+    text-decoration: underline;
+  }
+
+  #gns-fb-confirm {
+    display: none;
+    text-align: center;
+    padding: 28px 0 12px;
+  }
+  #gns-fb-confirm .fb-check {
+    font-size: 36px;
+    line-height: 1;
+    margin-bottom: 14px;
+    color: var(--fb-copper);
+  }
+  #gns-fb-confirm p {
+    font-family: 'Linden Hill', Palatino, serif;
+    font-size: 19px;
+    color: var(--fb-cream);
+    margin: 0;
+  }
+
+  #gns-fb-error {
+    display: none;
+    font-size: 12px;
+    color: #e07070;
+    margin-top: 6px;
+  }
+</style>
+
+<!-- Trigger button -->
+<button id="gns-feedback-btn" aria-label="Open feedback form">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+  Feedback
+</button>
+
+<!-- Modal overlay -->
+<div id="gns-feedback-overlay" role="dialog" aria-modal="true" aria-labelledby="gns-fb-heading">
+  <div id="gns-feedback-modal">
+    <button id="gns-feedback-close" aria-label="Close">&#x2715;</button>
+
+    <div id="gns-fb-form-wrap">
+      <h2 id="gns-fb-heading">Submit Feedback</h2>
+
+      <div class="fb-field">
+        <label>Page</label>
+        <input type="text" id="gns-fb-page" readonly tabindex="-1">
+      </div>
+
+      <div class="fb-field">
+        <label for="gns-fb-type">Type</label>
+        <select id="gns-fb-type">
+          <option value="Bug / Something looks wrong">Bug / Something looks wrong</option>
+          <option value="Suggestion">Suggestion</option>
+          <option value="Question">Question</option>
+          <option value="Content Issue">Content Issue</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="fb-field">
+        <label for="gns-fb-desc">Description <span style="color:var(--fb-copper)">*</span></label>
+        <textarea id="gns-fb-desc" placeholder="Briefly describe what you noticed..."></textarea>
+        <div id="gns-fb-error">Please add a description before submitting.</div>
+      </div>
+
+      <div class="fb-field">
+        <label>Screenshot <span style="opacity:0.5;font-size:10px;text-transform:none">(optional)</span></label>
+        <label class="fb-file-label" for="gns-fb-screenshot">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          Choose file…
+        </label>
+        <input type="file" id="gns-fb-screenshot" accept="image/*">
+        <div id="fb-file-name">No file selected</div>
+      </div>
+
+      <div class="fb-field">
+        <label>Submitted by</label>
+        <input type="text" id="gns-fb-name" readonly tabindex="-1" placeholder="Checking…">
+      </div>
+
+      <button id="gns-fb-submit">Submit Feedback</button>
+
+      <div id="gns-fb-login-prompt">
+        You must be logged in to submit feedback.<br>
+        <a id="gns-fb-login-link" href="/login.html">Log in to your account →</a>
+      </div>
+    </div>
+
+    <div id="gns-fb-confirm">
+      <div class="fb-check">&#10003;</div>
+      <p>Thanks — logged!</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  function getClient() {
+    if (window._supabaseClient) return window._supabaseClient;
+    if (window.supabase && window.SUPABASE_URL && window.SUPABASE_ANON_KEY) {
+      window._supabaseClient = window.supabase.createClient(
+        window.SUPABASE_URL, window.SUPABASE_ANON_KEY
+      );
+      return window._supabaseClient;
+    }
+    return null;
+  }
+
+  const btn         = document.getElementById('gns-feedback-btn');
+  const overlay     = document.getElementById('gns-feedback-overlay');
+  const closeBtn    = document.getElementById('gns-feedback-close');
+  const formWrap    = document.getElementById('gns-fb-form-wrap');
+  const confirmDiv  = document.getElementById('gns-fb-confirm');
+  const submitBtn   = document.getElementById('gns-fb-submit');
+  const loginPrompt = document.getElementById('gns-fb-login-prompt');
+  const pageInput   = document.getElementById('gns-fb-page');
+  const typeSelect  = document.getElementById('gns-fb-type');
+  const descTA      = document.getElementById('gns-fb-desc');
+  const nameInput   = document.getElementById('gns-fb-name');
+  const fileInput   = document.getElementById('gns-fb-screenshot');
+  const fileNameEl  = document.getElementById('fb-file-name');
+  const errorMsg    = document.getElementById('gns-fb-error');
+  const loginLink   = document.getElementById('gns-fb-login-link');
+
+  let _contributorId = null;
+  let _authChecked   = false;
+
+  // Auto-populate page field
+  pageInput.value = document.title
+    || window.location.pathname.split('/').pop()
+    || window.location.href;
+
+  // Open / close
+  btn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+  });
+
+  async function openModal() {
+    overlay.classList.add('open');
+    if (!_authChecked) await checkAuth();
+    if (submitBtn.style.display !== 'none') descTA.focus();
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    setTimeout(resetForm, 250);
+  }
+
+  function resetForm() {
+    formWrap.style.display   = '';
+    confirmDiv.style.display = 'none';
+    descTA.value             = '';
+    fileInput.value          = '';
+    fileNameEl.textContent   = 'No file selected';
+    errorMsg.style.display   = 'none';
+    submitBtn.disabled       = false;
+    submitBtn.textContent    = 'Submit Feedback';
+    typeSelect.selectedIndex = 0;
+    // Re-run auth check next open in case session changed
+    _authChecked = false;
+  }
+
+  // Auth check
+  async function checkAuth() {
+    _authChecked = true;
+    nameInput.placeholder = 'Checking…';
+    const client = getClient();
+
+    if (!client) { showUnauthState('No database connection.'); return; }
+
+    try {
+      const { data: { user }, error: authErr } = await client.auth.getUser();
+      if (authErr || !user) { showUnauthState(); return; }
+
+      const { data: profile } = await client
+        .from('contributor_profile')
+        .select('id, display_name')
+        .eq('auth_user_id', user.id)
+        .single();
+
+      if (profile) {
+        nameInput.value = profile.display_name || user.email || 'Unknown';
+        _contributorId  = profile.id;
+      } else {
+        nameInput.value = user.email || 'Unknown';
+        _contributorId  = null;
+      }
+
+      showAuthState();
+
+    } catch (err) {
+      console.warn('Feedback widget auth check:', err);
+      showUnauthState();
+    }
+  }
+
+  function showAuthState() {
+    submitBtn.style.display   = '';
+    loginPrompt.style.display = 'none';
+    nameInput.placeholder     = '';
+  }
+
+  function showUnauthState(msg) {
+    submitBtn.style.display   = 'none';
+    loginPrompt.style.display = 'block';
+    nameInput.value           = '';
+    nameInput.placeholder     = 'Not logged in';
+    _contributorId            = null;
+    // Append return URL so the user lands back here after login
+    const returnPath = encodeURIComponent(window.location.href);
+    loginLink.href   = `/login.html?return=${returnPath}`;
+  }
+
+  // File name display
+  fileInput.addEventListener('change', () => {
+    fileNameEl.textContent = fileInput.files.length
+      ? fileInput.files[0].name
+      : 'No file selected';
+  });
+
+  // Submit
+  submitBtn.addEventListener('click', async () => {
+    const desc = descTA.value.trim();
+    if (!desc) {
+      errorMsg.style.display = 'block';
+      descTA.focus();
+      return;
+    }
+    errorMsg.style.display  = 'none';
+    submitBtn.disabled      = true;
+    submitBtn.textContent   = 'Submitting…';
+
+    const client = getClient();
+    if (!client) {
+      alert('Could not connect to database. Please try again.');
+      submitBtn.disabled    = false;
+      submitBtn.textContent = 'Submit Feedback';
+      return;
+    }
+
+    try {
+      // Upload screenshot if present
+      let screenshotUrl = null;
+      if (fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        const ext  = file.name.split('.').pop();
+        const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+        const { error: upErr } = await client.storage
+          .from('feedback-screenshots')
+          .upload(path, file, { upsert: false });
+        if (!upErr) {
+          const { data: urlData } = client.storage
+            .from('feedback-screenshots')
+            .getPublicUrl(path);
+          screenshotUrl = urlData.publicUrl;
+        }
+      }
+
+      // Insert row
+      const { error: insErr } = await client.from('feedback').insert({
+        page:           pageInput.value,
+        feedback_type:  typeSelect.value,
+        description:    desc,
+        screenshot_url: screenshotUrl,
+        submitted_by:   nameInput.value || null,
+        contributor_id: _contributorId || null,
+        status:         'new'
+      });
+      if (insErr) throw insErr;
+
+      // Confirm
+      formWrap.style.display   = 'none';
+      confirmDiv.style.display = 'block';
+      setTimeout(closeModal, 2000);
+
+    } catch (err) {
+      console.error('Feedback submit error:', err);
+      alert('Something went wrong. Please try again.');
+      submitBtn.disabled    = false;
+      submitBtn.textContent = 'Submit Feedback';
+    }
+  });
+
+})();
+</script>
+<!-- End GNS Feedback Widget v2 -->
 
 </body>
 </html>

@@ -8,9 +8,9 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Fanwood Text', 'Fanwood', Georgia, serif;
-      background: #F0EDE4;
-      color: #1E2B22;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #FAF6F0;
+      color: #1a1a1a;
       min-height: 100vh;
     }
 
@@ -18,13 +18,9 @@
     @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill.otf') format('opentype'); font-weight: normal; font-style: normal; }
     @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
     @font-face { font-family: 'Runtime'; src: url('Runtime.otf') format('opentype'); font-weight: normal; font-style: normal; }
-    @font-face { font-family: 'Fanwood Text'; src: url('Fanwood_Text.otf') format('opentype'); font-weight: normal; font-style: normal; }
-    @font-face { font-family: 'Fanwood Text'; src: url('Fanwood_Text_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
-    @font-face { font-family: 'Fanwood'; src: url('Fanwood.otf') format('opentype'); font-weight: normal; font-style: normal; }
-    @font-face { font-family: 'Fanwood'; src: url('Fanwood_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
 
     header {
-      background: #1E2B22;
+      background: #1B2E4B;
       color: #fff;
       padding: 14px 2rem;
       height: auto;
@@ -37,7 +33,7 @@
       box-shadow: 0 2px 8px rgba(0,0,0,.25);
     }
     .wordmark { display: flex; flex-direction: column; gap: 1px; line-height: 1; text-decoration: none; }
-    .wm-line1 { font-family: 'Linden Hill', Georgia, serif; font-size: 2.22rem; font-style: normal; color: #F0EDE4; letter-spacing: 0.01em; line-height: 1; }
+    .wm-line1 { font-family: 'Linden Hill', Georgia, serif; font-size: 2.22rem; font-style: normal; color: #FAF6F0; letter-spacing: 0.01em; line-height: 1; }
     .wm-line2 { font-family: 'Runtime', sans-serif; font-size: 0.98rem; color: rgba(250,246,240,0.72); letter-spacing: 0.04em; line-height: 1; }
     .header-nav { display: flex; align-items: center; }
     .header-nav a {
@@ -53,13 +49,13 @@
       transition: color .15s;
     }
     .header-nav a:hover { color: #fff; }
-    .header-nav a.active { color: #fff; border-bottom-color: #A8894E; }
+    .header-nav a.active { color: #fff; border-bottom-color: #B5622A; }
 
-    .site-footer { border-top: 2px solid #1E2B22; background: #F0EDE4; padding: 2rem 40px; flex-shrink: 0; }
+    .site-footer { border-top: 2px solid #1b2e4b; background: #faf6f0; padding: 2rem 40px; flex-shrink: 0; }
     .site-footer-inner { max-width: 1280px; margin: 0 auto; display: flex; gap: 3rem; }
-    .footer-copy, .footer-legal { flex: 1; font-size: 0.75rem; color: #6B7A60; line-height: 1.65; }
-    .footer-copy a { color: #6B7A60; text-decoration: underline; text-underline-offset: 2px; }
-    .footer-copy a:hover { color: #A8894E; }
+    .footer-copy, .footer-legal { flex: 1; font-size: 0.75rem; color: #9a8e83; line-height: 1.65; }
+    .footer-copy a { color: #9a8e83; text-decoration: underline; text-underline-offset: 2px; }
+    .footer-copy a:hover { color: #b5622a; }
     @media (max-width: 680px) { .site-footer { padding: 1.5rem 20px; } .site-footer-inner { flex-direction: column; gap: 1.2rem; } }
 
     /* ── Layout ── */
@@ -70,7 +66,7 @@
       display: flex;
       align-items: flex-end;
       gap: 0;
-      border-bottom: 2px solid #DDD8C8;
+      border-bottom: 2px solid #E2DBD2;
       margin-bottom: 1.5rem;
       flex-wrap: wrap;
     }
@@ -83,7 +79,7 @@
       font-size: .875rem;
       font-weight: 500;
       font-family: inherit;
-      color: #6B7A60;
+      color: #7a7069;
       cursor: pointer;
       transition: color .15s;
       display: flex;
@@ -91,8 +87,8 @@
       gap: 4px;
       white-space: nowrap;
     }
-    .tab-btn:hover { color: #1E2B22; }
-    .tab-btn.active { color: #1E2B22; border-bottom-color: #A8894E; font-weight: 600; }
+    .tab-btn:hover { color: #1B2E4B; }
+    .tab-btn.active { color: #1B2E4B; border-bottom-color: #B5622A; font-weight: 600; }
     .tab-remove {
       background: none;
       border: none;
@@ -112,7 +108,7 @@
       padding: .65rem .8rem;
       font-size: .8rem;
       font-family: inherit;
-      color: #A8894E;
+      color: #B5622A;
       cursor: pointer;
       opacity: .7;
       transition: opacity .15s;
@@ -133,12 +129,12 @@
     }
     .toolbar select {
       padding: .38rem .75rem;
-      border: 1.5px solid #DDD8C8;
+      border: 1.5px solid #E2DBD2;
       border-radius: 6px;
       font-size: .82rem;
       font-family: inherit;
-      background: #FDFCF8;
-      color: #1E2B22;
+      background: #fff;
+      color: #1a1a1a;
       cursor: pointer;
       outline: none;
       -webkit-appearance: none;
@@ -148,35 +144,35 @@
       background-position: right 9px center;
       padding-right: 26px;
     }
-    .toolbar select:focus { border-color: #1E2B22; }
+    .toolbar select:focus { border-color: #1B2E4B; }
     .filter-toggle {
       padding: .38rem .85rem;
-      border: 1.5px solid #DDD8C8;
+      border: 1.5px solid #E2DBD2;
       border-radius: 6px;
       font-size: .82rem;
       font-family: inherit;
-      background: #FDFCF8;
-      color: #6B7A60;
+      background: #fff;
+      color: #7a7069;
       cursor: pointer;
       transition: border-color .15s, color .15s, background .15s;
     }
-    .filter-toggle.active { border-color: #A8894E; color: #A8894E; background: rgba(181,98,42,.06); }
+    .filter-toggle.active { border-color: #B5622A; color: #B5622A; background: rgba(181,98,42,.06); }
     .toolbar-spacer { flex: 1; }
     .add-col-btn {
       padding: .38rem .85rem;
       border: 1.5px dashed #D0C8BE;
       border-radius: 6px;
       background: none;
-      color: #6B7A60;
+      color: #9a8e83;
       font-size: .78rem;
       font-family: inherit;
       cursor: pointer;
       transition: border-color .15s, color .15s;
     }
-    .add-col-btn:hover { border-color: #A8894E; color: #A8894E; }
+    .add-col-btn:hover { border-color: #B5622A; color: #B5622A; }
     .add-row-btn {
       padding: .38rem .95rem;
-      background: #1E2B22;
+      background: #1B2E4B;
       color: #fff;
       border: none;
       border-radius: 6px;
@@ -190,7 +186,7 @@
 
     /* ── Table ── */
     .table-wrap {
-      background: #FDFCF8;
+      background: #fff;
       border-radius: 10px;
       box-shadow: 0 2px 12px rgba(27,46,75,.07), 0 1px 3px rgba(0,0,0,.04);
       overflow: hidden;
@@ -205,24 +201,24 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: .08em;
-      color: #6B7A60;
+      color: #7a7069;
       position: sticky;
       top: 0;
       white-space: nowrap;
     }
     tbody tr { border-top: 1px solid #F0EBE4; transition: background .1s; }
     tbody tr:hover { background: #FDFAF7; }
-    tbody td { padding: .55rem 1rem; vertical-align: middle; color: #1E2B22; cursor: pointer; }
+    tbody td { padding: .55rem 1rem; vertical-align: middle; color: #2c2c2c; cursor: pointer; }
     tbody td.no-edit { cursor: default; }
     tbody td input, tbody td select {
       width: 100%;
       padding: 4px 7px;
-      border: 1.5px solid #1E2B22;
+      border: 1.5px solid #1B2E4B;
       border-radius: 5px;
       font-size: .84rem;
       font-family: inherit;
-      color: #1E2B22;
-      background: #FDFCF8;
+      color: #2c2c2c;
+      background: #fff;
       outline: none;
     }
     tbody td select {
@@ -234,7 +230,7 @@
       appearance: none;
       cursor: pointer;
     }
-    .mono { font-family: 'SF Mono', 'Fira Code', monospace; font-size: .78rem; color: #6B7A60; }
+    .mono { font-family: 'SF Mono', 'Fira Code', monospace; font-size: .78rem; color: #7a7069; }
     .swatch-cell { display: flex; align-items: center; gap: 7px; }
     .swatch {
       display: inline-block;
@@ -244,14 +240,14 @@
       flex-shrink: 0;
     }
     .bool-cell { text-align: center; }
-    .bool-cell input[type="checkbox"] { width: 15px; height: 15px; cursor: pointer; accent-color: #A8894E; }
+    .bool-cell input[type="checkbox"] { width: 15px; height: 15px; cursor: pointer; accent-color: #B5622A; }
     .custom-col-badge {
       display: inline-block;
       font-size: .52rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: .05em;
-      color: #A8894E;
+      color: #B5622A;
       background: rgba(181,98,42,.1);
       padding: 1px 4px;
       border-radius: 3px;
@@ -269,7 +265,7 @@
     #status-msg {
       text-align: center;
       padding: 2.5rem 1rem;
-      color: #6B7A60;
+      color: #7a7069;
       font-size: .9rem;
       display: none;
     }
@@ -286,14 +282,14 @@
     }
     .modal-overlay.hidden { display: none; }
     .modal-box {
-      background: #FDFCF8;
+      background: #fff;
       border-radius: 10px;
       padding: 28px 30px 24px;
       width: 390px;
       max-width: 92vw;
       box-shadow: 0 10px 40px rgba(27,46,75,.18);
     }
-    .modal-box h3 { font-size: 1rem; font-weight: 600; color: #1E2B22; margin-bottom: 18px; }
+    .modal-box h3 { font-size: 1rem; font-weight: 600; color: #1B2E4B; margin-bottom: 18px; }
     .modal-info {
       background: #FFF8F2;
       border: 1px solid #F0C8A0;
@@ -311,21 +307,21 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: .08em;
-      color: #6B7A60;
+      color: #7a7069;
       margin-bottom: 5px;
     }
     .modal-field input, .modal-field select {
       width: 100%;
       padding: 8px 10px;
-      border: 1.5px solid #DDD8C8;
+      border: 1.5px solid #E2DBD2;
       border-radius: 6px;
       font-size: .875rem;
       font-family: inherit;
-      color: #1E2B22;
+      color: #1a1a1a;
       outline: none;
-      background: #FDFCF8;
+      background: #fff;
     }
-    .modal-field input:focus, .modal-field select:focus { border-color: #1E2B22; }
+    .modal-field input:focus, .modal-field select:focus { border-color: #1B2E4B; }
     .modal-field select {
       -webkit-appearance: none;
       appearance: none;
@@ -338,10 +334,10 @@
     .modal-actions { display: flex; justify-content: flex-end; gap: .55rem; margin-top: 20px; }
     .btn-cancel {
       padding: .4rem 1rem;
-      border: 1.5px solid #DDD8C8;
+      border: 1.5px solid #E2DBD2;
       border-radius: 6px;
-      background: #FDFCF8;
-      color: #6B7A60;
+      background: #fff;
+      color: #7a7069;
       font-size: .82rem;
       font-family: inherit;
       cursor: pointer;
@@ -352,7 +348,7 @@
       padding: .4rem 1.1rem;
       border: none;
       border-radius: 6px;
-      background: #1E2B22;
+      background: #1B2E4B;
       color: #fff;
       font-size: .82rem;
       font-weight: 600;
@@ -361,66 +357,21 @@
       transition: background .15s;
     }
     .btn-confirm:hover { background: #253d63; }
-
-    /* ── Header identity + site nav ── */
-    .header-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 1280px; margin: 0 auto; }
-    #header-identity { display: none; flex-direction: column; align-items: flex-end; gap: 1px; }
-    .header-cid  { font-size: 0.7rem;  font-weight: 700; color: #A8894E; letter-spacing: 0.07em; }
-    .header-name { font-size: 0.75rem; color: #c8d8e8; }
-    .header-right { display: flex; align-items: center; gap: 20px; }
-    .sign-out-btn { background: transparent; border: 1px solid rgba(255,255,255,0.22); color: #c8d8e8; border-radius: 5px; padding: 5px 13px; font-size: 0.775rem; font-family: inherit; cursor: pointer; transition: border-color 0.15s, color 0.15s; white-space: nowrap; }
-    .sign-out-btn:hover { border-color: rgba(255,255,255,0.55); color: #fff; }
-    /* ── Site nav ── */
-    .site-nav { display: flex; align-items: center; gap: 4px; margin: 0 20px; }
-    .nav-enter { display: inline-flex; align-items: center; color: #A8894E; border: 1.5px solid #A8894E; border-radius: 20px; padding: 6px 14px; font-size: 13px; font-weight: 500; letter-spacing: 0.03em; text-decoration: none; white-space: nowrap; background: transparent; transition: background 0.2s ease, color 0.2s ease; margin-right: 4px; }
-    .nav-enter:hover { background: #A8894E; color: #F0EDE4; }
-    .nav-link { color: rgba(250,246,240,0.65); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.03em; white-space: nowrap; padding: 4px 10px; border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s; background: none; border-top: none; border-left: none; border-right: none; cursor: pointer; font-family: inherit; line-height: inherit; }
-    .nav-link:hover { color: #F0EDE4; }
-    .nav-link.active { color: #F0EDE4; border-bottom-color: #A8894E; }
-    .nav-founding { visibility: hidden; }
-    .nav-founding.nav-visible { visibility: visible; }
-    .nav-dropdown { position: relative; display: flex; align-items: center; }
-    .nav-dropdown::after { content: ''; position: absolute; left: 0; right: 0; top: 100%; height: 10px; }
-    .nav-dropdown-trigger { display: inline-flex; align-items: center; cursor: pointer; }
-    .nav-dropdown-trigger::after { content: ''; display: inline-block; width: 0; height: 0; border-left: 3px solid transparent; border-right: 3px solid transparent; border-top: 4px solid currentColor; margin-left: 5px; opacity: 0.5; transition: transform 0.15s; }
-    .nav-dropdown:hover .nav-dropdown-trigger { color: #F0EDE4; }
-    .nav-dropdown:hover .nav-dropdown-trigger::after { transform: rotate(180deg); opacity: 1; }
-    .nav-dropdown-menu { position: absolute; top: calc(100% + 10px); left: 0; background: #1E2B22; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); padding: 6px 0; min-width: 190px; opacity: 0; visibility: hidden; transform: translateY(-4px); transition: opacity 0.15s ease, visibility 0.15s, transform 0.15s ease; z-index: 300; }
-    .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
-    .nav-dropdown-item { display: block; color: rgba(250,246,240,0.72); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.02em; padding: 9px 18px; white-space: nowrap; transition: color 0.12s; }
-    .nav-dropdown-item:hover { color: #A8894E; }
-    .nav-dropdown-item.active { color: #F0EDE4; font-weight: 600; }
-    .nav-dropdown-disabled { display: flex; align-items: center; gap: 8px; color: rgba(250,246,240,0.28); cursor: not-allowed; font-size: 13px; font-weight: 500; letter-spacing: 0.02em; padding: 9px 18px; white-space: nowrap; }
-    .nav-dropdown-soon { font-size: 0.68rem; color: #6B7A60; }
   </style>
 </head>
 <body>
 
 <header>
-  <div class="header-inner">
-    <a href="dashboard.html" class="wordmark">
+  <div style="display:flex;align-items:center;">
+    <a href="dashboard.html" class="wordmark" style="margin-right:1.5rem;">
       <span class="wm-line1">The Repertory</span>
       <span class="wm-line2">a Collective effort</span>
     </a>
-    <nav class="site-nav">
-      <a href="#" class="nav-enter"><img src="keyhole.png" alt="" width="14" height="20" style="vertical-align:middle; margin-right:6px;">Enter The Repertory</a>
-      <a href="contributor-form.html" class="nav-link">Submit</a>
-      <div class="nav-dropdown">
-        <span class="nav-link nav-dropdown-trigger active">Resources</span>
-        <div class="nav-dropdown-menu">
-          <a href="condition-standard.html" class="nav-dropdown-item">Condition Standard</a>
-          <a href="admin-glossary.html" class="nav-dropdown-item nav-founding active">Glossary</a>
-          <span class="nav-dropdown-disabled">Tools <span class="nav-dropdown-soon">Coming Soon</span></span>
-        </div>
-      </div>
+    <nav class="header-nav">
+      <a href="admin-review.html">Queue</a>
+      <a href="admin-glossary.html" class="active">Glossary</a>
+      <a href="resources.html">Resources</a>
     </nav>
-    <div class="header-right">
-      <div id="header-identity">
-        <span class="header-cid"  id="header-cid"></span>
-        <span class="header-name" id="header-name"></span>
-      </div>
-      <button class="sign-out-btn" id="sign-out-btn">Sign out</button>
-    </div>
   </div>
 </header>
 
@@ -444,17 +395,15 @@
 
 <script>
   const SUPABASE_URL = 'https://hsseypuhqdlcvepgyrtd.supabase.co'
-  const SUPABASE_KEY = 'sb_publishable_WOh4vQeiGzrN9CoICfiUTQ_XB5MQJw0'
-
-  const accessToken = localStorage.getItem('gns_access_token')
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhzc2V5cHVocWRsY3ZlcGd5cnRkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTc3NTk0MSwiZXhwIjoyMDkxMzUxOTQxfQ.mGNhUtPSCJWNDTVY1dlhwROsUMTAw-1dHkvRHYV0M0c'
 
   const DB_HEADERS = {
     'apikey':        SUPABASE_KEY,
-    'Authorization': `Bearer ${accessToken}`,
+    'Authorization': `Bearer ${SUPABASE_KEY}`,
     'Content-Type':  'application/json'
   }
 
-  let SCHEMA_HEADERS = { ...DB_HEADERS, 'Accept-Profile': 'information_schema' }
+  const SCHEMA_HEADERS = { ...DB_HEADERS, 'Accept-Profile': 'information_schema' }
 
   // ── Table label map ──────────────────────────────────────────────────────────
   const TABLE_LABELS = {
@@ -1165,63 +1114,24 @@
   }
 
   // ─── Admin access guard ────────────────────────────────────────────────────
-  async function refreshAccessToken() {
-    const rt = localStorage.getItem('gns_refresh_token')
-    if (!rt) return null
-    try {
-      const r = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
-        body: JSON.stringify({ refresh_token: rt })
-      })
-      if (!r.ok) return null
-      const d = await r.json()
-      if (!d.access_token) return null
-      localStorage.setItem('gns_access_token', d.access_token)
-      localStorage.setItem('gns_refresh_token', d.refresh_token)
-      localStorage.setItem('gns_user', JSON.stringify(d.user))
-      DB_HEADERS['Authorization'] = 'Bearer ' + d.access_token
-      SCHEMA_HEADERS['Authorization'] = 'Bearer ' + d.access_token
-      return d.access_token
-    } catch { return null }
-  }
-
   async function checkAdminAccess() {
-    let token = localStorage.getItem('gns_access_token')
+    const token = localStorage.getItem('gns_access_token')
     if (!token) { window.location.replace('dashboard.html'); return false }
     try {
       const parts = token.split('.')
       const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')))
       const userId = payload.sub
       if (!userId) throw new Error('no sub')
-      let res = await fetch(
-        `${SUPABASE_URL}/rest/v1/contributor_profile?auth_user_id=eq.${userId}&select=contributor_id,display_name,membership_tier&limit=1`,
-        { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + token } }
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/contributor_profile?auth_user_id=eq.${userId}&select=contributor_id,membership_tier&limit=1`,
+        { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } }
       )
-      if (res.status === 401) {
-        token = await refreshAccessToken()
-        if (!token) { window.location.replace('dashboard.html'); return false }
-        res = await fetch(
-          `${SUPABASE_URL}/rest/v1/contributor_profile?auth_user_id=eq.${userId}&select=contributor_id,display_name,membership_tier&limit=1`,
-          { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + token } }
-        )
-      }
       if (!res.ok) throw new Error('fetch failed')
       const rows = await res.json()
       const p = rows[0]
       if (!p || p.contributor_id !== 'GNS-00001' || p.membership_tier !== 'founding') {
         window.location.replace('dashboard.html'); return false
       }
-      document.getElementById('header-cid').textContent  = p.contributor_id || ''
-      document.getElementById('header-name').textContent = p.display_name   || ''
-      document.getElementById('header-identity').style.display = 'flex'
-      document.querySelectorAll('.nav-founding').forEach(function(el) { el.classList.add('nav-visible') })
-      document.getElementById('sign-out-btn').addEventListener('click', function() {
-        localStorage.removeItem('gns_access_token')
-        localStorage.removeItem('gns_refresh_token')
-        localStorage.removeItem('gns_user')
-        window.location.replace('dashboard.html')
-      })
       return true
     } catch {
       window.location.replace('dashboard.html'); return false
@@ -1238,8 +1148,169 @@
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script>window._supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);</script>
+<!-- ── Feedback Widget ──────────────────────────────────────────────────────── -->
+<style>
+#fbw-btn{position:fixed;bottom:24px;right:24px;z-index:9000;background:#1B2E4B;color:#FAF6F0;border:2px solid #B5622A;border-radius:24px;padding:9px 18px 9px 14px;font-size:.82rem;font-weight:600;font-family:inherit;letter-spacing:.04em;cursor:pointer;display:flex;align-items:center;gap:7px;box-shadow:0 4px 16px rgba(27,46,75,.28);transition:background .15s,box-shadow .15s}
+#fbw-btn:hover{background:#253d63;box-shadow:0 6px 20px rgba(27,46,75,.38)}
+#fbw-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:9001;align-items:center;justify-content:center;padding:1rem}
+#fbw-overlay.open{display:flex}
+#fbw-modal{background:#1B2E4B;border:1.5px solid #B5622A;border-radius:14px;padding:28px 30px 24px;width:100%;max-width:480px;box-shadow:0 20px 60px rgba(0,0,0,.45);position:relative;color:#FAF6F0}
+#fbw-close{position:absolute;top:14px;right:16px;background:none;border:none;color:rgba(250,246,240,.55);font-size:1.3rem;line-height:1;cursor:pointer;padding:4px 6px;border-radius:4px;transition:color .15s}
+#fbw-close:hover{color:#FAF6F0}
+#fbw-modal h2{font-family:'Linden Hill',Georgia,serif;font-size:1.45rem;color:#FAF6F0;margin-bottom:20px;letter-spacing:.01em}
+.fbw-group{margin-bottom:16px}
+.fbw-label{display:block;font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:rgba(250,246,240,.6);margin-bottom:6px}
+.fbw-input,.fbw-select,.fbw-textarea{width:100%;background:rgba(250,246,240,.07);border:1.5px solid rgba(181,98,42,.45);border-radius:7px;padding:9px 12px;font-size:.88rem;font-family:inherit;color:#FAF6F0;outline:none;transition:border-color .15s}
+.fbw-input::placeholder,.fbw-textarea::placeholder{color:rgba(250,246,240,.3)}
+.fbw-input:focus,.fbw-select:focus,.fbw-textarea:focus{border-color:#B5622A}
+.fbw-input[readonly]{opacity:.55;cursor:default}
+.fbw-select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B5622A' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.fbw-select option{background:#1B2E4B;color:#FAF6F0}
+.fbw-textarea{resize:vertical;min-height:88px;line-height:1.55}
+#fbw-error{font-size:.8rem;color:#f87171;margin-bottom:12px;display:none}
+#fbw-success{text-align:center;padding:24px 0 8px;display:none}
+#fbw-success .fbw-check{font-size:2.4rem;margin-bottom:10px;color:#B5622A}
+#fbw-success p{color:rgba(250,246,240,.8);font-size:.95rem}
+#fbw-submit{width:100%;background:#B5622A;color:#FAF6F0;border:none;border-radius:7px;padding:11px 16px;font-size:.9rem;font-weight:600;font-family:inherit;letter-spacing:.03em;cursor:pointer;transition:background .15s;margin-top:4px}
+#fbw-submit:hover:not(:disabled){background:#9a501f}
+#fbw-submit:disabled{opacity:.5;cursor:not-allowed}
+</style>
+
+<button id="fbw-btn" aria-label="Send feedback">
+  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M14 1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h3l3 3 3-3h3a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" stroke="#B5622A" stroke-width="1.5" stroke-linejoin="round"/></svg>
+  Feedback
+</button>
+
+<div id="fbw-overlay" role="dialog" aria-modal="true" aria-labelledby="fbw-title">
+  <div id="fbw-modal">
+    <button id="fbw-close" aria-label="Close">&times;</button>
+    <h2 id="fbw-title">Send Feedback</h2>
+    <div id="fbw-form-body">
+      <div class="fbw-group">
+        <label class="fbw-label" for="fbw-page">Page</label>
+        <input class="fbw-input" type="text" id="fbw-page" readonly>
+      </div>
+      <div class="fbw-group">
+        <label class="fbw-label" for="fbw-type">Type</label>
+        <select class="fbw-select" id="fbw-type">
+          <option value="bug">Bug / Something looks wrong</option>
+          <option value="suggestion">Suggestion</option>
+          <option value="question">Question</option>
+          <option value="content_issue">Content Issue</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="fbw-group">
+        <label class="fbw-label" for="fbw-desc">Description <span style="color:#f87171;font-weight:400;text-transform:none;letter-spacing:0">*</span></label>
+        <textarea class="fbw-textarea" id="fbw-desc" placeholder="Briefly describe what you noticed&hellip;"></textarea>
+      </div>
+      <div class="fbw-group">
+        <label class="fbw-label" for="fbw-screenshot">Screenshot <span style="font-weight:400;text-transform:none;letter-spacing:0;color:rgba(250,246,240,.4)">(optional)</span></label>
+        <input class="fbw-input" type="file" id="fbw-screenshot" accept="image/*" style="padding:6px 12px">
+      </div>
+      <div class="fbw-group">
+        <label class="fbw-label" for="fbw-name">Your Name <span style="font-weight:400;text-transform:none;letter-spacing:0;color:rgba(250,246,240,.4)">(optional)</span></label>
+        <input class="fbw-input" type="text" id="fbw-name" placeholder="e.g. Jane Smith" autocomplete="name">
+      </div>
+      <div id="fbw-error"></div>
+      <button id="fbw-submit">Submit Feedback</button>
+    </div>
+    <div id="fbw-success">
+      <div class="fbw-check">&#10003;</div>
+      <p>Thanks &mdash; logged!</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var SB_URL='https://hsseypuhqdlcvepgyrtd.supabase.co'
+  var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhzc2V5cHVocWRsY3ZlcGd5cnRkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTc3NTk0MSwiZXhwIjoyMDkxMzUxOTQxfQ.mGNhUtPSCJWNDTVY1dlhwROsUMTAw-1dHkvRHYV0M0c'
+  var SB_HDR={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}
+  var overlay=document.getElementById('fbw-overlay')
+  var formBody=document.getElementById('fbw-form-body')
+  var successEl=document.getElementById('fbw-success')
+  var errEl=document.getElementById('fbw-error')
+  var submitBtn=document.getElementById('fbw-submit')
+
+  document.getElementById('fbw-page').value=document.title||location.pathname.split('/').pop()||'Unknown'
+
+  try{
+    var u=JSON.parse(localStorage.getItem('gns_user')||'null')
+    if(u&&u.id)fetch(SB_URL+'/rest/v1/contributor_profile?auth_user_id=eq.'+u.id+'&select=display_name&limit=1',{headers:SB_HDR})
+      .then(function(r){return r.ok?r.json():[]}).then(function(rows){if(rows[0]&&rows[0].display_name)document.getElementById('fbw-name').value=rows[0].display_name}).catch(function(){})
+  }catch(e){}
+
+  function openModal(){overlay.classList.add('open');document.getElementById('fbw-desc').focus()}
+  function closeModal(){
+    overlay.classList.remove('open')
+    setTimeout(function(){
+      document.getElementById('fbw-desc').value=''
+      document.getElementById('fbw-screenshot').value=''
+      errEl.style.display='none'
+      formBody.style.display='block'
+      successEl.style.display='none'
+      submitBtn.disabled=false
+      submitBtn.textContent='Submit Feedback'
+    },250)
+  }
+
+  document.getElementById('fbw-btn').addEventListener('click',openModal)
+  document.getElementById('fbw-close').addEventListener('click',closeModal)
+  overlay.addEventListener('click',function(e){if(e.target===overlay)closeModal()})
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&overlay.classList.contains('open'))closeModal()})
+
+  function uploadScreenshot(file){
+    var ext=file.name.split('.').pop()||'png'
+    var path=Date.now()+'-'+Math.random().toString(36).slice(2)+'.'+ext
+    return fetch(SB_URL+'/storage/v1/object/feedback-screenshots/'+path,{
+      method:'POST',headers:Object.assign({},SB_HDR,{'Content-Type':file.type}),body:file
+    }).then(function(r){
+      if(!r.ok)throw new Error('Screenshot upload failed')
+      return SB_URL+'/storage/v1/object/public/feedback-screenshots/'+path
+    })
+  }
+
+  submitBtn.addEventListener('click',function(){
+    var desc=document.getElementById('fbw-desc').value.trim()
+    errEl.style.display='none'
+    if(!desc){errEl.textContent='Description is required.';errEl.style.display='block';document.getElementById('fbw-desc').focus();return}
+    submitBtn.disabled=true;submitBtn.textContent='Submitting…'
+    var filePromise=document.getElementById('fbw-screenshot').files[0]
+      ?uploadScreenshot(document.getElementById('fbw-screenshot').files[0])
+      :Promise.resolve(null)
+    filePromise.then(function(screenshot_url){
+      var storedUser=null
+      try{storedUser=JSON.parse(localStorage.getItem('gns_user')||'null')}catch(e){}
+      return fetch(SB_URL+'/rest/v1/feedback',{
+        method:'POST',
+        headers:Object.assign({},SB_HDR,{'Content-Type':'application/json','Prefer':'return=minimal'}),
+        body:JSON.stringify({
+          page:document.getElementById('fbw-page').value,
+          feedback_type:document.getElementById('fbw-type').value,
+          description:desc,
+          screenshot_url:screenshot_url,
+          submitted_by:document.getElementById('fbw-name').value.trim()||null,
+          contributor_id:storedUser?storedUser.id:null,
+          status:'new'
+        })
+      })
+    }).then(function(r){
+      if(!r.ok)throw new Error('Submission failed')
+      formBody.style.display='none';successEl.style.display='block'
+      setTimeout(closeModal,2000)
+    }).catch(function(err){
+      errEl.textContent=err.message||'Something went wrong. Please try again.'
+      errEl.style.display='block'
+      submitBtn.disabled=false;submitBtn.textContent='Submit Feedback'
+    })
+  })
+})()
+</script>
+<!-- ── /Feedback Widget ─────────────────────────────────────────────────────── -->
+
+
+
 <!--
   ============================================================
   GNS FEEDBACK WIDGET  — feedback-widget.html  (v2)
@@ -1256,9 +1327,9 @@
 
 <style>
   :root {
-    --fb-navy:    #1E2B22;
-    --fb-copper:  #A8894E;
-    --fb-cream:   #F0EDE4;
+    --fb-navy:    #1B2E4B;
+    --fb-copper:  #B5622A;
+    --fb-cream:   #FAF6F0;
     --fb-overlay: rgba(15, 22, 36, 0.72);
   }
 
@@ -1750,6 +1821,512 @@
 </script>
 <!-- End GNS Feedback Widget v2 -->
 
+</body>
+  on every page.
+
+  Requires window._supabaseClient already initialized.
+  Authentication is required to submit. Unauthenticated users
+  see a login prompt instead of the submit button.
+  Name is auto-populated from contributor_profile.display_name
+  and is read-only — it cannot be edited by the user.
+  ============================================================
+-->
+
+<style>
+  :root {
+    --fb-navy:    #1B2E4B;
+    --fb-copper:  #B5622A;
+    --fb-cream:   #FAF6F0;
+    --fb-overlay: rgba(15, 22, 36, 0.72);
+  }
+
+  #gns-feedback-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 18px 10px 14px;
+    background: var(--fb-navy);
+    color: var(--fb-cream);
+    border: 1.5px solid var(--fb-copper);
+    border-radius: 6px;
+    font-family: 'Fanwood Text', Georgia, serif;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+    transition: background 0.18s, border-color 0.18s, transform 0.12s;
+    user-select: none;
+  }
+  #gns-feedback-btn:hover {
+    background: #22395c;
+    border-color: #d07535;
+    transform: translateY(-1px);
+  }
+  #gns-feedback-btn svg { flex-shrink: 0; color: var(--fb-copper); }
+
+  #gns-feedback-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9100;
+    background: var(--fb-overlay);
+    backdrop-filter: blur(3px);
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  #gns-feedback-overlay.open { display: flex; }
+
+  #gns-feedback-modal {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    background: var(--fb-navy);
+    border: 1.5px solid var(--fb-copper);
+    border-radius: 8px;
+    padding: 32px 28px 28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+    font-family: 'Fanwood Text', Georgia, serif;
+    color: var(--fb-cream);
+    animation: fb-slide-up 0.22s ease;
+  }
+  @keyframes fb-slide-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  #gns-feedback-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: var(--fb-cream);
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+    opacity: 0.65;
+    transition: opacity 0.15s;
+    padding: 2px 4px;
+  }
+  #gns-feedback-close:hover { opacity: 1; }
+
+  #gns-feedback-modal h2 {
+    font-family: 'Linden Hill', 'Palatino Linotype', Palatino, serif;
+    font-size: 20px;
+    font-weight: normal;
+    color: var(--fb-cream);
+    margin: 0 0 22px;
+    letter-spacing: 0.03em;
+    border-bottom: 1px solid rgba(181,98,42,0.35);
+    padding-bottom: 12px;
+  }
+
+  .fb-field { margin-bottom: 16px; }
+  .fb-field label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fb-copper);
+    margin-bottom: 5px;
+  }
+  .fb-field input[type="text"],
+  .fb-field select,
+  .fb-field textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(181,98,42,0.4);
+    border-radius: 4px;
+    color: var(--fb-cream);
+    font-family: 'Fanwood Text', Georgia, serif;
+    font-size: 14px;
+    padding: 9px 11px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.15s, background 0.15s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .fb-field input[readonly] {
+    opacity: 0.55;
+    cursor: default;
+  }
+  .fb-field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B5622A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 11px center;
+    padding-right: 30px;
+    cursor: pointer;
+  }
+  .fb-field select option { background: var(--fb-navy); color: var(--fb-cream); }
+  .fb-field input:not([readonly]):focus,
+  .fb-field select:focus,
+  .fb-field textarea:focus {
+    border-color: var(--fb-copper);
+    background: rgba(255,255,255,0.09);
+  }
+  .fb-field textarea { resize: vertical; min-height: 88px; }
+
+  .fb-file-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 13px;
+    border: 1px dashed rgba(181,98,42,0.5);
+    border-radius: 4px;
+    font-size: 13px;
+    color: rgba(250,246,240,0.7);
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .fb-file-label:hover { border-color: var(--fb-copper); color: var(--fb-cream); }
+  .fb-file-label svg { color: var(--fb-copper); flex-shrink: 0; }
+  #gns-fb-screenshot { display: none; }
+  #fb-file-name {
+    font-size: 12px;
+    color: rgba(250,246,240,0.5);
+    margin-top: 5px;
+    font-style: italic;
+  }
+
+  #gns-fb-submit {
+    width: 100%;
+    margin-top: 6px;
+    padding: 11px;
+    background: var(--fb-copper);
+    color: var(--fb-cream);
+    border: none;
+    border-radius: 5px;
+    font-family: 'Fanwood Text', Georgia, serif;
+    font-size: 15px;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: background 0.17s, transform 0.1s;
+  }
+  #gns-fb-submit:hover:not(:disabled) { background: #c96e31; transform: translateY(-1px); }
+  #gns-fb-submit:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  /* shown when not authenticated */
+  #gns-fb-login-prompt {
+    display: none;
+    margin-top: 6px;
+    padding: 13px 16px;
+    border: 1px solid rgba(181,98,42,0.4);
+    border-radius: 5px;
+    background: rgba(181,98,42,0.08);
+    font-size: 13.5px;
+    color: rgba(250,246,240,0.75);
+    text-align: center;
+    line-height: 1.6;
+  }
+  #gns-fb-login-prompt a {
+    color: var(--fb-copper);
+    text-decoration: underline;
+  }
+
+  #gns-fb-confirm {
+    display: none;
+    text-align: center;
+    padding: 28px 0 12px;
+  }
+  #gns-fb-confirm .fb-check {
+    font-size: 36px;
+    line-height: 1;
+    margin-bottom: 14px;
+    color: var(--fb-copper);
+  }
+  #gns-fb-confirm p {
+    font-family: 'Linden Hill', Palatino, serif;
+    font-size: 19px;
+    color: var(--fb-cream);
+    margin: 0;
+  }
+
+  #gns-fb-error {
+    display: none;
+    font-size: 12px;
+    color: #e07070;
+    margin-top: 6px;
+  }
+</style>
+
+<!-- Trigger button -->
+<button id="gns-feedback-btn" aria-label="Open feedback form">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+  Feedback
+</button>
+
+<!-- Modal overlay -->
+<div id="gns-feedback-overlay" role="dialog" aria-modal="true" aria-labelledby="gns-fb-heading">
+  <div id="gns-feedback-modal">
+    <button id="gns-feedback-close" aria-label="Close">&#x2715;</button>
+
+    <div id="gns-fb-form-wrap">
+      <h2 id="gns-fb-heading">Submit Feedback</h2>
+
+      <div class="fb-field">
+        <label>Page</label>
+        <input type="text" id="gns-fb-page" readonly tabindex="-1">
+      </div>
+
+      <div class="fb-field">
+        <label for="gns-fb-type">Type</label>
+        <select id="gns-fb-type">
+          <option value="Bug / Something looks wrong">Bug / Something looks wrong</option>
+          <option value="Suggestion">Suggestion</option>
+          <option value="Question">Question</option>
+          <option value="Content Issue">Content Issue</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="fb-field">
+        <label for="gns-fb-desc">Description <span style="color:var(--fb-copper)">*</span></label>
+        <textarea id="gns-fb-desc" placeholder="Briefly describe what you noticed..."></textarea>
+        <div id="gns-fb-error">Please add a description before submitting.</div>
+      </div>
+
+      <div class="fb-field">
+        <label>Screenshot <span style="opacity:0.5;font-size:10px;text-transform:none">(optional)</span></label>
+        <label class="fb-file-label" for="gns-fb-screenshot">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          Choose file…
+        </label>
+        <input type="file" id="gns-fb-screenshot" accept="image/*">
+        <div id="fb-file-name">No file selected</div>
+      </div>
+
+      <div class="fb-field">
+        <label>Submitted by</label>
+        <input type="text" id="gns-fb-name" readonly tabindex="-1" placeholder="Checking…">
+      </div>
+
+      <button id="gns-fb-submit">Submit Feedback</button>
+
+      <div id="gns-fb-login-prompt">
+        You must be logged in to submit feedback.<br>
+        <a id="gns-fb-login-link" href="/login.html">Log in to your account →</a>
+      </div>
+    </div>
+
+    <div id="gns-fb-confirm">
+      <div class="fb-check">&#10003;</div>
+      <p>Thanks — logged!</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  function getClient() {
+    if (window._supabaseClient) return window._supabaseClient;
+    if (window.supabase && window.SUPABASE_URL && window.SUPABASE_ANON_KEY) {
+      window._supabaseClient = window.supabase.createClient(
+        window.SUPABASE_URL, window.SUPABASE_ANON_KEY
+      );
+      return window._supabaseClient;
+    }
+    return null;
+  }
+
+  const btn         = document.getElementById('gns-feedback-btn');
+  const overlay     = document.getElementById('gns-feedback-overlay');
+  const closeBtn    = document.getElementById('gns-feedback-close');
+  const formWrap    = document.getElementById('gns-fb-form-wrap');
+  const confirmDiv  = document.getElementById('gns-fb-confirm');
+  const submitBtn   = document.getElementById('gns-fb-submit');
+  const loginPrompt = document.getElementById('gns-fb-login-prompt');
+  const pageInput   = document.getElementById('gns-fb-page');
+  const typeSelect  = document.getElementById('gns-fb-type');
+  const descTA      = document.getElementById('gns-fb-desc');
+  const nameInput   = document.getElementById('gns-fb-name');
+  const fileInput   = document.getElementById('gns-fb-screenshot');
+  const fileNameEl  = document.getElementById('fb-file-name');
+  const errorMsg    = document.getElementById('gns-fb-error');
+  const loginLink   = document.getElementById('gns-fb-login-link');
+
+  let _contributorId = null;
+  let _authChecked   = false;
+
+  // Auto-populate page field
+  pageInput.value = document.title
+    || window.location.pathname.split('/').pop()
+    || window.location.href;
+
+  // Open / close
+  btn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+  });
+
+  async function openModal() {
+    overlay.classList.add('open');
+    if (!_authChecked) await checkAuth();
+    if (submitBtn.style.display !== 'none') descTA.focus();
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    setTimeout(resetForm, 250);
+  }
+
+  function resetForm() {
+    formWrap.style.display   = '';
+    confirmDiv.style.display = 'none';
+    descTA.value             = '';
+    fileInput.value          = '';
+    fileNameEl.textContent   = 'No file selected';
+    errorMsg.style.display   = 'none';
+    submitBtn.disabled       = false;
+    submitBtn.textContent    = 'Submit Feedback';
+    typeSelect.selectedIndex = 0;
+    // Re-run auth check next open in case session changed
+    _authChecked = false;
+  }
+
+  // Auth check
+  async function checkAuth() {
+    _authChecked = true;
+    nameInput.placeholder = 'Checking…';
+    const client = getClient();
+
+    if (!client) { showUnauthState('No database connection.'); return; }
+
+    try {
+      const { data: { user }, error: authErr } = await client.auth.getUser();
+      if (authErr || !user) { showUnauthState(); return; }
+
+      const { data: profile } = await client
+        .from('contributor_profile')
+        .select('id, display_name')
+        .eq('auth_user_id', user.id)
+        .single();
+
+      if (profile) {
+        nameInput.value = profile.display_name || user.email || 'Unknown';
+        _contributorId  = profile.id;
+      } else {
+        nameInput.value = user.email || 'Unknown';
+        _contributorId  = null;
+      }
+
+      showAuthState();
+
+    } catch (err) {
+      console.warn('Feedback widget auth check:', err);
+      showUnauthState();
+    }
+  }
+
+  function showAuthState() {
+    submitBtn.style.display   = '';
+    loginPrompt.style.display = 'none';
+    nameInput.placeholder     = '';
+  }
+
+  function showUnauthState(msg) {
+    submitBtn.style.display   = 'none';
+    loginPrompt.style.display = 'block';
+    nameInput.value           = '';
+    nameInput.placeholder     = 'Not logged in';
+    _contributorId            = null;
+    // Append return URL so the user lands back here after login
+    const returnPath = encodeURIComponent(window.location.href);
+    loginLink.href   = `/login.html?return=${returnPath}`;
+  }
+
+  // File name display
+  fileInput.addEventListener('change', () => {
+    fileNameEl.textContent = fileInput.files.length
+      ? fileInput.files[0].name
+      : 'No file selected';
+  });
+
+  // Submit
+  submitBtn.addEventListener('click', async () => {
+    const desc = descTA.value.trim();
+    if (!desc) {
+      errorMsg.style.display = 'block';
+      descTA.focus();
+      return;
+    }
+    errorMsg.style.display  = 'none';
+    submitBtn.disabled      = true;
+    submitBtn.textContent   = 'Submitting…';
+
+    const client = getClient();
+    if (!client) {
+      alert('Could not connect to database. Please try again.');
+      submitBtn.disabled    = false;
+      submitBtn.textContent = 'Submit Feedback';
+      return;
+    }
+
+    try {
+      // Upload screenshot if present
+      let screenshotUrl = null;
+      if (fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        const ext  = file.name.split('.').pop();
+        const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+        const { error: upErr } = await client.storage
+          .from('feedback-screenshots')
+          .upload(path, file, { upsert: false });
+        if (!upErr) {
+          const { data: urlData } = client.storage
+            .from('feedback-screenshots')
+            .getPublicUrl(path);
+          screenshotUrl = urlData.publicUrl;
+        }
+      }
+
+      // Insert row
+      const { error: insErr } = await client.from('feedback').insert({
+        page:           pageInput.value,
+        feedback_type:  typeSelect.value,
+        description:    desc,
+        screenshot_url: screenshotUrl,
+        submitted_by:   nameInput.value || null,
+        contributor_id: _contributorId || null,
+        status:         'new'
+      });
+      if (insErr) throw insErr;
+
+      // Confirm
+      formWrap.style.display   = 'none';
+      confirmDiv.style.display = 'block';
+      setTimeout(closeModal, 2000);
+
+    } catch (err) {
+      console.error('Feedback submit error:', err);
+      alert('Something went wrong. Please try again.');
+      submitBtn.disabled    = false;
+      submitBtn.textContent = 'Submit Feedback';
+    }
+  });
+
+})();
+</script>
+<!-- End GNS Feedback Widget v2 -->
 
 </body>
 </html>

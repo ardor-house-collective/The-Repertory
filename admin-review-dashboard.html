@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Repertory — Review Queue</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Fanwood Text', 'Fanwood', Georgia, serif;
+      background: #F0EDE4;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #1E2B22;
+      line-height: 1.5;
+    }
+
+    @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill.otf') format('opentype'); font-weight: normal; font-style: normal; }
+    @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
+    @font-face { font-family: 'Runtime'; src: url('Runtime.otf') format('opentype'); font-weight: normal; font-style: normal; }
+    @font-face { font-family: 'Fanwood Text'; src: url('Fanwood_Text.otf') format('opentype'); font-weight: normal; font-style: normal; }
+    @font-face { font-family: 'Fanwood Text'; src: url('Fanwood_Text_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
+    @font-face { font-family: 'Fanwood'; src: url('Fanwood.otf') format('opentype'); font-weight: normal; font-style: normal; }
+    @font-face { font-family: 'Fanwood'; src: url('Fanwood_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
+
+    /* ── Header ── */
+    header {
+      background: #1E2B22;
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      flex-shrink: 0;
+    }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 1100px; margin: 0 auto; }
+    .wordmark { display: flex; flex-direction: column; gap: 1px; line-height: 1; text-decoration: none; }
+    .wm-line1 { font-family: 'Linden Hill', Georgia, serif; font-size: 2.22rem; font-style: normal; color: #F0EDE4; letter-spacing: 0.01em; line-height: 1; }
+    .wm-line2 { font-family: 'Runtime', sans-serif; font-size: 0.98rem; color: rgba(250,246,240,0.72); letter-spacing: 0.04em; line-height: 1; }
+    .header-right { display: flex; align-items: center; gap: 20px; }
+    #header-identity { display: none; flex-direction: column; align-items: flex-end; gap: 1px; }
+    .header-cid  { font-size: 0.7rem;  font-weight: 700; color: #A8894E; letter-spacing: 0.07em; }
+    .header-name { font-size: 0.75rem; color: #c8d8e8; }
+    .sign-out-btn { background: transparent; border: 1px solid rgba(255,255,255,0.22); color: #c8d8e8; border-radius: 5px; padding: 5px 13px; font-size: 0.775rem; font-family: inherit; cursor: pointer; transition: border-color 0.15s, color 0.15s; white-space: nowrap; }
+    .sign-out-btn:hover { border-color: rgba(255,255,255,0.55); color: #fff; }
+
+    /* ── Site nav ── */
+    .site-nav { display: flex; align-items: center; gap: 4px; margin: 0 20px; }
+    .nav-enter { display: inline-flex; align-items: center; color: #A8894E; border: 1.5px solid #A8894E; border-radius: 20px; padding: 6px 14px; font-size: 13px; font-weight: 500; letter-spacing: 0.03em; text-decoration: none; white-space: nowrap; background: transparent; transition: background 0.2s ease, color 0.2s ease; margin-right: 4px; }
+    .nav-enter:hover { background: #A8894E; color: #F0EDE4; }
+    .nav-link { color: rgba(250,246,240,0.65); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.03em; white-space: nowrap; padding: 4px 10px; border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s; background: none; border-top: none; border-left: none; border-right: none; cursor: pointer; font-family: inherit; line-height: inherit; }
+    .nav-link:hover { color: #F0EDE4; }
+    .nav-link.active { color: #F0EDE4; border-bottom-color: #A8894E; }
+    .nav-founding { visibility: hidden; }
+    .nav-founding.nav-visible { visibility: visible; }
+    .nav-dropdown { position: relative; display: flex; align-items: center; }
+    .nav-dropdown::after { content: ''; position: absolute; left: 0; right: 0; top: 100%; height: 10px; }
+    .nav-dropdown-trigger { display: inline-flex; align-items: center; cursor: pointer; }
+    .nav-dropdown-trigger::after { content: ''; display: inline-block; width: 0; height: 0; border-left: 3px solid transparent; border-right: 3px solid transparent; border-top: 4px solid currentColor; margin-left: 5px; opacity: 0.5; transition: transform 0.15s; }
+    .nav-dropdown:hover .nav-dropdown-trigger { color: #F0EDE4; }
+    .nav-dropdown:hover .nav-dropdown-trigger::after { transform: rotate(180deg); opacity: 1; }
+    .nav-dropdown-menu { position: absolute; top: calc(100% + 10px); left: 0; background: #1E2B22; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); padding: 6px 0; min-width: 190px; opacity: 0; visibility: hidden; transform: translateY(-4px); transition: opacity 0.15s ease, visibility 0.15s, transform 0.15s ease; z-index: 300; }
+    .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-dropdown-item { display: block; color: rgba(250,246,240,0.72); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.02em; padding: 9px 18px; white-space: nowrap; transition: color 0.12s; }
+    .nav-dropdown-item:hover { color: #A8894E; }
+    .nav-dropdown-disabled { display: flex; align-items: center; gap: 8px; color: rgba(250,246,240,0.28); cursor: not-allowed; font-size: 13px; font-weight: 500; letter-spacing: 0.02em; padding: 9px 18px; white-space: nowrap; }
+    .nav-dropdown-soon { font-size: 0.68rem; color: #6B7A60; }
+
+    /* ── Main layout ── */
+    main { flex: 1; }
+    .page-inner { max-width: 1100px; margin: 0 auto; padding: 40px 40px 60px; }
+
+    /* ── Page header ── */
+    .page-header { margin-bottom: 8px; }
+    .page-title { font-family: 'Linden Hill', Georgia, serif; font-size: 2rem; color: #1E2B22; font-weight: 400; line-height: 1.15; }
+    .page-subtitle { font-size: 0.88rem; color: #6B7A60; margin-top: 6px; }
+    .page-subtitle .count-val { color: #A8894E; font-weight: 700; }
+
+    /* ── Section label ── */
+    .section-label {
+      font-size: 0.63rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: #6B7A60;
+      margin-bottom: 14px;
+      margin-top: 32px;
+    }
+
+    /* ── Queue cards grid ── */
+    .queue-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .queue-card {
+      display: block;
+      background: #FDFCF8;
+      border: 1px solid #DDD8C8;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(27,46,75,0.06), 0 1px 3px rgba(0,0,0,0.04);
+      padding: 24px 28px 28px;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      cursor: pointer;
+    }
+    .queue-card:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(27,46,75,0.10), 0 2px 6px rgba(0,0,0,0.05); }
+    .queue-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: #A8894E; opacity: 0; transition: opacity 0.18s ease; border-radius: 10px 0 0 10px; }
+    .queue-card:hover::before { opacity: 1; }
+
+    .queue-card-disabled {
+      background: #F7F4F0;
+      border-color: #EDE8E1;
+      cursor: default;
+      opacity: 0.6;
+    }
+    .queue-card-disabled:hover { transform: none; box-shadow: 0 2px 12px rgba(27,46,75,0.06), 0 1px 3px rgba(0,0,0,0.04); }
+    .queue-card-disabled:hover::before { opacity: 0; }
+
+    .qc-count {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #A8894E;
+      line-height: 1;
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+    .queue-card-disabled .qc-count { color: #6B7A60; }
+
+    .qc-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #1E2B22;
+      margin-bottom: 6px;
+    }
+
+    .qc-desc { font-size: 0.83rem; color: #6B7A60; line-height: 1.55; }
+
+    .qc-soon {
+      font-family: 'Linden Hill', Georgia, serif;
+      font-style: italic;
+      font-size: 0.75rem;
+      color: #b5ada4;
+      margin-top: 5px;
+    }
+
+    /* ── Back link ── */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      color: #6B7A60;
+      text-decoration: none;
+      margin-bottom: 24px;
+      transition: color 0.15s;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: inherit;
+    }
+    .back-link:hover { color: #A8894E; }
+
+    /* ── Queue view header ── */
+    .view-header { margin-bottom: 28px; }
+    .view-title { font-family: 'Linden Hill', Georgia, serif; font-size: 1.6rem; color: #1E2B22; font-weight: 400; }
+    .view-desc { font-size: 0.85rem; color: #6B7A60; margin-top: 5px; }
+
+    /* ── Submission cards ── */
+    .submission-list { display: flex; flex-direction: column; gap: 14px; }
+
+    .sub-card {
+      background: #FDFCF8;
+      border: 1px solid #DDD8C8;
+      border-radius: 8px;
+      padding: 20px 24px;
+      transition: border-color 0.15s;
+    }
+    .sub-card:hover { border-color: #c8bfb5; }
+
+    .sub-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+
+    .sub-type {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #1E2B22;
+    }
+
+    .sub-meta {
+      font-size: 0.78rem;
+      color: #6B7A60;
+      margin-top: 2px;
+    }
+
+    .sub-preview {
+      font-size: 0.82rem;
+      color: #6B7A60;
+      background: #F0EDE4;
+      border-radius: 4px;
+      padding: 8px 11px;
+      margin: 10px 0;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ── Lock state ── */
+    .lock-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #92651a;
+      background: #fef9ec;
+      border: 1px solid #f5d98a;
+      border-radius: 4px;
+      padding: 4px 10px;
+      white-space: nowrap;
+    }
+
+    /* ── Action buttons ── */
+    .sub-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #DDD8C8;
+    }
+
+    .btn { padding: 7px 16px; border-radius: 5px; font-family: inherit; font-size: 0.83rem; font-weight: 600; border: none; cursor: pointer; transition: background 0.15s, opacity 0.15s; letter-spacing: 0.02em; }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-approve  { background: #264E36; color: #F0EDE4; }
+    .btn-approve:hover:not(:disabled)   { background: #1d3a28; }
+    .btn-reject   { background: transparent; color: #6B7A60; border: 1.5px solid #DDD8C8; }
+    .btn-reject:hover:not(:disabled)    { border-color: #b71c1c; color: #b71c1c; }
+    .btn-flag     { background: transparent; color: #6B7A60; border: 1.5px solid #DDD8C8; }
+    .btn-flag:hover:not(:disabled)      { border-color: #5b2d8e; color: #5b2d8e; }
+    .btn-recommend { background: #1E2B22; color: #F0EDE4; }
+    .btn-recommend:hover:not(:disabled) { background: #14223a; }
+    .btn-escalate  { background: transparent; color: #6B7A60; border: 1.5px solid #DDD8C8; }
+    .btn-escalate:hover:not(:disabled)  { border-color: #92651a; color: #92651a; }
+
+    /* ── Reject reason modal ── */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(27,46,75,0.35); z-index: 400; align-items: center; justify-content: center; padding: 20px; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: #FDFCF8; border-radius: 10px; padding: 32px; width: 100%; max-width: 480px; box-shadow: 0 8px 40px rgba(27,46,75,0.18); }
+    .modal-title { font-family: 'Linden Hill', Georgia, serif; font-size: 1.15rem; color: #1E2B22; margin-bottom: 6px; font-weight: 400; }
+    .modal-sub { font-size: 0.85rem; color: #6B7A60; margin-bottom: 18px; }
+    .modal textarea { width: 100%; padding: 10px 13px; border: 1.5px solid #DDD8C8; border-radius: 6px; font-family: inherit; font-size: 0.88rem; resize: vertical; min-height: 90px; outline: none; transition: border-color 0.15s; background: #fff; color: #1E2B22; }
+    .modal textarea:focus { border-color: #1E2B22; }
+    .modal-actions { display: flex; gap: 10px; margin-top: 16px; justify-content: flex-end; }
+    .btn-cancel { background: transparent; color: #6B7A60; border: 1.5px solid #DDD8C8; }
+    .btn-cancel:hover { border-color: #9a8e83; color: #4a4540; }
+    .btn-confirm-reject { background: #b71c1c; color: #fff; }
+    .btn-confirm-reject:hover:not(:disabled) { background: #8b1414; }
+
+    /* ── Toast ── */
+    .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1E2B22; color: #F0EDE4; padding: 12px 22px; border-radius: 6px; font-size: 0.88rem; box-shadow: 0 4px 20px rgba(0,0,0,0.18); opacity: 0; transition: transform 0.25s ease, opacity 0.25s ease; z-index: 500; pointer-events: none; white-space: nowrap; }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    .toast.success { background: #264E36; }
+    .toast.error   { background: #b71c1c; }
+
+    /* ── Empty / loading ── */
+    .state-box { text-align: center; padding: 60px 20px; color: #9a8e83; font-size: 0.9rem; line-height: 1.7; }
+    .state-icon { font-size: 2rem; margin-bottom: 12px; opacity: 0.4; }
+
+    /* ── Footer ── */
+    .site-footer { background: #1E2B22; padding: 2rem 40px; flex-shrink: 0; }
+    .site-footer-inner { max-width: 1100px; margin: 0 auto; display: flex; gap: 3rem; }
+    .footer-copy, .footer-legal { flex: 1; font-size: 0.75rem; color: rgba(250,246,240,0.55); line-height: 1.65; }
+    .footer-copy a { color: rgba(250,246,240,0.55); text-decoration: underline; text-underline-offset: 2px; }
+    .footer-copy a:hover { color: #F0EDE4; }
+
+    /* ── Views ── */
+    #view-dashboard { display: block; }
+    #view-queue     { display: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) { .site-nav { display: none; } }
+    @media (max-width: 600px) {
+      header { padding: 0 20px; }
+      .page-inner { padding: 24px 20px 48px; }
+      .queue-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 680px) {
+      .site-footer { padding: 1.5rem 20px; }
+      .site-footer-inner { flex-direction: column; gap: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header>
+  <div class="header-inner">
+    <a href="dashboard.html" class="wordmark">
+      <span class="wm-line1">The Repertory</span>
+      <span class="wm-line2">a Collective effort</span>
+    </a>
+    <nav class="site-nav">
+      <a href="#" class="nav-enter"><img src="keyhole.png" alt="" width="14" height="20" style="vertical-align:middle;margin-right:6px;">Enter The Repertory</a>
+      <a href="contributor-form.html" class="nav-link">Submit</a>
+      <div class="nav-dropdown">
+        <span class="nav-link nav-dropdown-trigger">Resources</span>
+        <div class="nav-dropdown-menu">
+          <a href="condition-standard.html" class="nav-dropdown-item">Condition Standard</a>
+          <a href="admin-glossary.html" class="nav-dropdown-item nav-founding">Glossary</a>
+          <span class="nav-dropdown-disabled">Tools <span class="nav-dropdown-soon">Coming Soon</span></span>
+        </div>
+      </div>
+    </nav>
+    <div class="header-right">
+      <div id="header-identity">
+        <span class="header-cid"  id="header-cid"></span>
+        <span class="header-name" id="header-name"></span>
+      </div>
+      <button class="sign-out-btn" id="sign-out-btn">Sign out</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="page-inner">
+
+    <!-- ── Dashboard view ── -->
+    <div id="view-dashboard">
+      <div class="page-header">
+        <h1 class="page-title">Review Queue</h1>
+        <p class="page-subtitle"><span class="count-val" id="total-count">—</span> items needing attention</p>
+      </div>
+
+      <!-- General queues -->
+      <p class="section-label" style="margin-top:24px;">General</p>
+      <div class="queue-grid" id="general-grid">
+        <!-- All Submissions -->
+        <a class="queue-card" id="card-submissions" href="admin-submissions.html">
+          <div class="qc-count" id="count-submissions">—</div>
+          <div class="qc-name">All Submissions</div>
+          <div class="qc-desc">Full submission queue — first in, first out.</div>
+        </a>
+        <!-- Applications -->
+        <a class="queue-card" href="admin-applications.html">
+          <div class="qc-count" id="count-applications">—</div>
+          <div class="qc-name">Applications</div>
+          <div class="qc-desc">Access requests awaiting approval.</div>
+        </a>
+        <!-- Feedback -->
+        <a class="queue-card" href="admin-feedback.html">
+          <div class="qc-count" id="count-feedback">—</div>
+          <div class="qc-name">Feedback</div>
+          <div class="qc-desc">Contributor bug reports and suggestions.</div>
+        </a>
+        <!-- Escalations — founding/curator only -->
+        <a class="queue-card" id="card-escalations" href="admin-escalations.html" style="display:none">
+          <div class="qc-count" id="count-escalations">—</div>
+          <div class="qc-name">Escalations</div>
+          <div class="qc-desc">Disputed decisions awaiting final ruling.</div>
+        </a>
+      </div>
+
+      <!-- Reviewer queues — shown only if reviewer_role set -->
+      <div id="reviewer-section" style="display:none">
+        <p class="section-label">Reviewer Queues</p>
+        <div class="queue-grid" id="reviewer-grid">
+          <!-- Provisional Review -->
+          <a class="queue-card" id="card-provisional" href="admin-provisional.html" style="display:none">
+            <div class="qc-count" id="count-provisional">—</div>
+            <div class="qc-name">Provisional Review</div>
+            <div class="qc-desc">Open submissions available for provisional review.</div>
+          </a>
+          <!-- Recommendations -->
+          <a class="queue-card" id="card-recommendations" href="admin-recommendations.html" style="display:none">
+            <div class="qc-count" id="count-recommendations">—</div>
+            <div class="qc-name">Recommendations</div>
+            <div class="qc-desc">Provisional recommendations awaiting credentialed decision.</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Coming soon -->
+      <p class="section-label">Coming Soon</p>
+      <div class="queue-grid">
+        <div class="queue-card queue-card-disabled">
+          <div class="qc-count">0</div>
+          <div class="qc-name">Stolen Items</div>
+          <div class="qc-desc">Reported stolen item waiting room.</div>
+          <div class="qc-soon">Coming Soon</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Queue view ── -->
+    <div id="view-queue">
+      <button class="back-link" id="back-btn">← Review Queue</button>
+      <div class="view-header">
+        <h2 class="view-title" id="view-title"></h2>
+        <p class="view-desc" id="view-desc"></p>
+      </div>
+      <div class="submission-list" id="submission-list">
+        <div class="state-box"><div class="state-icon">⏳</div>Loading…</div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ── Reject reason modal ── -->
+<div class="modal-overlay" id="reject-modal">
+  <div class="modal">
+    <div class="modal-title">Reject submission</div>
+    <div class="modal-sub">Provide an optional reason. This will not be shown to the contributor.</div>
+    <textarea id="reject-reason" placeholder="Reason (optional)…"></textarea>
+    <div class="modal-actions">
+      <button class="btn btn-cancel" id="reject-cancel">Cancel</button>
+      <button class="btn btn-confirm-reject" id="reject-confirm">Reject</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <p class="footer-copy">The Repertory is a collective effort to build the world's most complete authenticated goods database. Under the care of <a href="https://ardorhousecollective.com" target="_blank" rel="noopener">Ardor House Collective</a>.</p>
+    <p class="footer-legal">The Repertory is an independent platform. All brand names and trademarks are the property of their respective owners. We are not affiliated with, authorized by, or associated with any brand referenced in this database.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict'
+
+  // ── Constants ──────────────────────────────────────────────────────────────
+  const SB_URL = 'https://hsseypuhqdlcvepgyrtd.supabase.co'
+  const SB_KEY = 'sb_publishable_WOh4vQeiGzrN9CoICfiUTQ_XB5MQJw0'
+
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December']
+
+  // ── State ─────────────────────────────────────────────────────────────────
+  let profile       = null
+  let currentView   = null   // 'all-submissions' | 'escalations' | 'provisional' | 'recommendations'
+  let refreshTimer  = null
+  let rejectTarget  = null   // { id, resolve }
+  const lockHeartbeats = {}  // submissionId → intervalId
+  const expandedCards  = {}  // submissionId → true
+
+  // ── Auth helpers ──────────────────────────────────────────────────────────
+  function getToken() { return localStorage.getItem('gns_access_token') }
+  function getStoredUser() {
+    try { return JSON.parse(localStorage.getItem('gns_user') || 'null') } catch { return null }
+  }
+
+  async function refreshAccessToken() {
+    const rt = localStorage.getItem('gns_refresh_token')
+    if (!rt) return null
+    try {
+      const r = await fetch(`${SB_URL}/auth/v1/token?grant_type=refresh_token`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY },
+        body: JSON.stringify({ refresh_token: rt })
+      })
+      if (!r.ok) return null
+      const d = await r.json()
+      if (!d.access_token) return null
+      localStorage.setItem('gns_access_token', d.access_token)
+      localStorage.setItem('gns_refresh_token', d.refresh_token)
+      localStorage.setItem('gns_user', JSON.stringify(d.user))
+      return d.access_token
+    } catch { return null }
+  }
+
+  function apiHeaders(prefer) {
+    const h = {
+      'apikey':        SB_KEY,
+      'Authorization': 'Bearer ' + (getToken() || SB_KEY),
+      'Content-Type':  'application/json'
+    }
+    if (prefer) h['Prefer'] = prefer
+    return h
+  }
+
+  async function apiFetch(path, opts = {}) {
+    let res = await fetch(SB_URL + '/rest/v1/' + path, {
+      ...opts,
+      headers: { ...apiHeaders(opts.prefer || ''), ...(opts.headers || {}) }
+    })
+    if (res.status === 401) {
+      const refreshed = await refreshAccessToken()
+      if (!refreshed) { window.location.replace('login.html'); return }
+      res = await fetch(SB_URL + '/rest/v1/' + path, {
+        ...opts,
+        headers: { ...apiHeaders(opts.prefer || ''), ...(opts.headers || {}) }
+      })
+    }
+    if (!res.ok && res.status !== 204) {
+      const err = await res.json().catch(() => ({}))
+      throw new Error(err.message || 'HTTP ' + res.status)
+    }
+    if (res.status === 204 || opts.method === 'HEAD') return res
+    return res.json()
+  }
+
+  function headCount(path) {
+    return apiFetch(path, { method: 'HEAD', prefer: 'count=exact' })
+      .then(r => parseInt((r.headers?.get('Content-Range') || '*/0').split('/')[1]) || 0)
+      .catch(() => 0)
+  }
+
+  // ── Role helpers ──────────────────────────────────────────────────────────
+  function isFoundingOrCurator() {
+    return profile?.membership_tier === 'founding' || profile?.is_curator_general === true
+  }
+  function isCuratorGeneral() {
+    return profile?.is_curator_general === true
+  }
+  function hasReviewerRole() {
+    return !!profile?.reviewer_role
+  }
+  function reviewerIs(role) {
+    return profile?.reviewer_role === role || isFoundingOrCurator()
+  }
+
+  // ── Toast ─────────────────────────────────────────────────────────────────
+  let _toastTimer = null
+  function toast(msg, type = '') {
+    const el = document.getElementById('toast')
+    el.textContent = msg
+    el.className = 'toast show' + (type ? ' ' + type : '')
+    clearTimeout(_toastTimer)
+    _toastTimer = setTimeout(() => { el.className = 'toast' }, 3200)
+  }
+
+  // ── Escape ────────────────────────────────────────────────────────────────
+  function esc(s) {
+    return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')
+  }
+
+  // ── Date formatting ───────────────────────────────────────────────────────
+  function fmtDate(iso) {
+    if (!iso) return '—'
+    const d = new Date(iso)
+    return MONTHS[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear()
+  }
+
+  // ── Lock helpers ──────────────────────────────────────────────────────────
+  function isLocked(row) {
+    if (!row.locked_until) return false
+    if (new Date(row.locked_until) <= new Date()) return false
+    if (row.locked_by === profile?.contributor_id) return false
+    return true
+  }
+
+  function lockSecondsRemaining(row) {
+    if (!row.locked_until) return 0
+    return Math.max(0, Math.floor((new Date(row.locked_until) - Date.now()) / 1000))
+  }
+
+  function fmtCountdown(secs) {
+    const m = Math.floor(secs / 60)
+    const s = secs % 60
+    return m + ':' + String(s).padStart(2, '0')
+  }
+
+  async function acquireLock(id) {
+    try {
+      const res = await apiFetch(
+        `submission_queue?id=eq.${id}&or=(locked_until.is.null,locked_until.lt.${new Date().toISOString()},locked_by.eq.${encodeURIComponent(profile.contributor_id)})`,
+        {
+          method: 'PATCH',
+          prefer: 'return=representation',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            locked_by:    profile.contributor_id,
+            locked_until: new Date(Date.now() + 10 * 60 * 1000).toISOString()
+          })
+        }
+      )
+      if (!Array.isArray(res) || res.length === 0) return false
+      return true
+    } catch { return false }
+  }
+
+  async function refreshLock(id) {
+    try {
+      await apiFetch(
+        `submission_queue?id=eq.${id}&locked_by=eq.${encodeURIComponent(profile.contributor_id)}`,
+        {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ locked_until: new Date(Date.now() + 10 * 60 * 1000).toISOString() })
+        }
+      )
+    } catch {}
+  }
+
+  async function releaseLock(id) {
+    try {
+      await apiFetch(
+        `submission_queue?id=eq.${id}&locked_by=eq.${encodeURIComponent(profile.contributor_id)}`,
+        {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ locked_by: null, locked_until: null })
+        }
+      )
+    } catch {}
+  }
+
+  function startHeartbeat(id) {
+    if (lockHeartbeats[id]) return
+    lockHeartbeats[id] = setInterval(() => refreshLock(id), 60000)
+  }
+
+  function stopHeartbeat(id) {
+    if (lockHeartbeats[id]) {
+      clearInterval(lockHeartbeats[id])
+      delete lockHeartbeats[id]
+    }
+  }
+
+  function releaseAllLocks() {
+    Object.keys(expandedCards).forEach(id => {
+      releaseLock(id)
+      stopHeartbeat(id)
+    })
+  }
+
+  window.addEventListener('beforeunload', releaseAllLocks)
+  window.addEventListener('pagehide',     releaseAllLocks)
+
+  // ── Reject modal ──────────────────────────────────────────────────────────
+  function openRejectModal(id) {
+    return new Promise(resolve => {
+      rejectTarget = { id, resolve }
+      document.getElementById('reject-reason').value = ''
+      document.getElementById('reject-modal').classList.add('open')
+    })
+  }
+
+  function closeRejectModal(confirmed) {
+    if (!rejectTarget) return
+    document.getElementById('reject-modal').classList.remove('open')
+    const reason = confirmed ? document.getElementById('reject-reason').value.trim() : null
+    rejectTarget.resolve({ confirmed, reason })
+    rejectTarget = null
+  }
+
+  document.getElementById('reject-cancel').addEventListener('click',  () => closeRejectModal(false))
+  document.getElementById('reject-confirm').addEventListener('click', () => closeRejectModal(true))
+  document.getElementById('reject-modal').addEventListener('click', e => {
+    if (e.target === document.getElementById('reject-modal')) closeRejectModal(false)
+  })
+
+  // ── Submission card renderer ──────────────────────────────────────────────
+  function makeSubCard(row, actions) {
+    const card = document.createElement('div')
+    card.className = 'sub-card'
+    card.dataset.id = row.id
+
+    const typeName = String(row.submission_type || 'Submission')
+      .replace(/_/g, ' ')
+      .replace(/\b\w/g, c => c.toUpperCase())
+
+    const preview = (() => {
+      try {
+        const s = JSON.stringify(row.payload || {})
+        return s.length > 120 ? s.slice(0, 120) + '…' : s
+      } catch { return '' }
+    })()
+
+    const locked = isLocked(row)
+
+    card.innerHTML = `
+      <div class="sub-card-header">
+        <div>
+          <div class="sub-type">${esc(typeName)}</div>
+          <div class="sub-meta">
+            By ${esc(row.submitted_by || row.contributor_id || '—')} &middot; ${esc(fmtDate(row.submitted_at || row.created_at))}
+          </div>
+        </div>
+        <div class="lock-area"></div>
+      </div>
+      ${preview ? `<div class="sub-preview">${esc(preview)}</div>` : ''}
+      <div class="sub-actions"></div>
+    `
+
+    const lockArea    = card.querySelector('.lock-area')
+    const actionsArea = card.querySelector('.sub-actions')
+
+    if (locked) {
+      let secs = lockSecondsRemaining(row)
+      const badge = document.createElement('div')
+      badge.className = 'lock-badge'
+      badge.textContent = 'Under Review — ' + fmtCountdown(secs)
+      lockArea.appendChild(badge)
+
+      const ticker = setInterval(() => {
+        secs--
+        if (secs <= 0) {
+          clearInterval(ticker)
+          rerenderCurrentView()
+        } else {
+          badge.textContent = 'Under Review — ' + fmtCountdown(secs)
+        }
+      }, 1000)
+
+      actionsArea.remove()
+    } else {
+      renderActionButtons(actionsArea, row, card, actions)
+    }
+
+    return card
+  }
+
+  function renderActionButtons(container, row, card, actions) {
+    actions.forEach(({ label, className, handler }) => {
+      const btn = document.createElement('button')
+      btn.className = 'btn ' + className
+      btn.textContent = label
+      btn.addEventListener('click', async () => {
+        if (btn.disabled) return
+
+        // Acquire lock before acting
+        if (!expandedCards[row.id]) {
+          const got = await acquireLock(row.id)
+          if (!got) {
+            toast('This submission was just locked by another reviewer.', 'error')
+            rerenderCurrentView()
+            return
+          }
+          expandedCards[row.id] = true
+          startHeartbeat(row.id)
+        }
+
+        container.querySelectorAll('.btn').forEach(b => b.disabled = true)
+        try {
+          await handler(row.id, card)
+        } catch (err) {
+          toast('Error: ' + err.message, 'error')
+          container.querySelectorAll('.btn').forEach(b => b.disabled = false)
+        }
+      })
+      container.appendChild(btn)
+    })
+  }
+
+  // ── Action handlers ───────────────────────────────────────────────────────
+  async function doApprove(id, card) {
+    await apiFetch(`submission_queue?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'approved', locked_by: null, locked_until: null })
+    })
+    stopHeartbeat(id)
+    delete expandedCards[id]
+    card.remove()
+    toast('Approved.', 'success')
+  }
+
+  async function doReject(id, card) {
+    const { confirmed, reason } = await openRejectModal(id)
+    if (!confirmed) {
+      card.querySelectorAll('.btn').forEach(b => b.disabled = false)
+      return
+    }
+    const body = { status: 'rejected', locked_by: null, locked_until: null }
+    if (reason) body.rejection_reason = reason
+    await apiFetch(`submission_queue?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    })
+    stopHeartbeat(id)
+    delete expandedCards[id]
+    card.remove()
+    toast('Rejected.', '')
+  }
+
+  async function doFlag(id, card) {
+    await apiFetch(`submission_queue?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'flagged', locked_by: null, locked_until: null })
+    })
+    stopHeartbeat(id)
+    delete expandedCards[id]
+    card.remove()
+    toast('Flagged for review.')
+  }
+
+  async function doRecommend(id, card) {
+    await apiFetch(`submission_queue?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'recommended', locked_by: null, locked_until: null })
+    })
+    stopHeartbeat(id)
+    delete expandedCards[id]
+    card.remove()
+    toast('Marked as recommended.', 'success')
+  }
+
+  async function doEscalate(id, card) {
+    await apiFetch(`submission_queue?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'escalated', locked_by: null, locked_until: null })
+    })
+    stopHeartbeat(id)
+    delete expandedCards[id]
+    card.remove()
+    toast('Escalated.')
+  }
+
+  // ── View definitions ──────────────────────────────────────────────────────
+  const VIEW_CONFIG = {
+    'all-submissions': {
+      title:   'All Submissions',
+      desc:    'All pending submissions — first in, first out.',
+      query:   () => `submission_queue?status=eq.pending&or=(locked_until.is.null,locked_until.lt.${new Date().toISOString()},locked_by.eq.${encodeURIComponent(profile.contributor_id)})&order=created_at.asc&select=*`,
+      actions: [
+        { label: 'Approve', className: 'btn-approve',  handler: doApprove },
+        { label: 'Reject',  className: 'btn-reject',   handler: doReject  },
+        { label: 'Flag',    className: 'btn-flag',     handler: doFlag    }
+      ]
+    },
+    'escalations': {
+      title:   'Escalations',
+      desc:    'Disputed decisions awaiting final ruling.',
+      query:   () => `submission_queue?status=eq.escalated&order=created_at.asc&select=*`,
+      actions: [
+        { label: 'Approve', className: 'btn-approve', handler: doApprove },
+        { label: 'Reject',  className: 'btn-reject',  handler: doReject  }
+      ]
+    },
+    'provisional': {
+      title:   'Provisional Review',
+      desc:    'Open submissions available for provisional review.',
+      query:   () => `submission_queue?status=eq.pending&or=(locked_until.is.null,locked_until.lt.${new Date().toISOString()},locked_by.eq.${encodeURIComponent(profile.contributor_id)})&order=created_at.asc&select=*`,
+      actions: [
+        { label: 'Recommend', className: 'btn-recommend', handler: doRecommend },
+        { label: 'Flag',      className: 'btn-flag',      handler: doFlag      }
+      ]
+    },
+    'recommendations': {
+      title:   'Recommendations',
+      desc:    'Provisional recommendations awaiting credentialed decision.',
+      query:   () => `submission_queue?status=eq.recommended&order=created_at.asc&select=*`,
+      actions: [
+        { label: 'Approve',   className: 'btn-approve',   handler: doApprove  },
+        { label: 'Reject',    className: 'btn-reject',    handler: doReject   },
+        { label: 'Escalate',  className: 'btn-escalate',  handler: doEscalate }
+      ]
+    }
+  }
+
+  // ── Load a queue view ─────────────────────────────────────────────────────
+  async function loadQueueView(viewKey) {
+    const cfg = VIEW_CONFIG[viewKey]
+    if (!cfg) return
+
+    document.getElementById('view-title').textContent = cfg.title
+    document.getElementById('view-desc').textContent  = cfg.desc
+
+    const list = document.getElementById('submission-list')
+    list.innerHTML = '<div class="state-box"><div class="state-icon">⏳</div>Loading…</div>'
+
+    let rows
+    try {
+      rows = await apiFetch(cfg.query())
+    } catch (err) {
+      list.innerHTML = `<div class="state-box"><div class="state-icon">⚠️</div>Could not load submissions.<br>${esc(err.message)}</div>`
+      return
+    }
+
+    if (!rows || rows.length === 0) {
+      list.innerHTML = '<div class="state-box"><div class="state-icon">✓</div>All clear — nothing to review.</div>'
+      return
+    }
+
+    list.innerHTML = ''
+    rows.forEach(row => list.appendChild(makeSubCard(row, cfg.actions)))
+  }
+
+  // ── Re-render current view ────────────────────────────────────────────────
+  function rerenderCurrentView() {
+    if (currentView) loadQueueView(currentView)
+  }
+
+  // ── Dashboard data load ───────────────────────────────────────────────────
+  async function loadDashboard() {
+    const now = new Date().toISOString()
+
+    const [subCount, appCount, fbCount, escCount, provCount, recCount] = await Promise.all([
+      headCount(`submission_queue?status=eq.pending&or=(locked_until.is.null,locked_until.lt.${now})`),
+      headCount(`access_requests?status=eq.pending`),
+      headCount(`feedback?status=eq.new`),
+      isFoundingOrCurator() ? headCount(`submission_queue?status=eq.escalated`) : Promise.resolve(null),
+      (hasReviewerRole() || isFoundingOrCurator()) ? headCount(`submission_queue?status=eq.pending&or=(locked_until.is.null,locked_until.lt.${now})`) : Promise.resolve(null),
+      (reviewerIs('credentialed') || isFoundingOrCurator()) ? headCount(`submission_queue?status=eq.recommended`) : Promise.resolve(null)
+    ])
+
+    document.getElementById('count-submissions').textContent   = subCount
+    document.getElementById('count-applications').textContent  = appCount
+    document.getElementById('count-feedback').textContent      = fbCount
+
+    let total = subCount + appCount + fbCount
+
+    if (isFoundingOrCurator()) {
+      document.getElementById('card-escalations').style.display = ''
+      document.getElementById('count-escalations').textContent  = escCount
+      total += escCount
+    }
+
+    if (hasReviewerRole() || isFoundingOrCurator()) {
+      document.getElementById('reviewer-section').style.display = ''
+    }
+
+    if (reviewerIs('provisional') || isFoundingOrCurator()) {
+      document.getElementById('card-provisional').style.display = ''
+      document.getElementById('count-provisional').textContent   = provCount
+    }
+
+    if (reviewerIs('credentialed') || isFoundingOrCurator()) {
+      document.getElementById('card-recommendations').style.display = ''
+      document.getElementById('count-recommendations').textContent   = recCount
+    }
+
+    document.getElementById('total-count').textContent = total
+  }
+
+  // ── Routing ───────────────────────────────────────────────────────────────
+  function showDashboard() {
+    clearInterval(refreshTimer)
+    releaseAllLocks()
+    Object.keys(expandedCards).forEach(k => delete expandedCards[k])
+
+    currentView = null
+    document.getElementById('view-dashboard').style.display = ''
+    document.getElementById('view-queue').style.display     = 'none'
+
+    if (history.state?.view !== 'dashboard') {
+      history.replaceState({ view: 'dashboard' }, '')
+    }
+    window.location.hash = ''
+    loadDashboard()
+  }
+
+  function showQueueView(viewKey) {
+    if (!VIEW_CONFIG[viewKey]) { showDashboard(); return }
+
+    currentView = viewKey
+    document.getElementById('view-dashboard').style.display = 'none'
+    document.getElementById('view-queue').style.display     = ''
+
+    loadQueueView(viewKey)
+    clearInterval(refreshTimer)
+    refreshTimer = setInterval(() => loadQueueView(viewKey), 60000)
+  }
+
+  function route(hash) {
+    const key = (hash || '').replace('#', '')
+    if (key && VIEW_CONFIG[key]) {
+      showQueueView(key)
+    } else {
+      showDashboard()
+    }
+  }
+
+  document.getElementById('back-btn').addEventListener('click', showDashboard)
+
+  window.addEventListener('hashchange', () => route(location.hash))
+
+  // ── Sign out ──────────────────────────────────────────────────────────────
+  document.getElementById('sign-out-btn').addEventListener('click', () => {
+    releaseAllLocks()
+    localStorage.removeItem('gns_access_token')
+    localStorage.removeItem('gns_refresh_token')
+    localStorage.removeItem('gns_user')
+    window.location.href = 'login.html'
+  })
+
+  // ── Init ──────────────────────────────────────────────────────────────────
+  async function init() {
+    let token = getToken()
+    let storedUser = getStoredUser()
+
+    if (!token || !storedUser?.id) {
+      const refreshed = await refreshAccessToken()
+      if (!refreshed) { window.location.replace('login.html'); return }
+      token = getToken()
+      storedUser = getStoredUser()
+      if (!token || !storedUser?.id) { window.location.replace('login.html'); return }
+    }
+
+    // Load profile
+    let rows
+    try {
+      rows = await apiFetch(
+        `contributor_profile?auth_user_id=eq.${encodeURIComponent(storedUser.id)}&select=id,contributor_id,display_name,membership_tier,reviewer_role,is_curator_general&limit=1`
+      )
+    } catch { window.location.replace('login.html'); return }
+
+    profile = rows?.[0]
+
+    if (!profile) { window.location.replace('login.html'); return }
+
+    // Access gate: founding OR curator_general OR has reviewer_role
+    const hasAccess = isFoundingOrCurator() || hasReviewerRole()
+    if (!hasAccess) { window.location.replace('dashboard.html'); return }
+
+    // Populate header
+    document.getElementById('header-cid').textContent         = profile.contributor_id || ''
+    document.getElementById('header-name').textContent        = profile.display_name   || ''
+    document.getElementById('header-identity').style.display  = 'flex'
+
+    // Show founding nav items
+    if (isFoundingOrCurator()) {
+      document.querySelectorAll('.nav-founding').forEach(el => el.classList.add('nav-visible'))
+    }
+
+    // Route to hash or dashboard
+    route(location.hash)
+  }
+
+  init()
+
+})()
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+  window._supabaseClient = window.supabase.createClient(
+    'https://hsseypuhqdlcvepgyrtd.supabase.co',
+    'sb_publishable_WOh4vQeiGzrN9CoICfiUTQ_XB5MQJw0'
+  )
+</script>
+
+<style>
+  :root {
+    --fb-navy:    #1E2B22;
+    --fb-copper:  #A8894E;
+    --fb-cream:   #F0EDE4;
+    --fb-overlay: rgba(15, 22, 36, 0.72);
+  }
+  #gns-feedback-btn { position: fixed; bottom: 24px; right: 24px; z-index: 9000; display: flex; align-items: center; gap: 7px; padding: 10px 18px 10px 14px; background: var(--fb-navy); color: var(--fb-cream); border: 1.5px solid var(--fb-copper); border-radius: 6px; font-family: 'Fanwood Text', Georgia, serif; font-size: 14px; letter-spacing: 0.04em; cursor: pointer; box-shadow: 0 4px 18px rgba(0,0,0,0.35); transition: background 0.18s, border-color 0.18s, transform 0.12s; user-select: none; }
+  #gns-feedback-btn:hover { background: #22395c; border-color: #d07535; transform: translateY(-1px); }
+  #gns-feedback-btn svg { flex-shrink: 0; color: var(--fb-copper); }
+  #gns-feedback-overlay { display: none; position: fixed; inset: 0; z-index: 9100; background: var(--fb-overlay); backdrop-filter: blur(3px); align-items: center; justify-content: center; padding: 16px; }
+  #gns-feedback-overlay.open { display: flex; }
+  #gns-feedback-modal { position: relative; width: 100%; max-width: 480px; background: var(--fb-navy); border: 1.5px solid var(--fb-copper); border-radius: 8px; padding: 32px 28px 28px; box-shadow: 0 20px 60px rgba(0,0,0,0.55); font-family: 'Fanwood Text', Georgia, serif; color: var(--fb-cream); animation: fb-slide-up 0.22s ease; }
+  @keyframes fb-slide-up { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  #gns-feedback-close { position: absolute; top: 14px; right: 16px; background: none; border: none; color: var(--fb-cream); cursor: pointer; font-size: 20px; line-height: 1; opacity: 0.65; transition: opacity 0.15s; padding: 2px 4px; }
+  #gns-feedback-close:hover { opacity: 1; }
+  #gns-feedback-modal h2 { font-family: 'Linden Hill', 'Palatino Linotype', Palatino, serif; font-size: 20px; font-weight: normal; color: var(--fb-cream); margin: 0 0 22px; letter-spacing: 0.03em; border-bottom: 1px solid rgba(181,98,42,0.35); padding-bottom: 12px; }
+  .fb-field { margin-bottom: 16px; }
+  .fb-field label { display: block; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fb-copper); margin-bottom: 5px; }
+  .fb-field input[type="text"], .fb-field select, .fb-field textarea { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(181,98,42,0.4); border-radius: 4px; color: var(--fb-cream); font-family: 'Fanwood Text', Georgia, serif; font-size: 14px; padding: 9px 11px; box-sizing: border-box; outline: none; transition: border-color 0.15s, background 0.15s; -webkit-appearance: none; appearance: none; }
+  .fb-field input[readonly] { opacity: 0.55; cursor: default; }
+  .fb-field select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B5622A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 11px center; padding-right: 30px; cursor: pointer; }
+  .fb-field select option { background: var(--fb-navy); color: var(--fb-cream); }
+  .fb-field input:not([readonly]):focus, .fb-field select:focus, .fb-field textarea:focus { border-color: var(--fb-copper); background: rgba(255,255,255,0.09); }
+  .fb-field textarea { resize: vertical; min-height: 88px; }
+  .fb-file-label { display: inline-flex; align-items: center; gap: 7px; padding: 7px 13px; border: 1px dashed rgba(181,98,42,0.5); border-radius: 4px; font-size: 13px; color: rgba(250,246,240,0.7); cursor: pointer; transition: border-color 0.15s, color 0.15s; width: 100%; box-sizing: border-box; }
+  .fb-file-label:hover { border-color: var(--fb-copper); color: var(--fb-cream); }
+  .fb-file-label svg { color: var(--fb-copper); flex-shrink: 0; }
+  #gns-fb-screenshot { display: none; }
+  #fb-file-name { font-size: 12px; color: rgba(250,246,240,0.5); margin-top: 5px; font-style: italic; }
+  #gns-fb-submit { width: 100%; margin-top: 6px; padding: 11px; background: var(--fb-copper); color: var(--fb-cream); border: none; border-radius: 5px; font-family: 'Fanwood Text', Georgia, serif; font-size: 15px; letter-spacing: 0.05em; cursor: pointer; transition: background 0.17s, transform 0.1s; }
+  #gns-fb-submit:hover:not(:disabled) { background: #c96e31; transform: translateY(-1px); }
+  #gns-fb-submit:disabled { opacity: 0.55; cursor: not-allowed; }
+  #gns-fb-login-prompt { display: none; margin-top: 6px; padding: 13px 16px; border: 1px solid rgba(181,98,42,0.4); border-radius: 5px; background: rgba(181,98,42,0.08); font-size: 13.5px; color: rgba(250,246,240,0.75); text-align: center; line-height: 1.6; }
+  #gns-fb-login-prompt a { color: var(--fb-copper); text-decoration: underline; }
+  #gns-fb-confirm { display: none; text-align: center; padding: 28px 0 12px; }
+  #gns-fb-confirm .fb-check { font-size: 36px; line-height: 1; margin-bottom: 14px; color: var(--fb-copper); }
+  #gns-fb-confirm p { font-family: 'Linden Hill', Palatino, serif; font-size: 19px; color: var(--fb-cream); margin: 0; }
+  #gns-fb-error { display: none; font-size: 12px; color: #e07070; margin-top: 6px; }
+</style>
+
+<button id="gns-feedback-btn" aria-label="Open feedback form">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  Feedback
+</button>
+
+<div id="gns-feedback-overlay" role="dialog" aria-modal="true" aria-labelledby="gns-fb-heading">
+  <div id="gns-feedback-modal">
+    <button id="gns-feedback-close" aria-label="Close">&#x2715;</button>
+    <div id="gns-fb-form-wrap">
+      <h2 id="gns-fb-heading">Submit Feedback</h2>
+      <div class="fb-field">
+        <label>Page</label>
+        <input type="text" id="gns-fb-page" readonly tabindex="-1">
+      </div>
+      <div class="fb-field">
+        <label for="gns-fb-type">Type</label>
+        <select id="gns-fb-type">
+          <option value="Bug / Something looks wrong">Bug / Something looks wrong</option>
+          <option value="Suggestion">Suggestion</option>
+          <option value="Question">Question</option>
+          <option value="Content Issue">Content Issue</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="fb-field">
+        <label for="gns-fb-desc">Description <span style="color:var(--fb-copper)">*</span></label>
+        <textarea id="gns-fb-desc" placeholder="Briefly describe what you noticed…"></textarea>
+        <div id="gns-fb-error">Please add a description before submitting.</div>
+      </div>
+      <div class="fb-field">
+        <label>Screenshot <span style="opacity:0.5;font-size:10px;text-transform:none">(optional)</span></label>
+        <label class="fb-file-label" for="gns-fb-screenshot">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Choose file…
+        </label>
+        <input type="file" id="gns-fb-screenshot" accept="image/*">
+        <div id="fb-file-name">No file selected</div>
+      </div>
+      <div class="fb-field">
+        <label>Submitted by</label>
+        <input type="text" id="gns-fb-name" readonly tabindex="-1" placeholder="Checking…">
+      </div>
+      <button id="gns-fb-submit">Submit Feedback</button>
+      <div id="gns-fb-login-prompt">
+        You must be logged in to submit feedback.<br>
+        <a id="gns-fb-login-link" href="/login.html">Log in to your account →</a>
+      </div>
+    </div>
+    <div id="gns-fb-confirm">
+      <div class="fb-check">&#10003;</div>
+      <p>Thanks — logged!</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict'
+  function getClient() {
+    if (window._supabaseClient) return window._supabaseClient
+    return null
+  }
+  const btn         = document.getElementById('gns-feedback-btn')
+  const overlay     = document.getElementById('gns-feedback-overlay')
+  const closeBtn    = document.getElementById('gns-feedback-close')
+  const formWrap    = document.getElementById('gns-fb-form-wrap')
+  const confirmDiv  = document.getElementById('gns-fb-confirm')
+  const submitBtn   = document.getElementById('gns-fb-submit')
+  const loginPrompt = document.getElementById('gns-fb-login-prompt')
+  const pageInput   = document.getElementById('gns-fb-page')
+  const typeSelect  = document.getElementById('gns-fb-type')
+  const descTA      = document.getElementById('gns-fb-desc')
+  const nameInput   = document.getElementById('gns-fb-name')
+  const fileInput   = document.getElementById('gns-fb-screenshot')
+  const fileNameEl  = document.getElementById('fb-file-name')
+  const errorMsg    = document.getElementById('gns-fb-error')
+  const loginLink   = document.getElementById('gns-fb-login-link')
+  let _contributorId = null
+  let _authChecked   = false
+  pageInput.value = document.title || window.location.pathname.split('/').pop() || window.location.href
+  btn.addEventListener('click', openModal)
+  closeBtn.addEventListener('click', closeModal)
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal() })
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal() })
+  async function openModal() {
+    overlay.classList.add('open')
+    if (!_authChecked) await checkAuth()
+    if (submitBtn.style.display !== 'none') descTA.focus()
+  }
+  function closeModal() {
+    overlay.classList.remove('open')
+    setTimeout(resetForm, 250)
+  }
+  function resetForm() {
+    formWrap.style.display   = ''
+    confirmDiv.style.display = 'none'
+    descTA.value             = ''
+    fileInput.value          = ''
+    fileNameEl.textContent   = 'No file selected'
+    errorMsg.style.display   = 'none'
+    submitBtn.disabled       = false
+    submitBtn.textContent    = 'Submit Feedback'
+    typeSelect.selectedIndex = 0
+    _authChecked = false
+  }
+  async function checkAuth() {
+    _authChecked = true
+    nameInput.placeholder = 'Checking…'
+    const client = getClient()
+    if (!client) { showUnauthState('No database connection.'); return }
+    try {
+      const { data: { user }, error: authErr } = await client.auth.getUser()
+      if (authErr || !user) { showUnauthState(); return }
+      const { data: profile } = await client.from('contributor_profile').select('id, display_name').eq('auth_user_id', user.id).single()
+      if (profile) {
+        nameInput.value = profile.display_name || user.email || 'Unknown'
+        _contributorId  = profile.id
+      } else {
+        nameInput.value = user.email || 'Unknown'
+        _contributorId  = null
+      }
+      showAuthState()
+    } catch (err) {
+      showUnauthState()
+    }
+  }
+  function showAuthState() {
+    submitBtn.style.display   = ''
+    loginPrompt.style.display = 'none'
+    nameInput.placeholder     = ''
+  }
+  function showUnauthState() {
+    submitBtn.style.display   = 'none'
+    loginPrompt.style.display = 'block'
+    nameInput.value           = ''
+    nameInput.placeholder     = 'Not logged in'
+    _contributorId            = null
+    const returnPath = encodeURIComponent(window.location.href)
+    loginLink.href   = `/login.html?return=${returnPath}`
+  }
+  fileInput.addEventListener('change', () => {
+    fileNameEl.textContent = fileInput.files.length ? fileInput.files[0].name : 'No file selected'
+  })
+  submitBtn.addEventListener('click', async () => {
+    const desc = descTA.value.trim()
+    if (!desc) { errorMsg.style.display = 'block'; descTA.focus(); return }
+    errorMsg.style.display = 'none'
+    submitBtn.disabled     = true
+    submitBtn.textContent  = 'Submitting…'
+    const client = getClient()
+    if (!client) { alert('Could not connect to database. Please try again.'); submitBtn.disabled = false; submitBtn.textContent = 'Submit Feedback'; return }
+    try {
+      let screenshotUrl = null
+      if (fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0]
+        const ext  = file.name.split('.').pop()
+        const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+        const { error: upErr } = await client.storage.from('feedback-screenshots').upload(path, file, { upsert: false })
+        if (!upErr) {
+          const { data: urlData } = client.storage.from('feedback-screenshots').getPublicUrl(path)
+          screenshotUrl = urlData.publicUrl
+        }
+      }
+      const { error: insErr } = await client.from('feedback').insert({ page: pageInput.value, feedback_type: typeSelect.value, description: desc, screenshot_url: screenshotUrl, submitted_by: nameInput.value || null, contributor_id: _contributorId || null, status: 'new' })
+      if (insErr) throw insErr
+      formWrap.style.display   = 'none'
+      confirmDiv.style.display = 'block'
+      setTimeout(closeModal, 2000)
+    } catch (err) {
+      alert('Something went wrong. Please try again.')
+      submitBtn.disabled    = false
+      submitBtn.textContent = 'Submit Feedback'
+    }
+  })
+})()
+</script>
+
+</body>
+</html>

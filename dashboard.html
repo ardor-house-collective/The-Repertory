@@ -8,25 +8,28 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-      background: #FAF6F0;
+      font-family: 'Fanwood Text', 'Fanwood', Georgia, serif;
+      background: #F0EDE4;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      color: #2c2c2c;
+      color: #1E2B22;
       line-height: 1.5;
     }
-
-    /* ── Header ──────────────────────────────────────────────────────────────── */
 
     @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill.otf') format('opentype'); font-weight: normal; font-style: normal; }
     @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
     @font-face { font-family: 'Runtime'; src: url('Runtime.otf') format('opentype'); font-weight: normal; font-style: normal; }
+    @font-face { font-family: 'Fanwood Text'; src: url('Fanwood_Text.otf') format('opentype'); font-weight: normal; font-style: normal; }
+    @font-face { font-family: 'Fanwood Text'; src: url('Fanwood_Text_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
+    @font-face { font-family: 'Fanwood'; src: url('Fanwood.otf') format('opentype'); font-weight: normal; font-style: normal; }
+    @font-face { font-family: 'Fanwood'; src: url('Fanwood_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
+
+    /* ── Header ── */
 
     header {
-      background: #1B2E4B;
+      background: #1E2B22;
       padding: 14px 40px;
-      height: auto;
       display: flex;
       align-items: center;
       position: sticky;
@@ -45,42 +48,17 @@
     }
 
     .wordmark { display: flex; flex-direction: column; gap: 1px; line-height: 1; text-decoration: none; }
-    .wm-line1 { font-family: 'Linden Hill', Georgia, serif; font-size: 2.22rem; font-style: normal; color: #FAF6F0; letter-spacing: 0.01em; line-height: 1; }
+    .wm-line1 { font-family: 'Linden Hill', Georgia, serif; font-size: 2.22rem; font-style: normal; color: #F0EDE4; letter-spacing: 0.01em; line-height: 1; }
     .wm-line2 { font-family: 'Runtime', sans-serif; font-size: 0.98rem; color: rgba(250,246,240,0.72); letter-spacing: 0.04em; line-height: 1; }
+
+    .header-right { display: flex; align-items: center; gap: 20px; }
+
     .header-link { color: rgba(250,246,240,0.65); text-decoration: none; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.03em; transition: color 0.15s; white-space: nowrap; }
-    .header-link:hover { color: #FAF6F0; }
+    .header-link:hover { color: #F0EDE4; }
 
-    .site-footer { border-top: 2px solid #1b2e4b; background: #faf6f0; padding: 2rem 40px; flex-shrink: 0; }
-    .site-footer-inner { max-width: 1280px; margin: 0 auto; display: flex; gap: 3rem; }
-    .footer-copy, .footer-legal { flex: 1; font-size: 0.75rem; color: #9a8e83; line-height: 1.65; }
-    .footer-copy a { color: #9a8e83; text-decoration: underline; text-underline-offset: 2px; }
-    .footer-copy a:hover { color: #b5622a; }
-    @media (max-width: 680px) { .site-footer { padding: 1.5rem 20px; } .site-footer-inner { flex-direction: column; gap: 1.2rem; } }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    #header-identity {
-      display: none;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 1px;
-    }
-
-    .header-cid {
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: #B5622A;
-      letter-spacing: 0.07em;
-    }
-
-    .header-name {
-      font-size: 0.75rem;
-      color: #c8d8e8;
-    }
+    #header-identity { display: none; flex-direction: column; align-items: flex-end; gap: 1px; }
+    .header-cid  { font-size: 0.7rem;  font-weight: 700; color: #A8894E; letter-spacing: 0.07em; }
+    .header-name { font-size: 0.75rem; color: #c8d8e8; }
 
     .sign-out-btn {
       background: transparent;
@@ -94,28 +72,36 @@
       transition: border-color 0.15s, color 0.15s;
       white-space: nowrap;
     }
+    .sign-out-btn:hover { border-color: rgba(255,255,255,0.55); color: #fff; }
 
-    .sign-out-btn:hover {
-      border-color: rgba(255,255,255,0.55);
-      color: #fff;
-    }
+    /* ── Site nav ── */
+    .site-nav { display: flex; align-items: center; gap: 4px; margin: 0 20px; }
+    .nav-enter { display: inline-flex; align-items: center; color: #A8894E; border: 1.5px solid #A8894E; border-radius: 20px; padding: 6px 14px; font-size: 13px; font-weight: 500; letter-spacing: 0.03em; text-decoration: none; white-space: nowrap; background: transparent; transition: background 0.2s ease, color 0.2s ease; margin-right: 4px; }
+    .nav-enter:hover { background: #A8894E; color: #F0EDE4; }
+    .nav-link { color: rgba(250,246,240,0.65); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.03em; white-space: nowrap; padding: 4px 10px; border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s; background: none; border-top: none; border-left: none; border-right: none; cursor: pointer; font-family: inherit; line-height: inherit; }
+    .nav-link:hover { color: #F0EDE4; }
+    .nav-link.active { color: #F0EDE4; border-bottom-color: #A8894E; }
+    .nav-founding { visibility: hidden; }
+    .nav-founding.nav-visible { visibility: visible; }
+    .nav-dropdown { position: relative; display: flex; align-items: center; }
+    .nav-dropdown::after { content: ''; position: absolute; left: 0; right: 0; top: 100%; height: 10px; }
+    .nav-dropdown-trigger { display: inline-flex; align-items: center; cursor: pointer; }
+    .nav-dropdown-trigger::after { content: ''; display: inline-block; width: 0; height: 0; border-left: 3px solid transparent; border-right: 3px solid transparent; border-top: 4px solid currentColor; margin-left: 5px; opacity: 0.5; transition: transform 0.15s; }
+    .nav-dropdown:hover .nav-dropdown-trigger { color: #F0EDE4; }
+    .nav-dropdown:hover .nav-dropdown-trigger::after { transform: rotate(180deg); opacity: 1; }
+    .nav-dropdown-menu { position: absolute; top: calc(100% + 10px); left: 0; background: #1E2B22; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); padding: 6px 0; min-width: 190px; opacity: 0; visibility: hidden; transform: translateY(-4px); transition: opacity 0.15s ease, visibility 0.15s, transform 0.15s ease; z-index: 300; }
+    .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-dropdown-item { display: block; color: rgba(250,246,240,0.72); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.02em; padding: 9px 18px; white-space: nowrap; transition: color 0.12s; }
+    .nav-dropdown-item:hover { color: #A8894E; }
+    .nav-dropdown-item.active { color: #F0EDE4; font-weight: 600; }
+    .nav-dropdown-disabled { display: flex; align-items: center; gap: 8px; color: rgba(250,246,240,0.28); cursor: not-allowed; font-size: 13px; font-weight: 500; letter-spacing: 0.02em; padding: 9px 18px; white-space: nowrap; }
+    .nav-dropdown-soon { font-size: 0.68rem; color: #6B7A60; }
 
-    /* ── Page shell ──────────────────────────────────────────────────────────── */
-
-    main { flex: 1; }
-
-    .page-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 40px;
-    }
-
-    /* ── Hero section ────────────────────────────────────────────────────────── */
+    /* ── Welcome hero ── */
 
     .hero {
-      background: #FAF6F0;
-      padding: 60px 0 52px;
-      border-bottom: 1px solid #e8e2d9;
+      background: #F0EDE4;
+      padding: 60px 0 0;
     }
 
     .hero-inner {
@@ -129,28 +115,18 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.14em;
-      color: #B5622A;
+      color: #A8894E;
       margin-bottom: 14px;
     }
 
     .hero-name {
-      font-family: Georgia, 'Times New Roman', serif;
+      font-family: 'Linden Hill', Georgia, serif;
       font-size: 2.8rem;
       font-weight: 400;
-      color: #1B2E4B;
+      color: #1E2B22;
       line-height: 1.15;
       margin-bottom: 18px;
       letter-spacing: -0.01em;
-    }
-
-    /* Skeleton shimmer for name */
-    .hero-name-skeleton {
-      display: inline-block;
-      width: 320px;
-      height: 46px;
-      background: #e4ddd4;
-      border-radius: 4px;
-      animation: shimmer 1.5s ease-in-out infinite;
     }
 
     .hero-meta {
@@ -164,15 +140,12 @@
     .hero-contributor-id {
       font-size: 0.9rem;
       font-weight: 700;
-      color: #B5622A;
+      color: #A8894E;
       letter-spacing: 0.06em;
       font-family: 'SF Mono', 'Fira Code', monospace;
     }
 
-    .meta-sep {
-      color: #ccc4bb;
-      font-size: 0.9rem;
-    }
+    .meta-sep { color: #ccc4bb; font-size: 0.9rem; }
 
     .tier-badge {
       display: inline-flex;
@@ -186,70 +159,78 @@
       color: #fff;
     }
 
-    .tier-founding    { background: #B5622A; }
-    .tier-pro         { background: #1565c0; }
-    .tier-intelligence { background: #6a1b9a; }
-    .tier-enterprise  { background: #1B2E4B; }
-    .tier-free        { background: #757575; }
+    .tier-founding     { background: #A8894E; }
+    .tier-associate  { background: #1565c0; }
+    .tier-certified  { background: #6a1b9a; }
+    .tier-accredited { background: #1E2B22; }
+    .tier-free         { background: #757575; }
 
-    .hero-since {
-      font-size: 0.825rem;
-      color: #9a8e83;
-    }
+    .hero-since { font-size: 0.825rem; color: #6B7A60; }
 
     .hero-tagline {
-      font-family: Georgia, 'Times New Roman', serif;
+      font-family: 'Linden Hill', Georgia, serif;
       font-style: italic;
       font-size: 1.05rem;
       color: #7a6e64;
       letter-spacing: 0.01em;
+      padding-bottom: 12px;
     }
 
-    /* ── Stats section ───────────────────────────────────────────────────────── */
-
-    .stats-section {
-      padding: 40px 0 0;
+    .hero-divider {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 40px;
     }
+
+    .hero-divider hr {
+      border: none;
+      border-top: 1px solid #DDD8C8;
+    }
+
+    /* ── Page shell ── */
+
+    main { flex: 1; }
+
+    .page-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* ── Stats ── */
+
+    .unified-section { padding: 8px 0 0; }
 
     .section-label {
       font-size: 0.65rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.13em;
-      color: #9a8e83;
+      color: #6B7A60;
       margin-bottom: 16px;
     }
 
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      width: 100%;
     }
 
     .stat-card {
-      background: #fff;
+      background: #FDFCF8;
+      border: 1px solid #DDD8C8;
       border-radius: 10px;
-      box-shadow: 0 2px 12px rgba(27, 46, 75, 0.06), 0 1px 3px rgba(0,0,0,0.04);
-      padding: 24px 24px 22px;
+      padding: 20px 20px 18px;
     }
 
     .stat-number {
       font-size: 2.1rem;
       font-weight: 700;
-      color: #B5622A;
+      color: #A8894E;
       line-height: 1;
       margin-bottom: 10px;
       letter-spacing: -0.02em;
-    }
-
-    .stat-number.skeleton-num {
-      width: 64px;
-      height: 36px;
-      background: #e4ddd4;
-      border-radius: 4px;
-      display: block;
-      animation: shimmer 1.5s ease-in-out infinite;
-      color: transparent;
     }
 
     .stat-label {
@@ -257,14 +238,12 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.09em;
-      color: #9a8e83;
+      color: #6B7A60;
     }
 
-    /* ── Actions section ─────────────────────────────────────────────────────── */
+    /* ── Actions ── */
 
-    .actions-section {
-      padding: 36px 0 60px;
-    }
+    .actions-section { padding: 36px 0 60px; }
 
     .actions-grid {
       display: grid;
@@ -274,9 +253,9 @@
 
     .action-card {
       display: block;
-      background: #fff;
+      background: #FDFCF8;
       border-radius: 10px;
-      box-shadow: 0 2px 12px rgba(27, 46, 75, 0.06), 0 1px 3px rgba(0,0,0,0.04);
+      box-shadow: 0 2px 12px rgba(27,46,75,0.06), 0 1px 3px rgba(0,0,0,0.04);
       padding: 32px 32px 56px;
       text-decoration: none;
       position: relative;
@@ -285,79 +264,149 @@
     }
 
     .action-card::after {
-      /* Subtle left accent line that deepens on hover */
       content: '';
       position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
+      left: 0; top: 0; bottom: 0;
       width: 3px;
-      background: #B5622A;
+      background: #A8894E;
       opacity: 0;
       transition: opacity 0.22s ease;
       border-radius: 10px 0 0 10px;
     }
 
-    .action-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 28px rgba(27, 46, 75, 0.11), 0 2px 6px rgba(0,0,0,0.05);
-    }
-
-    .action-card:hover::after {
-      opacity: 1;
-    }
+    .action-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(27,46,75,0.11), 0 2px 6px rgba(0,0,0,0.05); }
+    .action-card:hover::after { opacity: 1; }
 
     .action-eyebrow {
       font-size: 0.63rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.13em;
-      color: #B5622A;
+      color: #A8894E;
       margin-bottom: 14px;
     }
 
     .action-title {
       font-size: 1.05rem;
       font-weight: 600;
-      color: #1B2E4B;
+      color: #1E2B22;
       margin-bottom: 10px;
       line-height: 1.3;
       letter-spacing: -0.01em;
     }
 
-    .action-desc {
-      font-size: 0.855rem;
-      color: #7a7069;
-      line-height: 1.65;
-    }
+    .action-desc { font-size: 0.855rem; color: #6B7A60; line-height: 1.65; }
 
     .action-arrow {
       position: absolute;
-      bottom: 28px;
-      right: 28px;
-      width: 32px;
-      height: 32px;
+      bottom: 28px; right: 28px;
+      width: 32px; height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #B5622A;
+      color: #A8894E;
       opacity: 0;
       transform: translateX(-6px);
       transition: opacity 0.22s ease, transform 0.22s ease;
       font-size: 1.1rem;
     }
 
-    .action-card:hover .action-arrow {
-      opacity: 1;
-      transform: translateX(0);
+    .action-card:hover .action-arrow { opacity: 1; transform: translateX(0); }
+
+    .action-founding { display: none; }
+    .action-founding.action-visible { display: block; }
+
+    /* ── Repertory stats (bottom row) ── */
+
+    .uc-bottom { margin-top: 28px; }
+
+    .uc-rep-heading {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
     }
 
-    /* ── Skeletons ───────────────────────────────────────────────────────────── */
-
-    @keyframes shimmer {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.4; }
+    .uc-rep-heading::before,
+    .uc-rep-heading::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #DDD8C8;
     }
+
+    .uc-rep-heading-text {
+      font-size: 0.57rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #A8894E;
+      white-space: nowrap;
+    }
+
+    .uc-rep-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      text-align: center;
+    }
+
+    .uc-rep-stat { padding: 0 20px; border-right: 1px solid #DDD8C8; }
+    .uc-rep-stat:first-child { padding-left: 0; }
+    .uc-rep-stat:last-child { border-right: none; padding-right: 0; }
+
+    .rep-number {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #A8894E;
+      line-height: 1;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .rep-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #6B7A60;
+    }
+
+    .rep-sub {
+      font-family: 'Linden Hill', Georgia, serif;
+      font-style: italic;
+      font-size: 0.75rem;
+      color: #b5ada4;
+      margin-top: 3px;
+    }
+
+    /* ── Footer ── */
+
+    .site-footer {
+      background: #1E2B22;
+      padding: 2rem 40px;
+      flex-shrink: 0;
+    }
+
+    .site-footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      gap: 3rem;
+    }
+
+    .footer-copy, .footer-legal {
+      flex: 1;
+      font-size: 0.75rem;
+      color: rgba(250,246,240,0.55);
+      line-height: 1.65;
+    }
+
+    .footer-copy a { color: rgba(250,246,240,0.55); text-decoration: underline; text-underline-offset: 2px; }
+    .footer-copy a:hover { color: #F0EDE4; }
+
+    /* ── Skeletons ── */
+
+    @keyframes shimmer { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
     .sk {
       display: inline-block;
@@ -366,45 +415,228 @@
       animation: shimmer 1.5s ease-in-out infinite;
     }
 
-    .sk-w80  { width: 80px;  height: 13px; }
-    .sk-w140 { width: 140px; height: 13px; }
-    .sk-w200 { width: 200px; height: 13px; }
+    /* ── Unified card ── */
 
-    /* ── Responsive ──────────────────────────────────────────────────────────── */
+    .unified-card {
+      background: #FDFCF8;
+      border: 1px solid #DDD8C8;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(27,46,75,0.06), 0 1px 3px rgba(0,0,0,0.04);
+      padding: 24px 32px 28px;
+    }
+
+    .uc-top {
+      display: flex;
+      align-items: center;
+    }
+
+    .uc-flame-col {
+      flex: 0 0 25%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 16px 8px;
+    }
+
+    .uc-stats-col {
+      flex: 1;
+      padding: 0 0 8px 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .uc-divider {
+      width: 1px;
+      background: #DDD8C8;
+      align-self: stretch;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .uc-divider::after {
+      content: '◆';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #A8894E;
+      font-size: 0.45rem;
+      background: #FDFCF8;
+      padding: 3px 2px;
+      line-height: 1;
+    }
+
+    .flame-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    /* ── Flame tooltips ── */
+
+    .flame-tooltip {
+      position: absolute;
+      bottom: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #FDFCF8;
+      border: 1px solid #DDD8C8;
+      border-radius: 10px;
+      padding: 14px 16px;
+      box-shadow: 0 4px 20px rgba(27,46,75,0.10);
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 50;
+      min-width: 250px;
+      text-align: left;
+    }
+
+    .flame-item:hover .flame-tooltip { opacity: 1; }
+
+    .flame-tooltip-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: #6B7A60;
+      margin-bottom: 10px;
+    }
+
+    .flame-tooltip-row {
+      font-size: 0.8rem;
+      color: #1E2B22;
+      margin-bottom: 6px;
+      line-height: 1.5;
+    }
+
+    .flame-tooltip-italic {
+      font-family: 'Linden Hill', Georgia, serif;
+      font-style: italic;
+      font-size: 0.78rem;
+      color: #A8894E;
+      margin-top: 10px;
+      white-space: normal;
+    }
+
+    .flame-card-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: #A8894E;
+      margin-top: 14px;
+      margin-bottom: 3px;
+    }
+
+    .flame-card-stat {
+      font-size: 0.75rem;
+      color: #6B7A60;
+      margin-bottom: 2px;
+      letter-spacing: 0.01em;
+    }
+
+    .flame-card-tagline {
+      font-family: 'Linden Hill', Georgia, serif;
+      font-style: italic;
+      font-size: 0.80rem;
+      color: #A8894E;
+      text-align: center;
+    }
+
+    /* ── Responsive ── */
 
     @media (max-width: 900px) {
-      .stats-grid   { grid-template-columns: repeat(2, 1fr); }
+      .uc-top { flex-wrap: wrap; }
+      .uc-flame-col { flex: 1 1 40%; padding: 16px 16px 8px; }
+      .uc-divider { display: none; }
+      .uc-stats-col { flex: 1 1 100%; padding: 16px 0 0; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .uc-rep-grid { grid-template-columns: repeat(2, 1fr); }
+      .uc-rep-stat { border-right: none; padding: 0 16px 16px; }
+      .uc-rep-stat:nth-child(odd) { border-right: 1px solid #DDD8C8; }
+      .uc-rep-stat:last-child { border-bottom: none; }
       .actions-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .uc-top { flex-direction: column; align-items: stretch; }
+      .uc-flame-col { flex: unset; width: 100%; padding: 16px 0 8px; }
+      .uc-top > div:nth-child(1) img { width: 100px !important; }
+      .uc-top > div:nth-child(3) img { width: 65px !important; }
+      .uc-stats-col { width: 100%; padding: 24px 0 0; border-top: 1px solid #DDD8C8; margin-top: 4px; }
+    }
+
+    @media (max-width: 640px) {
+      .site-nav { display: none; }
     }
 
     @media (max-width: 600px) {
       header { padding: 0 20px; }
-
-      .hero         { padding: 40px 0 36px; }
-      .hero-inner   { padding: 0 20px; }
-      .hero-name    { font-size: 2rem; }
-      .page-inner   { padding: 0 20px; }
-
-      .stats-grid   { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .hero { padding: 28px 0 0; }
+      .hero-inner { padding: 0 20px; }
+      .hero-divider { padding: 0 20px; }
+      .hero-name { font-size: 1.9rem; }
+      .hero-tagline { padding-bottom: 28px; }
+      .page-inner { padding: 0 20px; }
+      .unified-card { padding: 20px 20px 18px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
       .actions-grid { grid-template-columns: 1fr; }
-
-      .action-card  { padding: 26px 24px 52px; }
-      .stats-section  { padding: 28px 0 0; }
-      .actions-section { padding: 24px 0 48px; }
+      .action-card { padding: 26px 24px 52px; }
+      .unified-section { padding: 20px 0 0; }
+      .actions-section { padding: 20px 0 48px; }
     }
+
+    @media (max-width: 680px) {
+      .site-footer { padding: 1.5rem 20px; }
+      .site-footer-inner { flex-direction: column; gap: 1.2rem; }
+    }
+
+    /* ── Review Queue Widget ── */
+    .rq-section { padding: 28px 0 0; }
+    .rq-card { background: #FDFCF8; border: 1px solid #DDD8C8; border-radius: 10px; box-shadow: 0 2px 12px rgba(27,46,75,0.06), 0 1px 3px rgba(0,0,0,0.04); padding: 20px 28px 24px; }
+    .rq-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .rq-header-label { font-size: 0.78rem; color: #6B7A60; }
+    .rq-view-all { font-size: 0.78rem; color: #A8894E; text-decoration: none; font-weight: 600; letter-spacing: 0.02em; }
+    .rq-view-all:hover { text-decoration: underline; }
+    .rq-stats { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .rq-stat { padding: 0 20px; border-right: 1px solid #DDD8C8; text-align: center; text-decoration: none; display: block; }
+    .rq-stat:first-child { padding-left: 0; }
+    .rq-stat:last-child { border-right: none; padding-right: 0; }
+    .rq-number { font-size: 2.0rem; font-weight: 700; color: #A8894E; line-height: 1; margin-bottom: 8px; letter-spacing: -0.02em; transition: color 0.15s; }
+    .rq-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #6B7A60; transition: color 0.15s; }
+    a.rq-stat:hover .rq-number { color: #9a501f; }
+    a.rq-stat:hover .rq-label { color: #A8894E; }
+    .rq-soon { font-size: 0.68rem; font-family: 'Linden Hill', Georgia, serif; font-style: italic; color: #b5ada4; margin-top: 5px; }
+    .rq-stat-disabled { cursor: default; }
+    .rq-stat-disabled .rq-number { color: #6B7A60; }
   </style>
 </head>
 <body>
 
-<!-- ── Header ──────────────────────────────────────────────────────────────── -->
+<!-- ── Header ── -->
 <header>
   <div class="header-inner">
     <a href="dashboard.html" class="wordmark">
       <span class="wm-line1">The Repertory</span>
       <span class="wm-line2">a Collective effort</span>
     </a>
+    <nav class="site-nav">
+      <a href="#" class="nav-enter"><img src="keyhole.png" alt="" width="14" height="20" style="vertical-align:middle; margin-right:6px;">Enter The Repertory</a>
+      <a href="contributor-form.html" class="nav-link">Submit</a>
+      <div class="nav-dropdown">
+        <span class="nav-link nav-dropdown-trigger">Resources</span>
+        <div class="nav-dropdown-menu">
+          <a href="condition-standard.html" class="nav-dropdown-item">Condition Standard</a>
+          <a href="admin-glossary.html" class="nav-dropdown-item nav-founding">Glossary</a>
+          <span class="nav-dropdown-disabled">Tools <span class="nav-dropdown-soon">Coming Soon</span></span>
+        </div>
+      </div>
+    </nav>
     <div class="header-right">
-      <a href="resources.html" class="header-link">Resources</a>
       <div id="header-identity">
         <span class="header-cid"  id="header-cid"></span>
         <span class="header-name" id="header-name"></span>
@@ -414,77 +646,176 @@
   </div>
 </header>
 
-<!-- ── Hero ────────────────────────────────────────────────────────────────── -->
+<!-- ── Welcome hero ── -->
 <section class="hero">
   <div class="hero-inner">
     <p class="hero-eyebrow">Welcome back</p>
-
     <h1 class="hero-name" id="hero-name">
-      <span class="sk" style="width:280px; height:42px; border-radius:4px"></span>
+      <span class="sk" style="width:280px;height:42px;border-radius:4px"></span>
     </h1>
-
     <div class="hero-meta" id="hero-meta">
-      <span class="sk sk-w80"></span>
+      <span class="sk" style="width:80px;height:13px;border-radius:3px"></span>
       <span class="meta-sep">·</span>
-      <span class="sk sk-w80"></span>
+      <span class="sk" style="width:80px;height:13px;border-radius:3px"></span>
       <span class="meta-sep">·</span>
-      <span class="sk sk-w140"></span>
+      <span class="sk" style="width:140px;height:13px;border-radius:3px"></span>
     </div>
-
     <p class="hero-tagline">Your contributions shape the standard.</p>
   </div>
 </section>
 
-<!-- ── Stats + Actions ─────────────────────────────────────────────────────── -->
+<div class="hero-divider"><hr></div>
+
+<!-- ── Stats + Actions ── -->
 <main>
   <div class="page-inner">
 
-    <!-- Stats row -->
-    <section class="stats-section">
+    <section class="unified-section">
       <p class="section-label">Your Activity</p>
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-number" id="stat-submissions"><span class="sk" style="width:52px;height:34px;border-radius:4px"></span></div>
-          <div class="stat-label">Total Submissions</div>
+      <div class="unified-card">
+
+        <!-- Top row: flames + contributor stats -->
+        <div class="uc-top">
+
+          <!-- Column 1: The Collective flame -->
+          <div class="uc-flame-col">
+            <div class="flame-item">
+              <div class="flame-tooltip" id="cf-tooltip">
+                <div class="flame-tooltip-label">What shapes the Collective</div>
+                <div class="flame-tooltip-row" id="cft-day">Today vs. yesterday: — today, — yesterday</div>
+                <div class="flame-tooltip-row" id="cft-total">— approved contributions across all contributors</div>
+                <div class="flame-tooltip-italic">Every contributor's flame feeds this one.</div>
+              </div>
+              <img src="hearthflame.png" alt="The Collective flame" style="width:110px; height:auto; display:block; margin:0 auto;">
+              <p class="flame-card-label">The Hearth</p>
+              <p class="flame-card-tagline">Every Ember feeds The Hearth.</p>
+            </div>
+          </div>
+
+          <div class="uc-divider"></div>
+
+          <!-- Column 2: Your Ember -->
+          <div class="uc-flame-col">
+            <div class="flame-item">
+              <div class="flame-tooltip" id="pf-tooltip">
+                <div class="flame-tooltip-label">What shapes your Ember</div>
+                <div class="flame-tooltip-row" id="pft-size">🔥 Size → — approved contributions</div>
+                <div class="flame-tooltip-row" id="pft-color">🌡 Color → Contribution milestone — Ember</div>
+                <div class="flame-tooltip-row" id="pft-rhythm">～ Rhythm → — submissions in the last 7 days</div>
+                <div class="flame-tooltip-italic">The more you contribute accurately, the hotter it burns.</div>
+              </div>
+              <img src="hearthflame.png" alt="Your ember" style="width:70px; height:auto; display:block; margin:0 auto; opacity:0.9;">
+              <p class="flame-card-label">Your Ember</p>
+              <p class="flame-card-tagline">Alone, a glow. Together, a blaze.</p>
+            </div>
+          </div>
+
+          <div class="uc-divider"></div>
+
+          <!-- Column 3: Contributor stats 2×2 -->
+          <div class="uc-stats-col">
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-number" id="stat-submissions"><span class="sk" style="width:52px;height:34px;border-radius:4px"></span></div>
+                <div class="stat-label">Total Submissions</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number" id="stat-approved"><span class="sk" style="width:52px;height:34px;border-radius:4px"></span></div>
+                <div class="stat-label">Total Approved</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number" id="stat-rate"><span class="sk" style="width:64px;height:34px;border-radius:4px"></span></div>
+                <div class="stat-label">Approval Rate</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number" id="stat-streak"><span class="sk" style="width:40px;height:34px;border-radius:4px"></span></div>
+                <div class="stat-label">Contribution Streak</div>
+              </div>
+            </div>
+          </div>
+
         </div>
-        <div class="stat-card">
-          <div class="stat-number" id="stat-approved"><span class="sk" style="width:52px;height:34px;border-radius:4px"></span></div>
-          <div class="stat-label">Total Approved</div>
+
+        <!-- Bottom row: The Repertory database stats -->
+        <div class="uc-bottom">
+          <div class="uc-rep-heading">
+            <span class="uc-rep-heading-text">The Repertory</span>
+          </div>
+          <div class="uc-rep-grid">
+            <div class="uc-rep-stat">
+              <div class="rep-number" id="ic-records"><span class="sk" style="width:52px;height:34px;border-radius:4px"></span></div>
+              <div class="rep-label">Items in The Repertory</div>
+            </div>
+            <div class="uc-rep-stat">
+              <div class="rep-number" id="ic-materials"><span class="sk" style="width:52px;height:34px;border-radius:4px"></span></div>
+              <div class="rep-label">Materials Catalogued</div>
+            </div>
+            <div class="uc-rep-stat">
+              <div class="rep-number" id="ic-colors"><span class="sk" style="width:52px;height:34px;border-radius:4px"></span></div>
+              <div class="rep-label">Colors Catalogued</div>
+            </div>
+            <div class="uc-rep-stat">
+              <div class="rep-number" id="ic-value">$0</div>
+              <div class="rep-label">Industry Value Captured</div>
+              <div class="rep-sub">Based on approved market listings</div>
+            </div>
+          </div>
         </div>
-        <div class="stat-card">
-          <div class="stat-number" id="stat-rate"><span class="sk" style="width:64px;height:34px;border-radius:4px"></span></div>
-          <div class="stat-label">Approval Rate</div>
+
+      </div>
+    </section>
+
+    <section class="rq-section" id="rq-section" style="display:none">
+      <p class="section-label">Review Queue</p>
+      <div class="rq-card">
+        <div class="rq-header">
+          <span class="rq-header-label">Pending items across all queues</span>
+          <a href="admin-review-dashboard.html" class="rq-view-all">View All →</a>
         </div>
-        <div class="stat-card">
-          <div class="stat-number" id="stat-streak"><span class="sk" style="width:40px;height:34px;border-radius:4px"></span></div>
-          <div class="stat-label">Contribution Streak</div>
+        <div class="rq-stats">
+          <a href="admin-submissions.html" class="rq-stat">
+            <div class="rq-number" id="rq-sub-count"><span class="sk" style="width:40px;height:32px;border-radius:4px"></span></div>
+            <div class="rq-label">Submissions</div>
+          </a>
+          <a href="admin-applications.html" class="rq-stat">
+            <div class="rq-number" id="rq-app-count"><span class="sk" style="width:40px;height:32px;border-radius:4px"></span></div>
+            <div class="rq-label">Applications</div>
+          </a>
+          <a href="admin-feedback.html" class="rq-stat">
+            <div class="rq-number" id="rq-fb-count"><span class="sk" style="width:40px;height:32px;border-radius:4px"></span></div>
+            <div class="rq-label">Feedback</div>
+          </a>
+          <div class="rq-stat rq-stat-disabled">
+            <div class="rq-number">0</div>
+            <div class="rq-label">Stolen Items</div>
+            <div class="rq-soon">Coming Soon</div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Quick actions -->
     <section class="actions-section">
-      <p class="section-label">Quick Actions</p>
+      <p class="section-label">Quick Links</p>
       <div class="actions-grid">
 
         <a href="contributor-form.html" class="action-card">
           <p class="action-eyebrow">Contribute</p>
           <h2 class="action-title">Submit a Contribution</h2>
-          <p class="action-desc">Add colors, materials, pricing, serials, and more to the registry.</p>
+          <p class="action-desc">Add colors, materials, pricing, serials, and more to The Repertory.</p>
           <span class="action-arrow">→</span>
         </a>
 
-        <a href="profile.html" class="action-card">
+        <a href="#" class="action-card">
           <p class="action-eyebrow">Profile</p>
           <h2 class="action-title">View Public Profile</h2>
           <p class="action-desc">See your public contributor page, badges, and leaderboard standing.</p>
           <span class="action-arrow">→</span>
         </a>
 
-        <a href="registry.html" class="action-card">
-          <p class="action-eyebrow">Explore</p>
-          <h2 class="action-title">Browse the Registry</h2>
-          <p class="action-desc">Search and explore the GNS database of authenticated luxury goods.</p>
+        <a href="admin-glossary.html" class="action-card action-founding">
+          <p class="action-eyebrow">Admin</p>
+          <h2 class="action-title">Admin Settings</h2>
+          <p class="action-desc">Manage glossary, settings, and access.</p>
           <span class="action-arrow">→</span>
         </a>
 
@@ -494,17 +825,18 @@
   </div>
 </main>
 
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <p class="footer-copy">The Repertory is a collective effort to build the world's most complete authenticated goods database. Under the care of <a href="https://ardorhousecollective.com" target="_blank" rel="noopener">Ardor House Collective</a>.</p>
+    <p class="footer-legal">The Repertory is an independent platform. All brand names and trademarks are the property of their respective owners. We are not affiliated with, authorized by, or associated with any brand referenced in this database.</p>
+  </div>
+</footer>
+
 <script>
   const SUPABASE_URL = 'https://hsseypuhqdlcvepgyrtd.supabase.co'
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhzc2V5cHVocWRsY3ZlcGd5cnRkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTc3NTk0MSwiZXhwIjoyMDkxMzUxOTQxfQ.mGNhUtPSCJWNDTVY1dlhwROsUMTAw-1dHkvRHYV0M0c'
+  const SUPABASE_KEY = 'sb_publishable_WOh4vQeiGzrN9CoICfiUTQ_XB5MQJw0'
 
-  const DB_HEADERS = {
-    'apikey': SUPABASE_KEY,
-    'Authorization': `Bearer ${SUPABASE_KEY}`,
-    'Content-Type': 'application/json'
-  }
-
-  // ── Auth guard ──────────────────────────────────────────────────────────────
+  // ── Auth guard ──
 
   const accessToken = localStorage.getItem('gns_access_token')
   const storedUser  = JSON.parse(localStorage.getItem('gns_user') || 'null')
@@ -513,7 +845,33 @@
     window.location.replace('login.html')
   }
 
-  // ── Sign out ──────────────────────────────────────────────────────────────
+  const DB_HEADERS = {
+    'apikey': SUPABASE_KEY,
+    'Authorization': `Bearer ${accessToken}`,
+    'Content-Type': 'application/json'
+  }
+
+  async function refreshAccessToken() {
+    const rt = localStorage.getItem('gns_refresh_token')
+    if (!rt) return null
+    try {
+      const r = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
+        body: JSON.stringify({ refresh_token: rt })
+      })
+      if (!r.ok) return null
+      const d = await r.json()
+      if (!d.access_token) return null
+      localStorage.setItem('gns_access_token', d.access_token)
+      localStorage.setItem('gns_refresh_token', d.refresh_token)
+      localStorage.setItem('gns_user', JSON.stringify(d.user))
+      DB_HEADERS['Authorization'] = 'Bearer ' + d.access_token
+      return d.access_token
+    } catch { return null }
+  }
+
+  // ── Sign out ──
 
   document.getElementById('sign-out-btn').addEventListener('click', () => {
     localStorage.removeItem('gns_access_token')
@@ -522,33 +880,95 @@
     window.location.href = 'login.html'
   })
 
-  // ── Date formatting ────────────────────────────────────────────────────────
+  // ── Flame tooltip data ──────────────────────────────────────────────────────
 
-  const MONTHS = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ]
+  window._pfSetApproved = function(n) {
+    const PF_TIER_LABELS = ['Ember', 'Rising', 'Bright', 'Brilliant', 'Luminous']
+    const tierIdx = n <= 10 ? 0 : n <= 50 ? 1 : n <= 150 ? 2 : n <= 300 ? 3 : 4
+    const sizeEl = document.getElementById('pft-size')
+    if (sizeEl) sizeEl.textContent = '🔥 Size → ' + n.toLocaleString() + ' approved contribution' + (n !== 1 ? 's' : '')
+    const colorEl = document.getElementById('pft-color')
+    if (colorEl) colorEl.textContent = '🌡 Color → Contribution milestone — ' + PF_TIER_LABELS[tierIdx]
+  }
 
-  function formatMemberSince(isoString) {
-    const d = new Date(isoString)
+  window._pfSetRhythm = function(weekCount) {
+    const el = document.getElementById('pft-rhythm')
+    if (el) el.textContent = '～ Rhythm → ' + weekCount + ' submission' + (weekCount !== 1 ? 's' : '') + ' in the last 7 days'
+  }
+
+  async function loadCFData() {
+    const now       = new Date()
+    const today     = now.toISOString().slice(0, 10)
+    const yesterday = new Date(now - 86400000).toISOString().slice(0, 10)
+    const tomorrow  = new Date(now.getTime() + 86400000).toISOString().slice(0, 10)
+
+    const [totalRes, todayRes, yestRes] = await Promise.all([
+      fetch(`${SUPABASE_URL}/rest/v1/submission_queue?status=eq.approved`, { method:'HEAD', headers:{...DB_HEADERS,'Prefer':'count=exact'} }),
+      fetch(`${SUPABASE_URL}/rest/v1/submission_queue?created_at=gte.${today}T00:00:00Z&created_at=lt.${tomorrow}T00:00:00Z`, { method:'HEAD', headers:{...DB_HEADERS,'Prefer':'count=exact'} }),
+      fetch(`${SUPABASE_URL}/rest/v1/submission_queue?created_at=gte.${yesterday}T00:00:00Z&created_at=lt.${today}T00:00:00Z`, { method:'HEAD', headers:{...DB_HEADERS,'Prefer':'count=exact'} })
+    ])
+
+    const getCount = r => parseInt((r.headers.get('Content-Range') || '*/0').split('/')[1]) || 0
+    const total    = getCount(totalRes)
+    const todayCt  = getCount(todayRes)
+    const yestCt   = getCount(yestRes)
+
+    const cfStat = document.getElementById('cf-stat')
+    if (cfStat) cfStat.textContent = total.toLocaleString() + ' approved submissions'
+
+    const cftDay = document.getElementById('cft-day')
+    if (cftDay) cftDay.textContent = 'Today vs. yesterday: ' + todayCt + ' today, ' + yestCt + ' yesterday'
+    const cftTotal = document.getElementById('cft-total')
+    if (cftTotal) cftTotal.textContent = total.toLocaleString() + ' approved contributions across all contributors'
+  }
+
+  loadCFData().catch(() => {})
+
+  async function loadReviewQueue() {
+    const getCount = r => parseInt((r.headers.get('Content-Range') || '*/0').split('/')[1]) || 0
+    try {
+      const [subRes, appRes, fbRes] = await Promise.all([
+        fetch(`${SUPABASE_URL}/rest/v1/submission_queue?status=eq.pending`, { method: 'HEAD', headers: { ...DB_HEADERS, 'Prefer': 'count=exact' } }),
+        fetch(`${SUPABASE_URL}/rest/v1/access_requests?status=eq.pending`,  { method: 'HEAD', headers: { ...DB_HEADERS, 'Prefer': 'count=exact' } }),
+        fetch(`${SUPABASE_URL}/rest/v1/feedback?status=eq.new`,             { method: 'HEAD', headers: { ...DB_HEADERS, 'Prefer': 'count=exact' } })
+      ])
+      document.getElementById('rq-sub-count').textContent = getCount(subRes).toLocaleString()
+      document.getElementById('rq-app-count').textContent = getCount(appRes).toLocaleString()
+      document.getElementById('rq-fb-count').textContent  = getCount(fbRes).toLocaleString()
+    } catch {}
+  }
+
+  // ── Impact counters ──────────────────────────────────────────────────────
+
+  ;(async function loadImpactData() {
+    const getCount = r => parseInt((r.headers.get('Content-Range') || '*/0').split('/')[1]) || 0
+    try {
+      const [recRes, matRes, colRes] = await Promise.all([
+        fetch(`${SUPABASE_URL}/rest/v1/gns_record`,       { method: 'HEAD', headers: { ...DB_HEADERS, 'Prefer': 'count=exact' } }),
+        fetch(`${SUPABASE_URL}/rest/v1/glossary_material`, { method: 'HEAD', headers: { ...DB_HEADERS, 'Prefer': 'count=exact' } }),
+        fetch(`${SUPABASE_URL}/rest/v1/glossary_color`,    { method: 'HEAD', headers: { ...DB_HEADERS, 'Prefer': 'count=exact' } })
+      ])
+      document.getElementById('ic-records').textContent   = getCount(recRes).toLocaleString()
+      document.getElementById('ic-materials').textContent = getCount(matRes).toLocaleString()
+      document.getElementById('ic-colors').textContent    = getCount(colRes).toLocaleString()
+    } catch {}
+  })()
+
+  // ── Profile + stats ──
+
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December']
+
+  function formatMemberSince(iso) {
+    const d = new Date(iso)
     return `Member since ${MONTHS[d.getMonth()]} ${d.getFullYear()}`
   }
 
-  // ── Populate hero ──────────────────────────────────────────────────────────
-
   function populateHero(p) {
-    // Name
-    const nameEl = document.getElementById('hero-name')
-    nameEl.textContent = p.display_name
-
-    // Header identity
-    document.getElementById('header-cid').textContent  = p.contributor_id
-    document.getElementById('header-name').textContent = p.display_name
+    document.getElementById('hero-name').textContent         = p.display_name
+    document.getElementById('header-cid').textContent        = p.contributor_id
+    document.getElementById('header-name').textContent       = p.display_name
     document.getElementById('header-identity').style.display = 'flex'
-
-    // Meta row: ID · tier badge · member since
-    const metaEl = document.getElementById('hero-meta')
-    metaEl.innerHTML = `
+    document.getElementById('hero-meta').innerHTML = `
       <span class="hero-contributor-id">${p.contributor_id}</span>
       <span class="meta-sep">·</span>
       <span class="tier-badge tier-${p.membership_tier}">${p.membership_tier}</span>
@@ -557,24 +977,28 @@
     `
   }
 
-  // ── Populate stats ─────────────────────────────────────────────────────────
-
   function populateStats(p) {
-    const total    = p.total_submissions || 0
-    const approved = p.total_approved    || 0
+    const total    = p.total_submissions   || 0
+    const approved = p.total_approved      || 0
     const streak   = p.contribution_streak || 0
-
-    const rate = total > 0
-      ? ((approved / total) * 100).toFixed(1) + '%'
-      : '—'
-
+    const rate     = total > 0 ? ((approved / total) * 100).toFixed(1) + '%' : '—'
     document.getElementById('stat-submissions').textContent = total.toLocaleString()
     document.getElementById('stat-approved').textContent    = approved.toLocaleString()
     document.getElementById('stat-rate').textContent        = rate
     document.getElementById('stat-streak').textContent      = streak.toLocaleString()
+    if (window._pfSetApproved) window._pfSetApproved(approved)
   }
 
-  // ── Boot ───────────────────────────────────────────────────────────────────
+  async function loadPFRhythm(contributorId) {
+    const weekAgo = new Date(Date.now() - 7 * 86400000).toISOString()
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/submission_queue?contributor_id=eq.${encodeURIComponent(contributorId)}&created_at=gte.${weekAgo}`,
+      { method: 'HEAD', headers: { ...DB_HEADERS, 'Prefer': 'count=exact' } }
+    )
+    if (!res.ok) return
+    const count = parseInt((res.headers.get('Content-Range') || '*/0').split('/')[1]) || 0
+    if (window._pfSetRhythm) window._pfSetRhythm(count)
+  }
 
   async function init() {
     let res
@@ -588,12 +1012,26 @@
       return
     }
 
+    if (res.status === 401) {
+      const newToken = await refreshAccessToken()
+      if (!newToken) { window.location.replace('login.html'); return }
+      try {
+        res = await fetch(
+          `${SUPABASE_URL}/rest/v1/contributor_profile?auth_user_id=eq.${storedUser.id}&select=*&limit=1`,
+          { headers: DB_HEADERS }
+        )
+      } catch {
+        window.location.replace('login.html')
+        return
+      }
+    }
+
     if (!res.ok) {
       window.location.replace('login.html')
       return
     }
 
-    const rows = await res.json()
+    const rows    = await res.json()
     const profile = rows[0] ?? null
 
     if (!profile) {
@@ -605,179 +1043,537 @@
 
     populateHero(profile)
     populateStats(profile)
+    loadPFRhythm(profile.contributor_id).catch(() => {})
+
+    const isFoundingUser = profile.membership_tier === 'founding' || profile.is_curator_general
+    if (isFoundingUser) {
+      document.querySelectorAll('.action-founding').forEach(el => el.classList.add('action-visible'))
+      document.querySelectorAll('.nav-founding').forEach(el => el.classList.add('nav-visible'))
+      const rqSection = document.getElementById('rq-section')
+      if (rqSection) rqSection.style.display = ''
+      loadReviewQueue().catch(() => {})
+    }
+    if (profile.reviewer_role) {
+      document.querySelectorAll('.nav-reviewer').forEach(el => el.classList.add('nav-visible'))
+      document.querySelectorAll('.action-reviewer').forEach(el => el.classList.add('action-visible'))
+    }
   }
 
   init()
 </script>
 
-<footer class="site-footer">
-  <div class="site-footer-inner">
-    <p class="footer-copy">The Repertory is a collective effort to build the world's most complete authenticated goods database. Under the care of <a href="https://ardorhousecollective.com" target="_blank" rel="noopener">Ardor House Collective</a>.</p>
-    <p class="footer-legal">The Repertory is an independent platform. All brand names and trademarks are the property of their respective owners. We are not affiliated with, authorized by, or associated with any brand referenced in this database.</p>
-  </div>
-</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>window._supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);</script>
+<!--
+  ============================================================
+  GNS FEEDBACK WIDGET  — feedback-widget.html  (v2)
+  Drop this entire block as the last element before </body>
+  on every page.
 
+  Requires window._supabaseClient already initialized.
+  Authentication is required to submit. Unauthenticated users
+  see a login prompt instead of the submit button.
+  Name is auto-populated from contributor_profile.display_name
+  and is read-only — it cannot be edited by the user.
+  ============================================================
+-->
 
-<!-- ── Feedback Widget ──────────────────────────────────────────────────────── -->
 <style>
-#fbw-btn{position:fixed;bottom:24px;right:24px;z-index:9000;background:#1B2E4B;color:#FAF6F0;border:2px solid #B5622A;border-radius:24px;padding:9px 18px 9px 14px;font-size:.82rem;font-weight:600;font-family:inherit;letter-spacing:.04em;cursor:pointer;display:flex;align-items:center;gap:7px;box-shadow:0 4px 16px rgba(27,46,75,.28);transition:background .15s,box-shadow .15s}
-#fbw-btn:hover{background:#253d63;box-shadow:0 6px 20px rgba(27,46,75,.38)}
-#fbw-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:9001;align-items:center;justify-content:center;padding:1rem}
-#fbw-overlay.open{display:flex}
-#fbw-modal{background:#1B2E4B;border:1.5px solid #B5622A;border-radius:14px;padding:28px 30px 24px;width:100%;max-width:480px;box-shadow:0 20px 60px rgba(0,0,0,.45);position:relative;color:#FAF6F0}
-#fbw-close{position:absolute;top:14px;right:16px;background:none;border:none;color:rgba(250,246,240,.55);font-size:1.3rem;line-height:1;cursor:pointer;padding:4px 6px;border-radius:4px;transition:color .15s}
-#fbw-close:hover{color:#FAF6F0}
-#fbw-modal h2{font-family:'Linden Hill',Georgia,serif;font-size:1.45rem;color:#FAF6F0;margin-bottom:20px;letter-spacing:.01em}
-.fbw-group{margin-bottom:16px}
-.fbw-label{display:block;font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:rgba(250,246,240,.6);margin-bottom:6px}
-.fbw-input,.fbw-select,.fbw-textarea{width:100%;background:rgba(250,246,240,.07);border:1.5px solid rgba(181,98,42,.45);border-radius:7px;padding:9px 12px;font-size:.88rem;font-family:inherit;color:#FAF6F0;outline:none;transition:border-color .15s}
-.fbw-input::placeholder,.fbw-textarea::placeholder{color:rgba(250,246,240,.3)}
-.fbw-input:focus,.fbw-select:focus,.fbw-textarea:focus{border-color:#B5622A}
-.fbw-input[readonly]{opacity:.55;cursor:default}
-.fbw-select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B5622A' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
-.fbw-select option{background:#1B2E4B;color:#FAF6F0}
-.fbw-textarea{resize:vertical;min-height:88px;line-height:1.55}
-#fbw-error{font-size:.8rem;color:#f87171;margin-bottom:12px;display:none}
-#fbw-success{text-align:center;padding:24px 0 8px;display:none}
-#fbw-success .fbw-check{font-size:2.4rem;margin-bottom:10px;color:#B5622A}
-#fbw-success p{color:rgba(250,246,240,.8);font-size:.95rem}
-#fbw-submit{width:100%;background:#B5622A;color:#FAF6F0;border:none;border-radius:7px;padding:11px 16px;font-size:.9rem;font-weight:600;font-family:inherit;letter-spacing:.03em;cursor:pointer;transition:background .15s;margin-top:4px}
-#fbw-submit:hover:not(:disabled){background:#9a501f}
-#fbw-submit:disabled{opacity:.5;cursor:not-allowed}
+  :root {
+    --fb-navy:    #1E2B22;
+    --fb-copper:  #A8894E;
+    --fb-cream:   #F0EDE4;
+    --fb-overlay: rgba(15, 22, 36, 0.72);
+  }
+
+  #gns-feedback-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 18px 10px 14px;
+    background: var(--fb-navy);
+    color: var(--fb-cream);
+    border: 1.5px solid var(--fb-copper);
+    border-radius: 6px;
+    font-family: 'Fanwood Text', Georgia, serif;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+    transition: background 0.18s, border-color 0.18s, transform 0.12s;
+    user-select: none;
+  }
+  #gns-feedback-btn:hover {
+    background: #22395c;
+    border-color: #d07535;
+    transform: translateY(-1px);
+  }
+  #gns-feedback-btn svg { flex-shrink: 0; color: var(--fb-copper); }
+
+  #gns-feedback-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9100;
+    background: var(--fb-overlay);
+    backdrop-filter: blur(3px);
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  #gns-feedback-overlay.open { display: flex; }
+
+  #gns-feedback-modal {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    background: var(--fb-navy);
+    border: 1.5px solid var(--fb-copper);
+    border-radius: 8px;
+    padding: 32px 28px 28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+    font-family: 'Fanwood Text', Georgia, serif;
+    color: var(--fb-cream);
+    animation: fb-slide-up 0.22s ease;
+  }
+  @keyframes fb-slide-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  #gns-feedback-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: var(--fb-cream);
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+    opacity: 0.65;
+    transition: opacity 0.15s;
+    padding: 2px 4px;
+  }
+  #gns-feedback-close:hover { opacity: 1; }
+
+  #gns-feedback-modal h2 {
+    font-family: 'Linden Hill', 'Palatino Linotype', Palatino, serif;
+    font-size: 20px;
+    font-weight: normal;
+    color: var(--fb-cream);
+    margin: 0 0 22px;
+    letter-spacing: 0.03em;
+    border-bottom: 1px solid rgba(181,98,42,0.35);
+    padding-bottom: 12px;
+  }
+
+  .fb-field { margin-bottom: 16px; }
+  .fb-field label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fb-copper);
+    margin-bottom: 5px;
+  }
+  .fb-field input[type="text"],
+  .fb-field select,
+  .fb-field textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(181,98,42,0.4);
+    border-radius: 4px;
+    color: var(--fb-cream);
+    font-family: 'Fanwood Text', Georgia, serif;
+    font-size: 14px;
+    padding: 9px 11px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.15s, background 0.15s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .fb-field input[readonly] {
+    opacity: 0.55;
+    cursor: default;
+  }
+  .fb-field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B5622A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 11px center;
+    padding-right: 30px;
+    cursor: pointer;
+  }
+  .fb-field select option { background: var(--fb-navy); color: var(--fb-cream); }
+  .fb-field input:not([readonly]):focus,
+  .fb-field select:focus,
+  .fb-field textarea:focus {
+    border-color: var(--fb-copper);
+    background: rgba(255,255,255,0.09);
+  }
+  .fb-field textarea { resize: vertical; min-height: 88px; }
+
+  .fb-file-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 13px;
+    border: 1px dashed rgba(181,98,42,0.5);
+    border-radius: 4px;
+    font-size: 13px;
+    color: rgba(250,246,240,0.7);
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .fb-file-label:hover { border-color: var(--fb-copper); color: var(--fb-cream); }
+  .fb-file-label svg { color: var(--fb-copper); flex-shrink: 0; }
+  #gns-fb-screenshot { display: none; }
+  #fb-file-name {
+    font-size: 12px;
+    color: rgba(250,246,240,0.5);
+    margin-top: 5px;
+    font-style: italic;
+  }
+
+  #gns-fb-submit {
+    width: 100%;
+    margin-top: 6px;
+    padding: 11px;
+    background: var(--fb-copper);
+    color: var(--fb-cream);
+    border: none;
+    border-radius: 5px;
+    font-family: 'Fanwood Text', Georgia, serif;
+    font-size: 15px;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: background 0.17s, transform 0.1s;
+  }
+  #gns-fb-submit:hover:not(:disabled) { background: #c96e31; transform: translateY(-1px); }
+  #gns-fb-submit:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  /* shown when not authenticated */
+  #gns-fb-login-prompt {
+    display: none;
+    margin-top: 6px;
+    padding: 13px 16px;
+    border: 1px solid rgba(181,98,42,0.4);
+    border-radius: 5px;
+    background: rgba(181,98,42,0.08);
+    font-size: 13.5px;
+    color: rgba(250,246,240,0.75);
+    text-align: center;
+    line-height: 1.6;
+  }
+  #gns-fb-login-prompt a {
+    color: var(--fb-copper);
+    text-decoration: underline;
+  }
+
+  #gns-fb-confirm {
+    display: none;
+    text-align: center;
+    padding: 28px 0 12px;
+  }
+  #gns-fb-confirm .fb-check {
+    font-size: 36px;
+    line-height: 1;
+    margin-bottom: 14px;
+    color: var(--fb-copper);
+  }
+  #gns-fb-confirm p {
+    font-family: 'Linden Hill', Palatino, serif;
+    font-size: 19px;
+    color: var(--fb-cream);
+    margin: 0;
+  }
+
+  #gns-fb-error {
+    display: none;
+    font-size: 12px;
+    color: #e07070;
+    margin-top: 6px;
+  }
 </style>
 
-<button id="fbw-btn" aria-label="Send feedback">
-  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M14 1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h3l3 3 3-3h3a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" stroke="#B5622A" stroke-width="1.5" stroke-linejoin="round"/></svg>
+<!-- Trigger button -->
+<button id="gns-feedback-btn" aria-label="Open feedback form">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
   Feedback
 </button>
 
-<div id="fbw-overlay" role="dialog" aria-modal="true" aria-labelledby="fbw-title">
-  <div id="fbw-modal">
-    <button id="fbw-close" aria-label="Close">&times;</button>
-    <h2 id="fbw-title">Send Feedback</h2>
-    <div id="fbw-form-body">
-      <div class="fbw-group">
-        <label class="fbw-label" for="fbw-page">Page</label>
-        <input class="fbw-input" type="text" id="fbw-page" readonly>
+<!-- Modal overlay -->
+<div id="gns-feedback-overlay" role="dialog" aria-modal="true" aria-labelledby="gns-fb-heading">
+  <div id="gns-feedback-modal">
+    <button id="gns-feedback-close" aria-label="Close">&#x2715;</button>
+
+    <div id="gns-fb-form-wrap">
+      <h2 id="gns-fb-heading">Submit Feedback</h2>
+
+      <div class="fb-field">
+        <label>Page</label>
+        <input type="text" id="gns-fb-page" readonly tabindex="-1">
       </div>
-      <div class="fbw-group">
-        <label class="fbw-label" for="fbw-type">Type</label>
-        <select class="fbw-select" id="fbw-type">
-          <option value="bug">Bug / Something looks wrong</option>
-          <option value="suggestion">Suggestion</option>
-          <option value="question">Question</option>
-          <option value="content_issue">Content Issue</option>
-          <option value="other">Other</option>
+
+      <div class="fb-field">
+        <label for="gns-fb-type">Type</label>
+        <select id="gns-fb-type">
+          <option value="Bug / Something looks wrong">Bug / Something looks wrong</option>
+          <option value="Suggestion">Suggestion</option>
+          <option value="Question">Question</option>
+          <option value="Content Issue">Content Issue</option>
+          <option value="Other">Other</option>
         </select>
       </div>
-      <div class="fbw-group">
-        <label class="fbw-label" for="fbw-desc">Description <span style="color:#f87171;font-weight:400;text-transform:none;letter-spacing:0">*</span></label>
-        <textarea class="fbw-textarea" id="fbw-desc" placeholder="Briefly describe what you noticed&hellip;"></textarea>
+
+      <div class="fb-field">
+        <label for="gns-fb-desc">Description <span style="color:var(--fb-copper)">*</span></label>
+        <textarea id="gns-fb-desc" placeholder="Briefly describe what you noticed..."></textarea>
+        <div id="gns-fb-error">Please add a description before submitting.</div>
       </div>
-      <div class="fbw-group">
-        <label class="fbw-label" for="fbw-screenshot">Screenshot <span style="font-weight:400;text-transform:none;letter-spacing:0;color:rgba(250,246,240,.4)">(optional)</span></label>
-        <input class="fbw-input" type="file" id="fbw-screenshot" accept="image/*" style="padding:6px 12px">
+
+      <div class="fb-field">
+        <label>Screenshot <span style="opacity:0.5;font-size:10px;text-transform:none">(optional)</span></label>
+        <label class="fb-file-label" for="gns-fb-screenshot">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          Choose file…
+        </label>
+        <input type="file" id="gns-fb-screenshot" accept="image/*">
+        <div id="fb-file-name">No file selected</div>
       </div>
-      <div class="fbw-group">
-        <label class="fbw-label" for="fbw-name">Your Name <span style="font-weight:400;text-transform:none;letter-spacing:0;color:rgba(250,246,240,.4)">(optional)</span></label>
-        <input class="fbw-input" type="text" id="fbw-name" placeholder="e.g. Jane Smith" autocomplete="name">
+
+      <div class="fb-field">
+        <label>Submitted by</label>
+        <input type="text" id="gns-fb-name" readonly tabindex="-1" placeholder="Checking…">
       </div>
-      <div id="fbw-error"></div>
-      <button id="fbw-submit">Submit Feedback</button>
+
+      <button id="gns-fb-submit">Submit Feedback</button>
+
+      <div id="gns-fb-login-prompt">
+        You must be logged in to submit feedback.<br>
+        <a id="gns-fb-login-link" href="/login.html">Log in to your account →</a>
+      </div>
     </div>
-    <div id="fbw-success">
-      <div class="fbw-check">&#10003;</div>
-      <p>Thanks &mdash; logged!</p>
+
+    <div id="gns-fb-confirm">
+      <div class="fb-check">&#10003;</div>
+      <p>Thanks — logged!</p>
     </div>
   </div>
 </div>
 
 <script>
-(function(){
-  var SB_URL='https://hsseypuhqdlcvepgyrtd.supabase.co'
-  var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhzc2V5cHVocWRsY3ZlcGd5cnRkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTc3NTk0MSwiZXhwIjoyMDkxMzUxOTQxfQ.mGNhUtPSCJWNDTVY1dlhwROsUMTAw-1dHkvRHYV0M0c'
-  var SB_HDR={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}
-  var overlay=document.getElementById('fbw-overlay')
-  var formBody=document.getElementById('fbw-form-body')
-  var successEl=document.getElementById('fbw-success')
-  var errEl=document.getElementById('fbw-error')
-  var submitBtn=document.getElementById('fbw-submit')
+(function () {
+  'use strict';
 
-  document.getElementById('fbw-page').value=document.title||location.pathname.split('/').pop()||'Unknown'
-
-  try{
-    var u=JSON.parse(localStorage.getItem('gns_user')||'null')
-    if(u&&u.id)fetch(SB_URL+'/rest/v1/contributor_profile?auth_user_id=eq.'+u.id+'&select=display_name&limit=1',{headers:SB_HDR})
-      .then(function(r){return r.ok?r.json():[]}).then(function(rows){if(rows[0]&&rows[0].display_name)document.getElementById('fbw-name').value=rows[0].display_name}).catch(function(){})
-  }catch(e){}
-
-  function openModal(){overlay.classList.add('open');document.getElementById('fbw-desc').focus()}
-  function closeModal(){
-    overlay.classList.remove('open')
-    setTimeout(function(){
-      document.getElementById('fbw-desc').value=''
-      document.getElementById('fbw-screenshot').value=''
-      errEl.style.display='none'
-      formBody.style.display='block'
-      successEl.style.display='none'
-      submitBtn.disabled=false
-      submitBtn.textContent='Submit Feedback'
-    },250)
+  function getClient() {
+    if (window._supabaseClient) return window._supabaseClient;
+    if (window.supabase && window.SUPABASE_URL && window.SUPABASE_ANON_KEY) {
+      window._supabaseClient = window.supabase.createClient(
+        window.SUPABASE_URL, window.SUPABASE_ANON_KEY
+      );
+      return window._supabaseClient;
+    }
+    return null;
   }
 
-  document.getElementById('fbw-btn').addEventListener('click',openModal)
-  document.getElementById('fbw-close').addEventListener('click',closeModal)
-  overlay.addEventListener('click',function(e){if(e.target===overlay)closeModal()})
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&overlay.classList.contains('open'))closeModal()})
+  const btn         = document.getElementById('gns-feedback-btn');
+  const overlay     = document.getElementById('gns-feedback-overlay');
+  const closeBtn    = document.getElementById('gns-feedback-close');
+  const formWrap    = document.getElementById('gns-fb-form-wrap');
+  const confirmDiv  = document.getElementById('gns-fb-confirm');
+  const submitBtn   = document.getElementById('gns-fb-submit');
+  const loginPrompt = document.getElementById('gns-fb-login-prompt');
+  const pageInput   = document.getElementById('gns-fb-page');
+  const typeSelect  = document.getElementById('gns-fb-type');
+  const descTA      = document.getElementById('gns-fb-desc');
+  const nameInput   = document.getElementById('gns-fb-name');
+  const fileInput   = document.getElementById('gns-fb-screenshot');
+  const fileNameEl  = document.getElementById('fb-file-name');
+  const errorMsg    = document.getElementById('gns-fb-error');
+  const loginLink   = document.getElementById('gns-fb-login-link');
 
-  function uploadScreenshot(file){
-    var ext=file.name.split('.').pop()||'png'
-    var path=Date.now()+'-'+Math.random().toString(36).slice(2)+'.'+ext
-    return fetch(SB_URL+'/storage/v1/object/feedback-screenshots/'+path,{
-      method:'POST',headers:Object.assign({},SB_HDR,{'Content-Type':file.type}),body:file
-    }).then(function(r){
-      if(!r.ok)throw new Error('Screenshot upload failed')
-      return SB_URL+'/storage/v1/object/public/feedback-screenshots/'+path
-    })
+  let _contributorId = null;
+  let _authChecked   = false;
+
+  // Auto-populate page field
+  pageInput.value = document.title
+    || window.location.pathname.split('/').pop()
+    || window.location.href;
+
+  // Open / close
+  btn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+  });
+
+  async function openModal() {
+    overlay.classList.add('open');
+    if (!_authChecked) await checkAuth();
+    if (submitBtn.style.display !== 'none') descTA.focus();
   }
 
-  submitBtn.addEventListener('click',function(){
-    var desc=document.getElementById('fbw-desc').value.trim()
-    errEl.style.display='none'
-    if(!desc){errEl.textContent='Description is required.';errEl.style.display='block';document.getElementById('fbw-desc').focus();return}
-    submitBtn.disabled=true;submitBtn.textContent='Submitting…'
-    var filePromise=document.getElementById('fbw-screenshot').files[0]
-      ?uploadScreenshot(document.getElementById('fbw-screenshot').files[0])
-      :Promise.resolve(null)
-    filePromise.then(function(screenshot_url){
-      var storedUser=null
-      try{storedUser=JSON.parse(localStorage.getItem('gns_user')||'null')}catch(e){}
-      return fetch(SB_URL+'/rest/v1/feedback',{
-        method:'POST',
-        headers:Object.assign({},SB_HDR,{'Content-Type':'application/json','Prefer':'return=minimal'}),
-        body:JSON.stringify({
-          page:document.getElementById('fbw-page').value,
-          feedback_type:document.getElementById('fbw-type').value,
-          description:desc,
-          screenshot_url:screenshot_url,
-          submitted_by:document.getElementById('fbw-name').value.trim()||null,
-          contributor_id:storedUser?storedUser.id:null,
-          status:'new'
-        })
-      })
-    }).then(function(r){
-      if(!r.ok)throw new Error('Submission failed')
-      formBody.style.display='none';successEl.style.display='block'
-      setTimeout(closeModal,2000)
-    }).catch(function(err){
-      errEl.textContent=err.message||'Something went wrong. Please try again.'
-      errEl.style.display='block'
-      submitBtn.disabled=false;submitBtn.textContent='Submit Feedback'
-    })
-  })
-})()
+  function closeModal() {
+    overlay.classList.remove('open');
+    setTimeout(resetForm, 250);
+  }
+
+  function resetForm() {
+    formWrap.style.display   = '';
+    confirmDiv.style.display = 'none';
+    descTA.value             = '';
+    fileInput.value          = '';
+    fileNameEl.textContent   = 'No file selected';
+    errorMsg.style.display   = 'none';
+    submitBtn.disabled       = false;
+    submitBtn.textContent    = 'Submit Feedback';
+    typeSelect.selectedIndex = 0;
+    // Re-run auth check next open in case session changed
+    _authChecked = false;
+  }
+
+  // Auth check
+  async function checkAuth() {
+    _authChecked = true;
+    nameInput.placeholder = 'Checking…';
+    const client = getClient();
+
+    if (!client) { showUnauthState('No database connection.'); return; }
+
+    try {
+      const { data: { user }, error: authErr } = await client.auth.getUser();
+      if (authErr || !user) { showUnauthState(); return; }
+
+      const { data: profile } = await client
+        .from('contributor_profile')
+        .select('id, display_name')
+        .eq('auth_user_id', user.id)
+        .single();
+
+      if (profile) {
+        nameInput.value = profile.display_name || user.email || 'Unknown';
+        _contributorId  = profile.id;
+      } else {
+        nameInput.value = user.email || 'Unknown';
+        _contributorId  = null;
+      }
+
+      showAuthState();
+
+    } catch (err) {
+      console.warn('Feedback widget auth check:', err);
+      showUnauthState();
+    }
+  }
+
+  function showAuthState() {
+    submitBtn.style.display   = '';
+    loginPrompt.style.display = 'none';
+    nameInput.placeholder     = '';
+  }
+
+  function showUnauthState(msg) {
+    submitBtn.style.display   = 'none';
+    loginPrompt.style.display = 'block';
+    nameInput.value           = '';
+    nameInput.placeholder     = 'Not logged in';
+    _contributorId            = null;
+    // Append return URL so the user lands back here after login
+    const returnPath = encodeURIComponent(window.location.href);
+    loginLink.href   = `/login.html?return=${returnPath}`;
+  }
+
+  // File name display
+  fileInput.addEventListener('change', () => {
+    fileNameEl.textContent = fileInput.files.length
+      ? fileInput.files[0].name
+      : 'No file selected';
+  });
+
+  // Submit
+  submitBtn.addEventListener('click', async () => {
+    const desc = descTA.value.trim();
+    if (!desc) {
+      errorMsg.style.display = 'block';
+      descTA.focus();
+      return;
+    }
+    errorMsg.style.display  = 'none';
+    submitBtn.disabled      = true;
+    submitBtn.textContent   = 'Submitting…';
+
+    const client = getClient();
+    if (!client) {
+      alert('Could not connect to database. Please try again.');
+      submitBtn.disabled    = false;
+      submitBtn.textContent = 'Submit Feedback';
+      return;
+    }
+
+    try {
+      // Upload screenshot if present
+      let screenshotUrl = null;
+      if (fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        const ext  = file.name.split('.').pop();
+        const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+        const { error: upErr } = await client.storage
+          .from('feedback-screenshots')
+          .upload(path, file, { upsert: false });
+        if (!upErr) {
+          const { data: urlData } = client.storage
+            .from('feedback-screenshots')
+            .getPublicUrl(path);
+          screenshotUrl = urlData.publicUrl;
+        }
+      }
+
+      // Insert row
+      const { error: insErr } = await client.from('feedback').insert({
+        page:           pageInput.value,
+        feedback_type:  typeSelect.value,
+        description:    desc,
+        screenshot_url: screenshotUrl,
+        submitted_by:   nameInput.value || null,
+        contributor_id: _contributorId || null,
+        status:         'new'
+      });
+      if (insErr) throw insErr;
+
+      // Confirm
+      formWrap.style.display   = 'none';
+      confirmDiv.style.display = 'block';
+      setTimeout(closeModal, 2000);
+
+    } catch (err) {
+      console.error('Feedback submit error:', err);
+      alert('Something went wrong. Please try again.');
+      submitBtn.disabled    = false;
+      submitBtn.textContent = 'Submit Feedback';
+    }
+  });
+
+})();
 </script>
-<!-- ── /Feedback Widget ─────────────────────────────────────────────────────── -->
+<!-- End GNS Feedback Widget v2 -->
+
 
 </body>
 </html>

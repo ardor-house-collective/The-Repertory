@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Repertory Index — Terms &amp; Designations</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:        #1E2B22;
+      --cream:       #F0EDE4;
+      --copper:      #A8894E;
+      --copper-dark: #9a501f;
+      --text:        #1E2B22;
+      --muted:       #6B7A60;
+      --border:      #DDD8C8;
+      --card:        #FDFCF8;
+      --green:       #264E36;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Fanwood Text', 'Fanwood', Georgia, serif;
+      background: var(--cream);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill.otf') format('opentype'); font-weight: normal; font-style: normal; }
+    @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
+    @font-face { font-family: 'Runtime'; src: url('Runtime.otf') format('opentype'); font-weight: normal; font-style: normal; }
+    @font-face { font-family: 'Fanwood Text'; src: url('Fanwood_Text.otf') format('opentype'); font-weight: normal; font-style: normal; }
+    @font-face { font-family: 'Fanwood Text'; src: url('Fanwood_Text_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
+    @font-face { font-family: 'Fanwood'; src: url('Fanwood.otf') format('opentype'); font-weight: normal; font-style: normal; }
+    @font-face { font-family: 'Fanwood'; src: url('Fanwood_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
+
+    /* ── Header ── */
+    header {
+      background: var(--navy);
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      flex-shrink: 0;
+      min-height: 64px;
+    }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 1280px; margin: 0 auto; }
+    .wordmark { display: flex; flex-direction: column; gap: 1px; line-height: 1; text-decoration: none; }
+    .wm-line1 { font-family: 'Linden Hill', Georgia, serif; font-size: 2.22rem; color: #F0EDE4; letter-spacing: 0.01em; line-height: 1; }
+    .wm-line2 { font-family: 'Runtime', sans-serif; font-size: 0.98rem; color: rgba(250,246,240,0.72); letter-spacing: 0.04em; line-height: 1; }
+    .header-right { display: flex; align-items: center; gap: 20px; }
+    #header-identity { display: none; flex-direction: column; align-items: flex-end; gap: 1px; }
+    .header-cid  { font-size: 0.7rem; font-weight: 700; color: var(--copper); letter-spacing: 0.07em; }
+    .header-name { font-size: 0.75rem; color: #c8d8e8; }
+    .sign-out-btn { background: transparent; border: 1px solid rgba(255,255,255,0.22); color: #c8d8e8; border-radius: 5px; padding: 5px 13px; font-size: 0.775rem; font-family: inherit; cursor: pointer; transition: border-color 0.15s, color 0.15s; white-space: nowrap; }
+    .sign-out-btn:hover { border-color: rgba(255,255,255,0.55); color: #fff; }
+
+    /* ── Site nav ── */
+    .site-nav { display: flex; align-items: center; gap: 4px; margin: 0 20px; }
+    .nav-enter { display: inline-flex; align-items: center; color: #A8894E; border: 1.5px solid #A8894E; border-radius: 20px; padding: 6px 14px; font-size: 13px; font-weight: 500; letter-spacing: 0.03em; text-decoration: none; white-space: nowrap; background: transparent; transition: background 0.2s ease, color 0.2s ease; margin-right: 4px; }
+    .nav-enter:hover { background: #A8894E; color: #F0EDE4; }
+    .nav-link { color: rgba(250,246,240,0.65); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.03em; white-space: nowrap; padding: 4px 10px; border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s; }
+    .nav-link:hover { color: #F0EDE4; }
+    .nav-link.active { color: #F0EDE4; border-bottom-color: #A8894E; }
+    .nav-founding { visibility: hidden; }
+    .nav-founding.nav-visible { visibility: visible; }
+    .nav-reviewer { display: none; }
+    .nav-reviewer.nav-visible { display: block; }
+    .nav-dropdown { position: relative; display: flex; align-items: center; }
+    .nav-dropdown::after { content: ''; position: absolute; left: 0; right: 0; top: 100%; height: 10px; }
+    .nav-dropdown-trigger { display: inline-flex; align-items: center; cursor: pointer; color: rgba(250,246,240,0.65); font-size: 13px; font-weight: 500; letter-spacing: 0.03em; padding: 4px 10px; }
+    .nav-dropdown-trigger::after { content: ''; display: inline-block; width: 0; height: 0; border-left: 3px solid transparent; border-right: 3px solid transparent; border-top: 4px solid currentColor; margin-left: 5px; opacity: 0.5; transition: transform 0.15s; }
+    .nav-dropdown:hover .nav-dropdown-trigger { color: #F0EDE4; }
+    .nav-dropdown:hover .nav-dropdown-trigger::after { transform: rotate(180deg); opacity: 1; }
+    .nav-dropdown-menu { position: absolute; top: calc(100% + 10px); left: 0; background: #1E2B22; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); padding: 6px 0; min-width: 190px; opacity: 0; visibility: hidden; transform: translateY(-4px); transition: opacity 0.15s ease, visibility 0.15s, transform 0.15s ease; z-index: 300; }
+    .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-dropdown-item { display: block; color: rgba(250,246,240,0.72); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.02em; padding: 9px 18px; white-space: nowrap; transition: color 0.12s; }
+    .nav-dropdown-item:hover { color: #A8894E; }
+    .nav-dropdown-item.active { color: #F0EDE4; font-weight: 600; }
+    .nav-dropdown-disabled { display: flex; align-items: center; gap: 8px; color: rgba(250,246,240,0.28); cursor: not-allowed; font-size: 13px; padding: 9px 18px; white-space: nowrap; }
+    .nav-dropdown-soon { font-size: 0.68rem; color: #6B7A60; }
+
+    /* ── In-page nav ── */
+    .inpage-nav {
+      background: var(--cream);
+      border-bottom: 2px solid var(--navy);
+      position: sticky;
+      top: 64px;
+      z-index: 100;
+    }
+    .inpage-nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 10px 40px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .inpage-nav-inner::-webkit-scrollbar { display: none; }
+    .inpage-nav-label { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--copper); white-space: nowrap; flex-shrink: 0; padding-right: 12px; }
+    .inpage-pill { display: inline-block; padding: 7px 14px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.02em; color: var(--navy); background: rgba(27,46,75,0.06); border: 1px solid rgba(27,46,75,0.18); text-decoration: none; border-radius: 6px; white-space: nowrap; transition: background 0.15s, border-color 0.15s; }
+    .inpage-pill:hover { background: rgba(27,46,75,0.12); border-color: rgba(27,46,75,0.32); }
+    .inpage-pill.active { background: var(--copper); color: var(--cream); border-color: var(--copper); }
+
+    /* ── Layout ── */
+    main { flex: 1; max-width: 1100px; margin: 0 auto; width: 100%; padding: 0 40px 80px; }
+
+    /* ── Page title ── */
+    .page-title-section { padding: 52px 0 40px; border-bottom: 1px solid var(--border); margin-bottom: 52px; }
+    .page-eyebrow { font-family: 'Runtime', sans-serif; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--copper); margin-bottom: 10px; display: block; }
+    .page-title { font-family: 'Linden Hill', Georgia, serif; font-size: 2.4rem; color: var(--navy); line-height: 1.1; margin-bottom: 10px; }
+    .page-subtitle { font-size: 0.92rem; color: var(--muted); line-height: 1.65; max-width: 580px; }
+
+    /* ── Sections ── */
+    .index-section { margin-bottom: 60px; scroll-margin-top: 130px; }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--navy);
+    }
+
+    .section-title {
+      font-family: 'Linden Hill', Georgia, serif;
+      font-size: 1.35rem;
+      color: var(--navy);
+      font-weight: normal;
+    }
+
+    .section-count {
+      font-family: 'Runtime', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── Term entries ── */
+    .term-list { display: flex; flex-direction: column; gap: 2px; }
+
+    .term-entry {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .term-entry:last-child { border-bottom: none; }
+
+    .term-left { padding-top: 2px; }
+
+    .term-name {
+      font-family: 'Linden Hill', Georgia, serif;
+      font-size: 1.05rem;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .term-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-family: 'Runtime', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .badge-tier       { background: #264E36; color: #F4F0EC; }
+    .badge-council    { background: #1E2B22; color: #F0EDE4; }
+    .badge-reviewer   { background: #1565c0; color: #fff; }
+    .badge-cert       { background: #166534; color: #fff; }
+    .badge-process    { background: rgba(181,98,42,0.12); color: #7a3010; border: 1px solid rgba(181,98,42,0.3); }
+    .badge-principle  { background: #F0EDE4; color: #6B7A60; border: 1px solid #DDD8C8; }
+
+    .term-body {
+      font-size: 0.88rem;
+      color: #3a3028;
+      line-height: 1.74;
+    }
+
+    .term-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+      font-style: italic;
+    }
+
+    .term-appears {
+      font-family: 'Runtime', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    /* ── Back link ── */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-decoration: none;
+      margin-bottom: 40px;
+      margin-top: 8px;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--copper); }
+
+    /* ── Footer ── */
+    .site-footer { border-top: 2px solid var(--navy); background: var(--cream); padding: 2rem 40px; flex-shrink: 0; }
+    .site-footer-inner { max-width: 1280px; margin: 0 auto; display: flex; gap: 3rem; }
+    .footer-copy, .footer-legal { flex: 1; font-size: 0.75rem; color: var(--muted); line-height: 1.65; }
+    .footer-copy a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+    .footer-copy a:hover { color: var(--copper); }
+
+    @media (max-width: 760px) {
+      header { padding: 0 20px; }
+      main { padding: 0 20px 60px; }
+      .page-title-section { padding: 36px 0 28px; }
+      .page-title { font-size: 1.8rem; }
+      .term-entry { grid-template-columns: 1fr; gap: 8px; }
+      .term-left { padding-top: 0; }
+      .inpage-nav-inner { padding: 10px 20px; }
+      .site-footer { padding: 1.5rem 20px; }
+      .site-footer-inner { flex-direction: column; gap: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="dashboard.html" class="wordmark">
+      <span class="wm-line1">The Repertory</span>
+      <span class="wm-line2">a Collective effort</span>
+    </a>
+    <nav class="site-nav">
+      <a href="#" class="nav-enter"><img src="keyhole.png" alt="" width="14" height="20" style="vertical-align:middle;margin-right:6px;">Enter The Repertory</a>
+      <a href="contributor-form.html" class="nav-link">Submit</a>
+      <div class="nav-dropdown">
+        <span class="nav-link nav-dropdown-trigger active">Resources</span>
+        <div class="nav-dropdown-menu">
+          <a href="condition-standard.html" class="nav-dropdown-item">Condition Standard</a>
+          <a href="repertory-index.html" class="nav-dropdown-item active">Index</a>
+          <a href="admin-glossary.html" class="nav-dropdown-item nav-founding">Glossary</a>
+          <span class="nav-dropdown-disabled">Tools <span class="nav-dropdown-soon">Coming Soon</span></span>
+        </div>
+      </div>
+    </nav>
+    <div class="header-right">
+      <div id="header-identity">
+        <span class="header-cid"  id="header-cid"></span>
+        <span class="header-name" id="header-name"></span>
+      </div>
+      <button class="sign-out-btn" id="sign-out-btn">Sign out</button>
+    </div>
+  </div>
+</header>
+
+<nav class="inpage-nav">
+  <div class="inpage-nav-inner">
+    <span class="inpage-nav-label">Jump to</span>
+    <a class="inpage-pill active" href="#tiers">Membership Tiers</a>
+    <a class="inpage-pill" href="#designations">Collective Designations</a>
+    <a class="inpage-pill" href="#council">The Council</a>
+    <a class="inpage-pill" href="#reviewer-roles">Reviewer Roles</a>
+    <a class="inpage-pill" href="#certifications">Certifications</a>
+    <a class="inpage-pill" href="#process">Process Terms</a>
+    <a class="inpage-pill" href="#principles">Collective Principles</a>
+  </div>
+</nav>
+
+<main>
+
+  <div class="page-title-section">
+    <span class="page-eyebrow">Under Resources</span>
+    <h1 class="page-title">The Repertory Index</h1>
+    <p class="page-subtitle">Canonical definitions for all designations, tiers, roles, certifications, and collective concepts used across The Repertory platform. When a term appears anywhere in the system, this is what it means.</p>
+  </div>
+
+  <a href="resources.html" class="back-link">← Resources</a>
+
+  <!-- ── Membership Tiers ── -->
+  <section id="tiers" class="index-section">
+    <div class="section-header">
+      <h2 class="section-title">Membership Tiers</h2>
+      <span class="section-count">4 tiers + Free</span>
+    </div>
+    <p style="font-size:0.875rem;color:var(--muted);line-height:1.7;margin-bottom:28px">Paid tiers determine what data a contributor can access. They are assigned at onboarding and are not earned through contribution volume. Each tier unlocks a defined set of features in addition to everything below it.</p>
+    <div class="term-list">
+
+      <div class="term-entry">
+        <div class="term-left">
+          <div class="term-name">Free</div>
+          <span class="term-badge badge-tier">Tier</span>
+        </div>
+        <div>
+          <p class="term-body">The base access level for all contributors. Free members can submit data, view their own submissions, and access basic GNS record detail. No market data or authentication data is included.</p>
+          <p class="term-appears">Appears on: contributor profile, submission form</p>
+        </div>
+      </div>
+
+      <div class="term-entry">
+        <div class="term-left">
+          <div class="term-name">Associate</div>
+          <span class="term-badge badge-tier">Tier</span>
+        </div>
+        <div>
+          <p class="term-body">The first paid tier. In addition to Free access, Associate members can view market data, fair market value estimates, and price trend information for GNS records. Intended for resellers, buyers, and collectors who want pricing intelligence.</p>
+          <p class="term-appears">Appears on: contributor profile, record pages (market data layer)</p>
+        </div>
+      </div>
+
+      <div class="term-entry">
+        <div class="term-left">
+          <div class="term-name">Certified</div>
+          <span class="term-badge badge-tier">Tier</span>
+        </div>
+        <div>
+          <p class="term-body">The second paid tier. In addition to Associate access, Certified members can view authentication data on GNS records — serial number data, date code data, hardware marking data, and authentication reference media. Intended for professional authenticators, researchers, and consignment professionals conducting due diligence.</p>
+          <p class="term-note">Note: the Certified tier label refers to access level only and is unrelated to Authenticator certification, which is a separate professional designation earned through examination.</p>
+          <p class="term-appears">Appears on: contributor profile, record pages (authentication data layer)</p>
+        </div>
+      </div>
+
+      <div class="term-entry">
+        <div class="term-left">
+          <div class="term-name">Accredited</div>
+          <span class="term-badge badge-tier">Tier</span>
+        </div>
+        <div>
+          <p class="term-body">The third paid tier. In addition to Certified access, Accredited members receive API access, the ability to tag their own inventory with GNS IDs, and integration that surfaces their internal product data alongside the GNS record — their data displayed first against external data. Designed for resale platforms, auction houses, and corporate authentication services operating at scale.</p>
+          <p class="term-appears">Appears on: contributor profile, GNS record pages (integrated inventory layer), API documentation</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Collective Designations ── -->
+  <section id="designations" class="index-section">
+    <div class="section-header">
+      <h2 class="section-title">Collective Designations</h2>
+      <span class="section-count">2 designations</span>
+    </div>
+    <p style="font-size:0.875rem;color:var(--muted);line-height:1.7;margin-bottom:28px">Designations are not paid tiers. They cannot be purchased or earned through contribution volume. They are assigned by invitation or by the system and indicate a distinct role within the collective's governance structure.</p>
+    <div class="term-list">
+
+      <div class="term-entry">
+        <div class="term-left">
+          <div class="term-name">Founding</div>
+          <span class="term-badge badge-council">Designation</span>
+        </div>
+        <div>
+          <p class="term-body">A council designation for members personally inducted into the Repertory Standards Council by the Curator General. Founding members have full review authority in the backend — they can approve, reject, or act on any submission type. Founding is not a paid tier and cannot be applied for. It is extended by invitation only, based on expertise, industry contribution, and demonstrated commitment to transparency and primary/secondary market bridge-building.</p>
+          <p class="term-note">Founding is separate from paid tiers. A Founding member does not hold Associate, Certified, or Accredited tier — they hold the Founding designation, which carries its own access scope.</p>
+          <p class="term-appears">Appears on: public profile (badge), private profile, review queue, admin pages</p>
+        </div>
+      </div>
+
+      <div class="term-entry">
+        <div class="term-left">
+          <div class="term-name">Curator General</div>
+          <span class="term-badge badge-council">Designation</span>
+        </div>
+        <div>
+          <p class="term-body">The system owner and final arbiter of The Repertory. One seat. The Curator General oversees the Repertory Standards Council, holds override authority over all access logic, and is the sole person who can rule on escalated disputes between Provisional and Credentialed Reviewers. The designation is not a tier and is not achievable through contribution or purchase. It is delegatable to one other person, manually, by the current Curator General only.</p>
+          <p class="term-appears">Appears on: public profile (badge), escalation queue, system settings</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── The Council ── -->
+  <section id="council" class="index-section">
+    <div class="section-header">
+      <h2 class="section-title">The Council</h2>
+      <span class="section-count">1 body</span>
+    </div>
+    <div class="term-list">
+
+      <div class="term-entry">
+        <div class="term-left">
+          <div class="term-name">Repertory Standards Council</div>
+          <span class="term-badge badge-council">Governing body</span>
+        </div>
+        <div>
+          <p class="term-body">The governing body of The Repertory. The Council oversees curation standards, authentication and condition standards, and the overall direction of the platform. Members are selected by the Curator General based on expertise, industry contribution, passion for the work, and commitment to transparency and primary/secondary market bridge-building. Membership is invitation-only and voluntary. Council members hold the Founding designation.</p>
+          <p class="term-note">The Council currently consists of one member: the Curator General. It is designed to scale as the platform grows and the right contributors are identified.</p>
+          <p class="term-appears">Appears on: public profiles (Council badge), About pages, legal documentation</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Reviewer Roles ── -->
+  <section id="reviewer-roles" class="index-section">
+    <div class="section-header">
+      <h2 class="section-title">Reviewer Roles</h2>
+      <span class="section-count">2 trust levels + Founding</span>
+    </div>
+    <p style="font-size:0.875rem;color:var(--muted);line-height:1.7;margin-bottom:28px">Reviewer roles are internal trust designations for contributors inducted into the review system. They are separate from paid tiers — a contributor at any tier can be inducted as a reviewer. Reviewer role is not publicly disclosed at level; public profiles show "Reviewer" only. The full designation (Provisional or Credentialed) is visible on private profiles and to Founding members.</p>
+    <div class="term-list">
+
+      <div class="term-entry">
+        <div class="term-left">
+          <div class="term-name">Provisional</div>
+          <span class="term-badge badge-reviewer">Reviewer role</span>
+        </div>
+        <div>
+          <p class="term-body">The entry-level reviewer trust designation. A Provisional Reviewer can be assigned submissions from the queue, review them, and submit a formal recommendation. Recommendations from Provisional Reviewers do not take effect automatically — they require approval from a Credentialed Reviewer before the submission is actioned. If a Credentialed Reviewer rejects the recommendation, the Provisional Reviewer may escalate to the Curator General with written justification.</p>
+          <p class="term-note">The name reflects trust level, not a temporary or probationary state. Provisional Reviewers are trusted contributors — the designation describes their position in the review hierarchy, not a lack of qualification.</p>
+          <p class="term-appears">Appears on: private profile, review queue assignment, review chain audit log</p>
+        </div>
+      </div>
+
+      <div class="term-entry">
+        <div class="term-left">
+          <div class="term-name">Credentialed</div>
+          <span class="term-badge badge-reviewer">Reviewer role</span>
+        </div>
+        <div>
+          <p class="term-body">The senior reviewer trust designation. A Credentialed Reviewer sees all Provisional Reviewer recommendations and has authority to approve or reject them. If a Credentialed Reviewer agrees with a recommendation, the submission is approved and enters the record. If they disagree, the submission is rejected and the Provisional Reviewer is notified. The Provisional Reviewer may then escalate to the Curator General. For authentication submissions specifically, the Credentialed Reviewer must also hold Authenticator certification.</p>
+          <p class="term-appears">Appears on: private profile, review queue (recommendation view), review chain audit log</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Certifications ── -->
+  <section id="certifications" class="index-section">
+    <div class="section-header">
+      <h2 class="section-title">Certifications</h2>
+      <span class="section-count">3 types</span>
+    </div>
+    <p style="font-size:0.875rem;color:var(--muted);line-height:1.7;margin-bottom:28px">Certifications are professional credentials recorded on a contributor's profile. They are separate from tiers and reviewer roles. Internal certifications are issued by The Repertory through a formal process. External certifications are issued by recognized professional bodies and verified by The Repertory before being displayed.</p>
+    <div class="term-list">
+
+      <div class="term-entry">
+        <div class="term-left">
+          <div class="term-name">Certified Authenticator</div>
+          <span class="term-badge badge-cert">Internal cert</span>
+        </div>
+        <div>
+          <p class="term-body">A professional certification issued by The Repertory through a formal process involving a background check and examination. This certification is required — in combination with the Credentialed Reviewer role — to review authentication submissions (serial numbers, date codes, NFC data, hardware markings, and authentication reference media). Neither the certification alone nor the reviewer role alone is sufficient; both are required. The certification pipeline is managed in-platform: application, background check, examination, and certification status are all tracked in The Repertory system.</p>
+          <p class="term-appears">Appears on: public profile (Certified Authenticator badge), private profile (full status + certification date), review queue (gates authentication submission types)</p>
+        </div>
+      </div>
+
+      <div class="term-entry">
+        <div class="term-left">
+          <div class="term-name">Appraiser</div>
+          <span class="term-badge badge-cert">External cert</span>
+        </div>
+        <div>
+          <p class="term-body">An externally issued professional appraisal credential from a recognized body. The Repertory verifies the credential against documentation before it is displayed on a contributor's profile. Recognized bodies include ISA (International Society of Appraisers), AAA (Appraisers Association of America), ASA (American Society of Appraisers), RICS (Royal Institution of Chartered Surveyors), Commissaires-Priseurs (France), and other internationally recognized appraisal bodies. Credential type, designation level, issuing body, country, and license number are all recorded.</p>
+          <p class="term-appears">Appears on: public profile (verified credential badge with body and designation), private profile (full credential detail)</p>
+        </div>
+      </div>
+
+      <div class="term-entry">
+        <div class="term-left">
+          <div class="term-name">Gemologist</div>
+          <span class="term-badge badge-cert">External cert</span>
+        </div>
+        <div>
+          <p class="term-body">An externally issued gemological certification from a recognized body. Verified by The Repertory before display. Recognized bodies include GIA (Gemological Institute of America — Graduate Gemologist, Graduate Diamonds, and other designations), FGA (Fellow of the Gemmological Association of Great Britain), AGS (American Gem Society), HRD Antwerp, SSEF, and Gübelin. Most relevant to contributors working with jewelry and watches categories.</p>
+          <p class="term-appears">Appears on: public profile (verified credential badge), private profile (full credential detail)</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Process Terms ── -->
+  <section id="process" class="index-section">
+    <div class="section-header">
+      <h2 class="section-title">Process Terms</h2>
+      <span class="section-count">6 terms</span>
+    </div>
+    <div class="term-list">
+
+      <div class="term-entry">
+        <div class="term-left">
+          <div class="term-name">Submission</div>
+          <span class="term-badge badge-process">Process</span>
+        </div>
+        <div>
+          <p class="term-body">A contributor's data entry into The Repertory's review pipeline. A submission can be a new brand, model, color, material, size, hardware type, market listing, retail price, serial number, date code, NFC data, hardware marking, authentication reference media, stolen item report, product note, or a flag for curator review. All submissions enter a queue and are reviewed before being actioned into the canonical record.</p>
+        </div>
+      </div>
+
+      <div class="term-entry">
+        <div class="term-left">
+          <div class="term-name">Recommendation</div>
+          <span class="term-badge badge-process">Process</span>
+        </div>
+        <div>
+          <p class="term-body">A Provisional Reviewer's formal assessment of a submission. A recommendation is not an approval — it is a structured opinion with supporting notes, submitted for review by a Credentialed Reviewer. The submission status moves to "recommended" while awaiting the Credentialed Reviewer's decision.</p>
+        </div>
+      </div>
+
+      <div class="term-entry">
+        <div class="term-left">
+          <div class="term-name">Escalation</div>
+          <span class="term-badge badge-process">Process</span>
+        </div>
+        <div>
+          <p class="term-body">A formal dispute by a Provisional Reviewer of a Credentialed Reviewer's rejection. Escalations require written justification of a minimum length and are routed directly to the Curator General for a final ruling. The Curator General's decision is final — there is no further appeal. A rejected submission may be resubmitted by the original contributor; rejection is not permanent.</p>
+        </div>
+      </div>
+
+      <div class="term-entry">
+        <div class="term-left">
+          <div class="term-name">GNS Record</div>
+          <span class="term-badge badge-process">Data</span>
+        </div>
+        <div>
+          <p class="term-body">A canonical authenticated goods record in The Repertory database. A GNS record represents a specific configuration of an item — brand, model, size, material, color, hardware — at a level of specificity that makes it uniquely identifiable. GNS records are the core unit of the database. All submissions, market data, authentication data, and serial data attach to GNS records.</p>
+        </div>
+      </div>
+
+      <div class="term-entry">
+        <div class="term-left">
+          <div class="term-name">Invite Token</div>
+          <span class="term-badge badge-process">Access</span>
+        </div>
+        <div>
+          <p class="term-body">A single-use cryptographic token issued to an approved applicant that allows them to activate their contributor account. Tokens are generated by The Repertory upon approval of an access application and sent via email. Tokens expire after a set period. By activating an invite token, the recipient acknowledges they are joining The Repertory as a voluntary contributor to a collective standards effort, that contributions are freely given, and that access is a privilege which may be revoked.</p>
+        </div>
+      </div>
+
+      <div class="term-entry">
+        <div class="term-left">
+          <div class="term-name">SLA</div>
+          <span class="term-badge badge-process">Process</span>
+        </div>
+        <div>
+          <p class="term-body">Service Level Agreement — the time window within which a reviewer action is expected to be completed. The Repertory operates on business hours (Monday–Friday, 9am–5pm Pacific, federal holidays excluded). SLA windows are measured in business days from the point of assignment. Submissions that exceed their SLA window are automatically flagged and may be reassigned or escalated. SLA values are configurable by the Curator General and do not require a deployment to change.</p>
+          <p class="term-note">Current SLA windows: Provisional Reviewer recommendation — 3 business days. Credentialed Reviewer action on a recommendation — 5 business days. Escalation notification to Curator General — 7 business days, with a 48-hour reminder after escalation is filed (weekdays only).</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Collective Principles ── -->
+  <section id="principles" class="index-section">
+    <div class="section-header">
+      <h2 class="section-title">Collective Principles</h2>
+      <span class="section-count">4 principles</span>
+    </div>
+    <div class="term-list">
+
+      <div class="term-entry">
+        <div class="term-left">
+          <div class="term-name">Voluntary Contribution</div>
+          <span class="term-badge badge-principle">Principle</span>
+        </div>
+        <div>
+          <p class="term-body">All contributions to The Repertory are made freely. No compensation, payment, equity, or professional credit is owed or implied in exchange for contributions. Contributors join a collective standards effort — not an employment relationship. This principle is stated explicitly at account activation and governs the relationship between contributors and The Repertory.</p>
+        </div>
+      </div>
+
+      <div class="term-entry">
+        <div class="term-left">
+          <div class="term-name">Business Hours</div>
+          <span class="term-badge badge-principle">Principle</span>
+        </div>
+        <div>
+          <p class="term-body">The Repertory recognizes and respects contributor work-life balance. All SLA windows, automated notifications, and system reminders operate within declared business hours: Monday through Friday, 9am to 5pm Pacific Time, federal holidays excluded. Activity by volunteers and contributors outside these hours is at their own discretion and is not expected. Deadlines never fall on weekends or federal holidays.</p>
+        </div>
+      </div>
+
+      <div class="term-entry">
+        <div class="term-left">
+          <div class="term-name">Resubmission</div>
+          <span class="term-badge badge-principle">Principle</span>
+        </div>
+        <div>
+          <p class="term-body">A rejected submission is not a permanent outcome. Contributors may resubmit data that has been rejected, incorporating the reviewer's feedback and correcting the issues that led to rejection. The Repertory's standard is exacting — rejection usually reflects a specific, addressable problem, not a categorical dismissal of the contributor's work. Rejection reasons are always documented in the review chain.</p>
+        </div>
+      </div>
+
+      <div class="term-entry">
+        <div class="term-left">
+          <div class="term-name">Non-Affiliation</div>
+          <span class="term-badge badge-principle">Principle</span>
+        </div>
+        <div>
+          <p class="term-body">Reviewers evaluate submissions independent of their employer, clients, or commercial relationships. A contributor may work at a resale platform, auction house, or brand-adjacent company — their review work for The Repertory is voluntary and must be conducted without affiliation bias. Conflicts of interest must be disclosed. Coordinated submissions, brand-sponsored data contributions, or submissions made on behalf of a commercial interest without disclosure are prohibited and may result in account suspension.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <p class="footer-copy">The Repertory is a collective effort to build the world's most complete authenticated goods database. Under the care of <a href="https://ardorhousecollective.com" target="_blank" rel="noopener">Ardor House Collective</a>.</p>
+    <p class="footer-legal">The Repertory is an independent platform. All brand names and trademarks are the property of their respective owners. We are not affiliated with, authorized by, or associated with any brand referenced in this database.</p>
+  </div>
+</footer>
+
+<script>
+  const SUPABASE_URL = 'https://hsseypuhqdlcvepgyrtd.supabase.co'
+  const SUPABASE_KEY = 'sb_publishable_WOh4vQeiGzrN9CoICfiUTQ_XB5MQJw0'
+
+  const accessToken = localStorage.getItem('gns_access_token')
+  const storedUser  = JSON.parse(localStorage.getItem('gns_user') || 'null')
+  if (!accessToken || !storedUser?.id) window.location.replace('login.html')
+
+  const DB_HEADERS = {
+    'apikey':        SUPABASE_KEY,
+    'Authorization': `Bearer ${accessToken}`,
+    'Content-Type':  'application/json'
+  }
+
+  document.getElementById('sign-out-btn').addEventListener('click', () => {
+    localStorage.removeItem('gns_access_token')
+    localStorage.removeItem('gns_refresh_token')
+    localStorage.removeItem('gns_user')
+    window.location.href = 'login.html'
+  })
+
+  ;(async function loadProfile() {
+    try {
+      const res  = await fetch(
+        `${SUPABASE_URL}/rest/v1/contributor_profile?auth_user_id=eq.${storedUser.id}&select=contributor_id,display_name,membership_tier,reviewer_role,is_curator_general&limit=1`,
+        { headers: DB_HEADERS }
+      )
+      if (!res.ok) return
+      const rows = await res.json()
+      const p    = rows[0]
+      if (!p) return
+      document.getElementById('header-cid').textContent  = p.contributor_id || ''
+      document.getElementById('header-name').textContent = p.display_name   || ''
+      document.getElementById('header-identity').style.display = 'flex'
+      const isFoundingUser = p.membership_tier === 'founding' || p.is_curator_general
+      if (isFoundingUser) {
+        document.querySelectorAll('.nav-founding').forEach(el => el.classList.add('nav-visible'))
+      }
+      if (p.reviewer_role) {
+        document.querySelectorAll('.nav-reviewer').forEach(el => el.classList.add('nav-visible'))
+      }
+    } catch {}
+  })()
+
+  // In-page nav active state
+  const sections = document.querySelectorAll('.index-section[id]')
+  const pills    = document.querySelectorAll('.inpage-pill')
+  const pillMap  = {}
+  pills.forEach(p => { pillMap[p.getAttribute('href').replace('#','')] = p })
+
+  new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        pills.forEach(p => p.classList.remove('active'))
+        if (pillMap[e.target.id]) pillMap[e.target.id].classList.add('active')
+      }
+    })
+  }, { rootMargin: '-64px 0px -55% 0px', threshold: 0 }).observe
+  sections.forEach(s => {
+    new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          pills.forEach(p => p.classList.remove('active'))
+          if (pillMap[e.target.id]) pillMap[e.target.id].classList.add('active')
+        }
+      })
+    }, { rootMargin: '-64px 0px -55% 0px', threshold: 0 }).observe(s)
+  })
+</script>
+
+</body>
+</html>
