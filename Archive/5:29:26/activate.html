@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activate Your Access — The Repertory</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Fanwood Text', 'Fanwood', Georgia, serif;
+      background: #FAF6F0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #2c2c2c;
+      line-height: 1.5;
+    }
+
+    @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill.otf') format('opentype'); font-weight: normal; font-style: normal; }
+    @font-face { font-family: 'Linden Hill'; src: url('Linden_Hill_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
+    @font-face { font-family: 'Runtime'; src: url('Runtime.otf') format('opentype'); }
+    @font-face { font-family: 'Fanwood Text'; src: url('Fanwood_Text.otf') format('opentype'); font-weight: normal; font-style: normal; }
+    @font-face { font-family: 'Fanwood Text'; src: url('Fanwood_Text_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
+    @font-face { font-family: 'Fanwood'; src: url('Fanwood.otf') format('opentype'); }
+    @font-face { font-family: 'Fanwood'; src: url('Fanwood_Italic.otf') format('opentype'); font-weight: normal; font-style: italic; }
+
+    header {
+      background: #1B2E4B;
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+    }
+    .wordmark { display: flex; flex-direction: column; gap: 1px; line-height: 1; text-decoration: none; }
+    .wm-line1 { font-family: 'Linden Hill', Georgia, serif; font-size: 2.22rem; color: #FAF6F0; letter-spacing: 0.01em; line-height: 1; }
+    .wm-line2 { font-family: 'Runtime', sans-serif; font-size: 0.98rem; color: rgba(250,246,240,0.72); letter-spacing: 0.04em; line-height: 1; }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 48px 20px 60px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 16px rgba(27,46,75,0.08), 0 1px 4px rgba(0,0,0,0.05);
+      padding: 44px 40px;
+      width: 100%;
+      max-width: 540px;
+    }
+
+    /* ── Error / expired states ── */
+    .state-invalid { text-align: center; }
+    .state-icon-wrap {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .state-icon-wrap.error   { background: #fdf0ef; border: 1.5px solid #e57373; }
+    .state-icon-wrap.success { background: #f0f7f1; border: 1.5px solid #81c784; }
+    .state-icon-wrap svg { width: 24px; height: 24px; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+    .state-icon-wrap.error   svg { stroke: #b71c1c; }
+    .state-icon-wrap.success svg { stroke: #2e7d32; }
+
+    .state-heading { font-size: 1.15rem; font-weight: 600; color: #1B2E4B; margin-bottom: 10px; }
+    .state-body    { font-size: 0.9rem; color: #5a5450; line-height: 1.65; }
+
+    /* ── Form ── */
+    .section-eyebrow {
+      font-family: 'Runtime', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #B5622A;
+      margin-bottom: 6px;
+    }
+
+    h1 { font-family: 'Linden Hill', Georgia, serif; font-size: 1.7rem; color: #1B2E4B; margin-bottom: 10px; line-height: 1.15; }
+
+    .mission-block {
+      background: #FAF6F0;
+      border-left: 3px solid #1B2E4B;
+      border-radius: 0 5px 5px 0;
+      padding: 14px 16px;
+      margin-bottom: 28px;
+      font-size: 0.88rem;
+      color: #4a4540;
+      line-height: 1.65;
+    }
+
+    .tier-pill {
+      display: inline-block;
+      font-family: 'Runtime', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 3px;
+      background: #264E36;
+      color: #F4F0EC;
+      margin-bottom: 22px;
+    }
+
+    .form-group { margin-bottom: 20px; }
+
+    label {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #555;
+      margin-bottom: 7px;
+    }
+    .required-mark { color: #B5622A; margin-left: 2px; }
+
+    input {
+      width: 100%;
+      padding: 10px 13px;
+      border: 1.5px solid #dfd9d1;
+      border-radius: 6px;
+      font-size: 0.93rem;
+      font-family: inherit;
+      color: #2c2c2c;
+      background: #fff;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    input:focus { border-color: #1B2E4B; box-shadow: 0 0 0 3px rgba(27,46,75,0.07); }
+    input::placeholder { color: #b5ada4; }
+
+    .field-hint { font-size: 0.77rem; color: #9a8e83; margin-top: 5px; }
+
+    hr { border: none; border-top: 1px solid #ede8e1; margin: 28px 0; }
+
+    /* ── Voluntary acknowledgment block ── */
+    .ack-block {
+      background: #1B2E4B;
+      color: #FAF6F0;
+      border-radius: 7px;
+      padding: 20px 22px;
+      margin-bottom: 22px;
+    }
+    .ack-block-title {
+      font-family: 'Runtime', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(250,246,240,0.6);
+      margin-bottom: 10px;
+    }
+    .ack-block p {
+      font-size: 0.86rem;
+      line-height: 1.7;
+      color: rgba(250,246,240,0.92);
+      margin-bottom: 10px;
+    }
+    .ack-block p:last-of-type { margin-bottom: 0; }
+
+    .ack-check-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(250,246,240,0.15);
+    }
+    .ack-check-row input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      margin-top: 2px;
+      border: 1.5px solid rgba(250,246,240,0.4);
+      border-radius: 3px;
+      background: transparent;
+      accent-color: #B5622A;
+      cursor: pointer;
+    }
+    .ack-check-row label {
+      font-size: 0.83rem;
+      color: rgba(250,246,240,0.88);
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: normal;
+      cursor: pointer;
+      line-height: 1.55;
+    }
+    .ack-check-row label a { color: #FAF6F0; text-underline-offset: 2px; }
+    .ack-check-row label a:hover { opacity: 0.75; }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 13px 16px;
+      background: #B5622A;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.93rem;
+      font-weight: 600;
+      font-family: inherit;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: background 0.15s, opacity 0.15s;
+    }
+    .btn:hover:not(:disabled) { background: #9a501f; }
+    .btn:disabled { background: rgba(181,98,42,0.45); cursor: not-allowed; }
+
+    .legal-links {
+      text-align: center;
+      font-size: 0.78rem;
+      color: #9a8e83;
+      margin-top: 18px;
+      line-height: 1.7;
+    }
+    .legal-links a { color: #7a7069; text-underline-offset: 2px; }
+    .legal-links a:hover { color: #B5622A; }
+
+    .alert {
+      padding: 11px 14px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      display: none;
+    }
+    .alert-error   { background: #fdf0ef; border: 1px solid #e57373; color: #b71c1c; }
+
+    .site-footer { border-top: 2px solid #1B2E4B; background: #FAF6F0; padding: 2rem 40px; flex-shrink: 0; }
+    .site-footer-inner { max-width: 1280px; margin: 0 auto; display: flex; gap: 3rem; }
+    .footer-copy, .footer-legal { flex: 1; font-size: 0.75rem; color: #9a8e83; line-height: 1.65; }
+    .footer-copy a { color: #9a8e83; text-decoration: underline; text-underline-offset: 2px; }
+    .footer-copy a:hover { color: #B5622A; }
+
+    @media (max-width: 600px) {
+      .card { padding: 28px 22px; }
+      header { padding: 14px 20px; }
+      .site-footer { padding: 1.5rem 20px; }
+      .site-footer-inner { flex-direction: column; gap: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="login.html" class="wordmark">
+    <span class="wm-line1">The Repertory</span>
+    <span class="wm-line2">a Collective effort</span>
+  </a>
+</header>
+
+<main>
+  <div class="card">
+
+    <!-- Loading state -->
+    <div id="state-loading">
+      <p style="text-align:center; color:#9a8e83; font-size:0.9rem;">Validating your invitation…</p>
+    </div>
+
+    <!-- Invalid / expired token -->
+    <div id="state-invalid" style="display:none;" class="state-invalid">
+      <div class="state-icon-wrap error">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </div>
+      <p class="state-heading" id="invalid-heading">This invitation is no longer valid</p>
+      <p class="state-body" id="invalid-body">
+        This invite link has expired or has already been used.
+        If you believe this is an error, contact the Repertory at
+        <a href="mailto:collective@ardorhousecollective.com">collective@ardorhousecollective.com</a>.
+      </p>
+    </div>
+
+    <!-- Activation form -->
+    <div id="state-form" style="display:none;">
+      <p class="section-eyebrow">You've been invited</p>
+      <h1>Activate Your Access</h1>
+
+      <div class="mission-block">
+        The Repertory is a voluntary collective standards body — an independent effort to build
+        the world's most complete authenticated goods database. You've been selected to contribute.
+        This is meaningful, exacting work. We are glad you're here.
+      </div>
+
+      <div id="tier-pill" class="tier-pill"></div>
+
+      <div id="alert" class="alert alert-error"></div>
+
+      <div class="form-group">
+        <label for="display-name">Display Name <span class="required-mark">*</span></label>
+        <input type="text" id="display-name" placeholder="How you'll appear to other contributors" autocomplete="nickname" required>
+        <p class="field-hint">This is your public name within The Repertory. Your legal name is kept private.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Create Password <span class="required-mark">*</span></label>
+        <input type="password" id="password" placeholder="Minimum 10 characters" autocomplete="new-password" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password-confirm">Confirm Password <span class="required-mark">*</span></label>
+        <input type="password" id="password-confirm" placeholder="Re-enter your password" autocomplete="new-password" required>
+      </div>
+
+      <hr>
+
+      <!-- Voluntary contribution acknowledgment — above the CTA, not in a footnote -->
+      <div class="ack-block">
+        <p class="ack-block-title">Before you activate</p>
+        <p>
+          By activating your access, you acknowledge that you are joining The Repertory
+          as a <strong>voluntary contributor</strong> to a collective standards effort.
+        </p>
+        <p>
+          Contributions are made freely. No compensation, payment, equity, or professional
+          credit is owed or implied in exchange for your contributions. Access is a privilege
+          granted by the Repertory Standards Council — not a right — and may be revoked.
+        </p>
+        <p>
+          Continued participation constitutes ongoing agreement with The Repertory's
+          Terms of Service, Privacy Policy, and Contributor Usage Terms.
+        </p>
+        <div class="ack-check-row">
+          <input type="checkbox" id="ack-checkbox">
+          <label for="ack-checkbox">
+            I understand that my contributions are voluntary, that I will not be compensated,
+            and that I agree to the
+            <a href="terms.html" target="_blank">Terms of Service</a>,
+            <a href="privacy.html" target="_blank">Privacy Policy</a>, and
+            <a href="contributor-terms.html" target="_blank">Contributor Usage Terms</a>.
+          </label>
+        </div>
+      </div>
+
+      <button class="btn" id="activate-btn" disabled>Activate My Access</button>
+
+      <p class="legal-links">
+        <a href="terms.html" target="_blank">Terms of Service</a> ·
+        <a href="privacy.html" target="_blank">Privacy Policy</a> ·
+        <a href="contributor-terms.html" target="_blank">Contributor Usage Terms</a>
+      </p>
+    </div>
+
+    <!-- Success state -->
+    <div id="state-success" style="display:none;" class="state-invalid">
+      <div class="state-icon-wrap success">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <p class="state-heading">Welcome to The Repertory</p>
+      <p class="state-body">
+        Your account is active. You'll be redirected to the dashboard in a moment.
+      </p>
+    </div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <p class="footer-copy">The Repertory is a collective effort to build the world's most complete authenticated goods database. Under the care of <a href="https://ardorhousecollective.com" target="_blank" rel="noopener">Ardor House Collective</a>.</p>
+    <p class="footer-legal">The Repertory is an independent platform. All brand names and trademarks are the property of their respective owners. We are not affiliated with, authorized by, or associated with any brand referenced in this database.</p>
+  </div>
+</footer>
+
+<script>
+  const SUPABASE_URL     = 'https://hsseypuhqdlcvepgyrtd.supabase.co'
+  // Replace with your anon key — never the service role key
+  const SUPABASE_ANON_KEY = 'sb_publishable_WOh4vQeiGzrN9CoICfiUTQ_XB5MQJw0'
+
+  // ── Helpers ─────────────────────────────────────────────────────────────────
+  function show(id)  { document.getElementById(id).style.display = '' }
+  function hide(id)  { document.getElementById(id).style.display = 'none' }
+  function showError(msg) {
+    const el = document.getElementById('alert')
+    el.textContent = msg
+    el.style.display = 'block'
+    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+  }
+
+  async function supabaseFetch(path, opts = {}) {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+      ...opts,
+      headers: {
+        'apikey':        SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Content-Type':  'application/json',
+        'Accept':        'application/json',
+        ...(opts.headers || {}),
+      }
+    })
+    if (!res.ok && res.status !== 204) {
+      const err = await res.json().catch(() => ({}))
+      throw new Error(err.message || `HTTP ${res.status}`)
+    }
+    if (res.status === 204) return null
+    return res.json()
+  }
+
+  async function supabaseAuth(path, body) {
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/${path}`, {
+      method: 'POST',
+      headers: {
+        'apikey':       SUPABASE_ANON_KEY,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body)
+    })
+    const data = await res.json()
+    if (!res.ok) throw new Error(data.error_description || data.msg || `Auth error ${res.status}`)
+    return data
+  }
+
+  // ── Token validation ─────────────────────────────────────────────────────────
+  const TIER_LABELS = {
+    free:       'Free',
+    associate:  'Associate',
+    certified:  'Certified',
+    accredited: 'Accredited',
+    founding:   'Founding',
+  }
+
+  let tokenRecord = null
+
+  async function validateToken() {
+    const params = new URLSearchParams(window.location.search)
+    const token  = params.get('token')
+
+    if (!token) {
+      showInvalid('No invitation found', 'This link does not contain a valid invitation token.')
+      return
+    }
+
+    try {
+      const rows = await supabaseFetch(
+        `invite_tokens?token=eq.${encodeURIComponent(token)}&select=id,token,membership_tier,used,used_at&limit=1`
+      )
+
+      const record = rows?.[0]
+
+      if (!record) {
+        showInvalid('Invitation not found', 'This invite link is not recognized. Please check that you used the correct link from your invitation email.')
+        return
+      }
+
+      if (record.used) {
+        showInvalid('Already activated', 'This invitation has already been used to create an account. If this is unexpected, contact us at collective@ardorhousecollective.com.')
+        return
+      }
+
+      // Valid — show the form
+      tokenRecord = record
+      const label = TIER_LABELS[record.membership_tier] || record.membership_tier
+      document.getElementById('tier-pill').textContent = `Access level: ${label}`
+      hide('state-loading')
+      show('state-form')
+
+    } catch (err) {
+      showInvalid('Something went wrong', `Unable to validate your invitation. Please try again or contact us. (${err.message})`)
+    }
+  }
+
+  function showInvalid(heading, body) {
+    hide('state-loading')
+    document.getElementById('invalid-heading').textContent = heading
+    document.getElementById('invalid-body').textContent   = body
+    show('state-invalid')
+  }
+
+  // ── Checkbox enables button ──────────────────────────────────────────────────
+  document.getElementById('ack-checkbox').addEventListener('change', function() {
+    document.getElementById('activate-btn').disabled = !this.checked
+  })
+
+  // ── Activation ───────────────────────────────────────────────────────────────
+  document.getElementById('activate-btn').addEventListener('click', async () => {
+    document.getElementById('alert').style.display = 'none'
+
+    const displayName    = document.getElementById('display-name').value.trim()
+    const password       = document.getElementById('password').value
+    const passwordConfirm = document.getElementById('password-confirm').value
+
+    if (!displayName)              { showError('Please enter a display name.'); return }
+    if (displayName.length < 2)    { showError('Display name must be at least 2 characters.'); return }
+    if (!password)                 { showError('Please create a password.'); return }
+    if (password.length < 10)      { showError('Password must be at least 10 characters.'); return }
+    if (password !== passwordConfirm) { showError('Passwords do not match.'); return }
+
+    const btn = document.getElementById('activate-btn')
+    btn.disabled    = true
+    btn.textContent = 'Activating…'
+
+    try {
+      // 1. Get the email associated with this token from access_requests
+      //    (token links to the approved application)
+      const appRows = await supabaseFetch(
+        `access_requests?invite_sent_at=not.is.null&status=eq.approved&select=email,legal_first_name,legal_last_name&limit=100`
+      )
+      // Match by token — in production this would be a direct join or Edge Function
+      // For now we look up the email from the token's used_by_email if set,
+      // or use the token record to find the application
+      // This flow should be handled by a Supabase Edge Function in production (ARD: invite flow)
+
+      // 2. Create the auth user
+      const authData = await supabaseAuth('signup', {
+        email:    tokenRecord.email || '', // populated from Edge Function context
+        password: password,
+        data: {
+          display_name:    displayName,
+          membership_tier: tokenRecord.membership_tier,
+          invite_token:    tokenRecord.token,
+        }
+      })
+
+      if (!authData.user) throw new Error('Account creation failed — no user returned.')
+
+      // 3. Mark token as used
+      await supabaseFetch(`invite_tokens?id=eq.${tokenRecord.id}`, {
+        method:  'PATCH',
+        headers: { 'Prefer': 'return=minimal' },
+        body: JSON.stringify({ used: true, used_at: new Date().toISOString() })
+      })
+
+      // 4. Show success
+      hide('state-form')
+      show('state-success')
+      setTimeout(() => { window.location.href = 'dashboard.html' }, 2800)
+
+    } catch (err) {
+      showError(`Activation failed: ${err.message}`)
+      btn.disabled    = false
+      btn.textContent = 'Activate My Access'
+    }
+  })
+
+  // ── Init ─────────────────────────────────────────────────────────────────────
+  validateToken()
+</script>
+
+</body>
+</html>

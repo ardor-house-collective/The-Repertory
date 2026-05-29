@@ -201,40 +201,6 @@
     .app-referral { font-size: 0.8rem; color: #7a7069; margin-bottom: 18px; }
     .app-referral span { color: #4a4540; }
 
-    .app-fields {
-      display: grid;
-      grid-template-columns: 110px 1fr;
-      gap: 6px 16px;
-      margin-bottom: 16px;
-      align-items: baseline;
-    }
-    .app-field-label {
-      font-family: 'Runtime', sans-serif;
-      font-size: 10px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #6B7A60;
-      padding-top: 1px;
-    }
-    .app-field-value {
-      font-size: 13px;
-      color: #1E2B22;
-      line-height: 1.5;
-    }
-    .app-decline-note {
-      display: grid;
-      grid-template-columns: 110px 1fr;
-      gap: 6px 16px;
-      margin-bottom: 16px;
-      align-items: baseline;
-      padding-top: 12px;
-      border-top: 1px solid #ede8e1;
-    }
-    .app-decline-value {
-      font-size: 13px;
-      color: #6B7A60;
-    }
-
     /* ── Actions ── */
     .app-actions {
       display: flex;
@@ -271,13 +237,14 @@
     .btn-flag     { background: transparent; color: #7a7069; border: 1.5px solid #dfd9d1; }
     .btn-flag:hover:not(:disabled)     { border-color: #5b2d8e; color: #5b2d8e; }
 
+    /* Flag = suggest for curator_general review — available to founding members */
     .flag-note {
       font-size: 0.75rem;
       color: #9a8e83;
       font-style: italic;
     }
 
-    /* ── Modals ── */
+    /* ── Decline / flag modal ── */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -457,7 +424,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script type="module">
   // ── Config ──────────────────────────────────────────────────────────────────
-  const SUPABASE_URL      = 'https://hsseypuhqdlcvepgyrtd.supabase.co'
+  const SUPABASE_URL = 'https://hsseypuhqdlcvepgyrtd.supabase.co'
   // Replace with your anon key — never the service role key
   const SUPABASE_ANON_KEY = 'sb_publishable_WOh4vQeiGzrN9CoICfiUTQ_XB5MQJw0'
 
@@ -552,28 +519,19 @@
     const list = document.getElementById('applications-list')
     list.innerHTML = '<div class="state-box"><div class="state-icon">◌</div>Loading…</div>'
 
-    const statusParam = currentFilter === 'all' ? '' : `&status=eq.${currentFilter}`
-    try {
-      const rows = await apiFetch(
-        `access_requests?select=id,full_name,email,credentials,expertise,referral,referral_gns_id,status,review_notes,assigned_tier,created_at${statusParam}&order=created_at.desc`
-      )
-      if (rows === null) {
-        list.innerHTML = '<div class="state-box"><div class="state-icon">○</div>Could not load applications — session may have expired.</div>'
-        return
-      }
-      allApplications = rows
-      updateCounts()
-      render()
-    } catch (err) {
-      list.innerHTML = `<div class="state-box"><div class="state-icon">!</div>Failed to load: ${esc(err.message)}</div>`
-    }
+    const rows = await apiFetch(
+      'access_requests?select=id,full_name,email,credentials,expertise,referral,status,review_notes,assigned_tier,created_at&order=created_at.desc'
+    )
+    if (!rows) return
+
+    allApplications = rows
+    updateCounts()
+    render()
   }
 
   function updateCounts() {
-    if (currentFilter === 'pending' || currentFilter === 'all') {
-      const pending = allApplications.filter(a => a.status === 'pending').length
-      document.getElementById('count-pending').textContent = pending
-    }
+    const pending = allApplications.filter(a => a.status === 'pending').length
+    document.getElementById('count-pending').textContent = pending
   }
 
   // ── Render ──────────────────────────────────────────────────────────────────
@@ -625,24 +583,9 @@
         ${!isCuratorGeneral() ? `<button class="btn btn-flag" data-id="${app.id}" title="Suggest this application for curator review">Flag for Curator</button>` : ''}
         ${app.status === 'flagged' && app.review_notes ? `<span class="flag-note">Flagged: ${app.review_notes}</span>` : ''}
       </div>
-    ` : ''
-
-    const fieldsGrid = `
-      <div class="app-fields">
-        ${app.expertise   ? `<div class="app-field-label">Expertise</div><div class="app-field-value">${esc(app.expertise)}</div>`   : ''}
-        ${app.credentials ? `<div class="app-field-label">Credentials</div><div class="app-field-value">${esc(app.credentials)}</div>` : ''}
-        ${(app.referral_gns_id || app.referral) ? `<div class="app-field-label">Referred By</div><div class="app-field-value">${
-          app.referral_gns_id
-            ? `<span style="color:#A8894E;font-weight:600">${esc(app.referral_gns_id)}</span>&ensp;<span style="font-size:10px;color:#6B7A60;font-family:'Runtime',sans-serif;letter-spacing:0.06em;text-transform:uppercase">contributor</span>`
-            : esc(app.referral)
-        }</div>` : ''}
-      </div>
-    `
-
-    const declineNote = app.status === 'declined' ? `
-      <div class="app-decline-note">
-        <div class="app-field-label">Decline Note</div>
-        <div class="app-decline-value">${app.review_notes ? `<em>${esc(app.review_notes)}</em>` : 'No note added.'}</div>
+    ` : app.review_notes ? `
+      <div class="app-actions">
+        <span class="flag-note">${app.review_notes}</span>
       </div>
     ` : ''
 
@@ -654,12 +597,13 @@
             <div class="app-email">${esc(app.email)}</div>
           </div>
           <div class="app-meta">
+            <span class="tag tag-expertise">${esc(app.expertise)}</span>
             <span class="tag ${tagMap[app.status] || 'tag-pending'}">${tagText[app.status] || app.status}</span>
             <span class="app-date">${date}</span>
           </div>
         </div>
-        ${fieldsGrid}
-        ${declineNote}
+        <div class="app-credentials">${esc(app.credentials)}</div>
+        ${app.referral ? `<div class="app-referral">Referred by: <span>${esc(app.referral)}</span></div>` : ''}
         ${actions}
       </div>
     `
@@ -696,6 +640,7 @@
         })
       })
 
+      // Update local state
       const idx = allApplications.findIndex(a => a.id === app.id)
       if (idx > -1) { allApplications[idx].status = 'approved'; allApplications[idx].assigned_tier = tier }
       updateCounts()
@@ -797,7 +742,7 @@
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'))
       btn.classList.add('active')
       currentFilter = btn.dataset.filter
-      loadApplications()
+      render()
     })
   })
 
@@ -1024,6 +969,7 @@
   #gns-fb-submit:hover:not(:disabled) { background: #c96e31; transform: translateY(-1px); }
   #gns-fb-submit:disabled { opacity: 0.55; cursor: not-allowed; }
 
+  /* shown when not authenticated */
   #gns-fb-login-prompt {
     display: none;
     margin-top: 6px;
@@ -1175,10 +1121,12 @@
   let _contributorId = null;
   let _authChecked   = false;
 
+  // Auto-populate page field
   pageInput.value = document.title
     || window.location.pathname.split('/').pop()
     || window.location.href;
 
+  // Open / close
   btn.addEventListener('click', openModal);
   closeBtn.addEventListener('click', closeModal);
   overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
@@ -1207,9 +1155,11 @@
     submitBtn.disabled       = false;
     submitBtn.textContent    = 'Submit Feedback';
     typeSelect.selectedIndex = 0;
+    // Re-run auth check next open in case session changed
     _authChecked = false;
   }
 
+  // Auth check
   async function checkAuth() {
     _authChecked = true;
     nameInput.placeholder = 'Checking…';
@@ -1255,16 +1205,19 @@
     nameInput.value           = '';
     nameInput.placeholder     = 'Not logged in';
     _contributorId            = null;
+    // Append return URL so the user lands back here after login
     const returnPath = encodeURIComponent(window.location.href);
     loginLink.href   = `/login.html?return=${returnPath}`;
   }
 
+  // File name display
   fileInput.addEventListener('change', () => {
     fileNameEl.textContent = fileInput.files.length
       ? fileInput.files[0].name
       : 'No file selected';
   });
 
+  // Submit
   submitBtn.addEventListener('click', async () => {
     const desc = descTA.value.trim();
     if (!desc) {
@@ -1285,6 +1238,7 @@
     }
 
     try {
+      // Upload screenshot if present
       let screenshotUrl = null;
       if (fileInput.files && fileInput.files[0]) {
         const file = fileInput.files[0];
@@ -1301,6 +1255,7 @@
         }
       }
 
+      // Insert row
       const { error: insErr } = await client.from('feedback').insert({
         page:           pageInput.value,
         feedback_type:  typeSelect.value,
@@ -1312,6 +1267,7 @@
       });
       if (insErr) throw insErr;
 
+      // Confirm
       formWrap.style.display   = 'none';
       confirmDiv.style.display = 'block';
       setTimeout(closeModal, 2000);

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Applications — The Repertory</title>
+  <title>The Repertory — Feedback</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -95,254 +95,24 @@
     /* ── Layout ── */
     main { flex: 1; max-width: 1100px; width: 100%; margin: 0 auto; padding: 40px 40px 60px; }
 
-    .page-header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      margin-bottom: 32px;
-      gap: 20px;
-    }
-
-    .page-title { font-family: 'Linden Hill', Georgia, serif; font-size: 1.9rem; color: #1E2B22; line-height: 1.1; }
-    .page-subtitle { font-size: 0.88rem; color: #7a7069; margin-top: 5px; }
-
-    /* ── Filters ── */
-    .filters {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
-    }
-
-    .filter-btn {
-      padding: 6px 16px;
-      border-radius: 20px;
-      border: 1.5px solid #dfd9d1;
-      background: #fff;
-      font-family: 'Runtime', sans-serif;
-      font-size: 0.76rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: #7a7069;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .filter-btn:hover { border-color: #1E2B22; color: #1E2B22; }
-    .filter-btn.active { background: #1E2B22; border-color: #1E2B22; color: #F0EDE4; }
-
-    .count-badge {
+    .back-link {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      min-width: 18px;
-      height: 18px;
-      padding: 0 5px;
-      border-radius: 9px;
-      background: #A8894E;
-      color: #fff;
-      font-size: 0.65rem;
-      font-weight: 700;
-      margin-left: 6px;
-    }
-
-    /* ── Application cards ── */
-    .applications-list { display: flex; flex-direction: column; gap: 16px; }
-
-    .app-card {
-      background: #fff;
-      border-radius: 8px;
-      border: 1.5px solid #ede8e1;
-      padding: 24px 28px;
-      transition: border-color 0.15s, box-shadow 0.15s;
-    }
-    .app-card:hover { border-color: #c8c0b6; box-shadow: 0 2px 12px rgba(27,46,75,0.06); }
-
-    .app-card-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 14px;
-    }
-
-    .app-name { font-size: 1.05rem; font-weight: 600; color: #1E2B22; }
-    .app-email { font-size: 0.83rem; color: #7a7069; margin-top: 2px; }
-    .app-meta { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-
-    .tag {
-      display: inline-block;
-      padding: 3px 10px;
-      border-radius: 3px;
-      font-family: 'Runtime', sans-serif;
-      font-size: 0.68rem;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      font-weight: 600;
-    }
-    .tag-expertise { background: #f0ece6; color: #5a4e44; }
-    .tag-pending   { background: #fef9ec; color: #92651a; border: 1px solid #f5d98a; }
-    .tag-approved  { background: #f0f7f1; color: #2e6b35; border: 1px solid #9ecda3; }
-    .tag-declined  { background: #fdf0ef; color: #b71c1c; border: 1px solid #e57373; }
-    .tag-flagged   { background: #f3eeff; color: #5b2d8e; border: 1px solid #c4a0f0; }
-
-    .app-date { font-size: 0.78rem; color: #9a8e83; }
-
-    .app-credentials {
-      font-size: 0.88rem;
-      color: #4a4540;
-      line-height: 1.6;
-      margin-bottom: 14px;
-      padding: 12px 14px;
-      background: #F0EDE4;
-      border-radius: 5px;
-      border-left: 3px solid #dfd9d1;
-    }
-
-    .app-referral { font-size: 0.8rem; color: #7a7069; margin-bottom: 18px; }
-    .app-referral span { color: #4a4540; }
-
-    .app-fields {
-      display: grid;
-      grid-template-columns: 110px 1fr;
-      gap: 6px 16px;
-      margin-bottom: 16px;
-      align-items: baseline;
-    }
-    .app-field-label {
-      font-family: 'Runtime', sans-serif;
-      font-size: 10px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      gap: .3rem;
+      font-size: .82rem;
       color: #6B7A60;
-      padding-top: 1px;
+      text-decoration: none;
+      margin-bottom: 1.5rem;
+      transition: color .15s;
     }
-    .app-field-value {
-      font-size: 13px;
-      color: #1E2B22;
-      line-height: 1.5;
-    }
-    .app-decline-note {
-      display: grid;
-      grid-template-columns: 110px 1fr;
-      gap: 6px 16px;
-      margin-bottom: 16px;
-      align-items: baseline;
-      padding-top: 12px;
-      border-top: 1px solid #ede8e1;
-    }
-    .app-decline-value {
-      font-size: 13px;
-      color: #6B7A60;
-    }
+    .back-link:hover { color: #A8894E; }
 
-    /* ── Actions ── */
-    .app-actions {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-      padding-top: 16px;
-      border-top: 1px solid #ede8e1;
-    }
-
-    .tier-select {
-      padding: 8px 12px;
-      border: 1.5px solid #dfd9d1;
-      border-radius: 5px;
-      font-family: inherit;
-      font-size: 0.85rem;
-      color: #2c2c2c;
-      background: #fff;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 10px center;
-      padding-right: 32px;
-      appearance: none;
-      cursor: pointer;
-    }
-    .tier-select:focus { outline: none; border-color: #1E2B22; }
-
-    .btn { padding: 8px 18px; border-radius: 5px; font-family: inherit; font-size: 0.85rem; font-weight: 600; border: none; cursor: pointer; transition: background 0.15s, opacity 0.15s; letter-spacing: 0.02em; }
-    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
-    .btn-approve  { background: #264E36; color: #F0EDE4; }
-    .btn-approve:hover:not(:disabled)  { background: #1d3a28; }
-    .btn-decline  { background: transparent; color: #7a7069; border: 1.5px solid #dfd9d1; }
-    .btn-decline:hover:not(:disabled)  { border-color: #b71c1c; color: #b71c1c; }
-    .btn-flag     { background: transparent; color: #7a7069; border: 1.5px solid #dfd9d1; }
-    .btn-flag:hover:not(:disabled)     { border-color: #5b2d8e; color: #5b2d8e; }
-
-    .flag-note {
-      font-size: 0.75rem;
-      color: #9a8e83;
-      font-style: italic;
-    }
-
-    /* ── Modals ── */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(27,46,75,0.35);
-      z-index: 100;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .modal-overlay.open { display: flex; }
-
-    .modal {
-      background: #fff;
-      border-radius: 10px;
-      padding: 32px;
-      width: 100%;
-      max-width: 480px;
-      box-shadow: 0 8px 40px rgba(27,46,75,0.18);
-    }
-    .modal-title { font-size: 1.1rem; font-weight: 600; color: #1E2B22; margin-bottom: 8px; }
-    .modal-sub   { font-size: 0.85rem; color: #7a7069; margin-bottom: 20px; }
-    .modal textarea {
-      width: 100%; padding: 10px 13px; border: 1.5px solid #dfd9d1; border-radius: 6px;
-      font-family: inherit; font-size: 0.88rem; resize: vertical; min-height: 100px;
-      outline: none; transition: border-color 0.15s;
-    }
-    .modal textarea:focus { border-color: #1E2B22; }
-    .modal-actions { display: flex; gap: 10px; margin-top: 16px; justify-content: flex-end; }
-    .btn-cancel { background: transparent; color: #7a7069; border: 1.5px solid #dfd9d1; }
-    .btn-cancel:hover { border-color: #9a8e83; color: #4a4540; }
-    .btn-confirm-decline { background: #b71c1c; color: #fff; }
-    .btn-confirm-decline:hover:not(:disabled) { background: #8b1414; }
-    .btn-confirm-flag    { background: #5b2d8e; color: #fff; }
-    .btn-confirm-flag:hover:not(:disabled)    { background: #43206b; }
-
-    /* ── Empty / loading states ── */
-    .state-box {
-      text-align: center;
-      padding: 60px 20px;
-      color: #9a8e83;
-      font-size: 0.9rem;
-      line-height: 1.7;
-    }
-    .state-box .state-icon { font-size: 2rem; margin-bottom: 12px; opacity: 0.4; }
-
-    /* ── Toast ── */
-    .toast {
-      position: fixed;
-      bottom: 28px;
-      right: 28px;
+    /* Dark card wrapper so the feedback-section's dark-palette styles render correctly */
+    .feedback-card {
       background: #1E2B22;
-      color: #F0EDE4;
-      padding: 12px 20px;
-      border-radius: 6px;
-      font-size: 0.88rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.18);
-      transform: translateY(80px);
-      opacity: 0;
-      transition: transform 0.25s ease, opacity 0.25s ease;
-      z-index: 200;
-      max-width: 340px;
+      border-radius: 10px;
+      padding: 28px 32px;
     }
-    .toast.show { transform: translateY(0); opacity: 1; }
-    .toast.error { background: #b71c1c; }
 
     /* ── Footer ── */
     .site-footer { border-top: 2px solid #1E2B22; background: #F0EDE4; padding: 2rem 40px; flex-shrink: 0; }
@@ -354,11 +124,193 @@
     @media (max-width: 680px) {
       main { padding: 24px 20px 48px; }
       header { padding: 14px 20px; }
-      .page-header { flex-direction: column; align-items: flex-start; }
-      .app-card { padding: 18px 20px; }
-      .app-card-header { flex-direction: column; }
+      .feedback-card { padding: 20px 18px; }
       .site-footer { padding: 1.5rem 20px; }
       .site-footer-inner { flex-direction: column; gap: 1.2rem; }
+    }
+
+    /* ── Feedback admin styles (from admin-feedback-section.html) ── */
+
+    #feedback-panel {
+      display: none;
+    }
+    #feedback-panel.active {
+      display: block;
+    }
+
+    .fb-admin-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .fb-admin-header h2 {
+      font-family: 'Linden Hill', Palatino, serif;
+      font-size: 22px;
+      font-weight: normal;
+      color: #F0EDE4;
+      margin: 0;
+    }
+    .fb-admin-count {
+      font-family: 'Fanwood Text', Georgia, serif;
+      font-size: 13px;
+      color: rgba(250,246,240,0.5);
+    }
+
+    .fb-filter-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    .fb-filter-bar select {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(181,98,42,0.35);
+      border-radius: 4px;
+      color: #F0EDE4;
+      font-family: 'Fanwood Text', Georgia, serif;
+      font-size: 13px;
+      padding: 7px 28px 7px 10px;
+      cursor: pointer;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23B5622A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 9px center;
+    }
+    .fb-filter-bar select option { background: #1E2B22; }
+    .fb-filter-bar select:focus { border-color: #A8894E; }
+
+    .fb-table-wrap {
+      overflow-x: auto;
+    }
+    table.fb-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Fanwood Text', Georgia, serif;
+      font-size: 13.5px;
+      color: #F0EDE4;
+    }
+    table.fb-table thead tr {
+      border-bottom: 1.5px solid rgba(181,98,42,0.4);
+    }
+    table.fb-table th {
+      text-align: left;
+      font-size: 10.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #A8894E;
+      padding: 0 12px 10px 0;
+      font-weight: normal;
+      white-space: nowrap;
+    }
+    table.fb-table td {
+      padding: 12px 12px 12px 0;
+      vertical-align: top;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    table.fb-table tr:last-child td { border-bottom: none; }
+    table.fb-table tbody tr:hover td {
+      background: rgba(255,255,255,0.03);
+    }
+
+    .fb-cell-ts {
+      white-space: nowrap;
+      color: rgba(250,246,240,0.55);
+      font-size: 12px;
+      min-width: 110px;
+    }
+    .fb-cell-page {
+      max-width: 140px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: rgba(250,246,240,0.75);
+    }
+    .fb-type-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      border: 1px solid rgba(181,98,42,0.4);
+      color: #A8894E;
+    }
+    .fb-cell-desc {
+      max-width: 220px;
+      color: rgba(250,246,240,0.88);
+      line-height: 1.45;
+    }
+    .fb-cell-sub {
+      white-space: nowrap;
+      color: rgba(250,246,240,0.6);
+      font-size: 12px;
+      font-style: italic;
+    }
+    .fb-thumb {
+      width: 52px;
+      height: 36px;
+      object-fit: cover;
+      border-radius: 3px;
+      border: 1px solid rgba(181,98,42,0.3);
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .fb-thumb:hover { opacity: 0.8; }
+
+    .fb-status-select {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(181,98,42,0.35);
+      border-radius: 4px;
+      color: #F0EDE4;
+      font-family: 'Fanwood Text', Georgia, serif;
+      font-size: 12px;
+      padding: 4px 22px 4px 8px;
+      cursor: pointer;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='6' viewBox='0 0 9 6'%3E%3Cpath d='M1 1l3.5 3.5L8 1' stroke='%23B5622A' stroke-width='1.3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 7px center;
+      transition: border-color 0.15s;
+      min-width: 108px;
+    }
+    .fb-status-select option { background: #1E2B22; }
+    .fb-status-select:focus { border-color: #A8894E; }
+    .fb-status-select[data-status="new"]       { border-left: 3px solid #6a9fd8; }
+    .fb-status-select[data-status="reviewed"]  { border-left: 3px solid #A8894E; }
+    .fb-status-select[data-status="actioned"]  { border-left: 3px solid #5dab7a; }
+    .fb-status-select[data-status="dismissed"] { border-left: 3px solid #888; }
+
+    .fb-state-row td {
+      text-align: center;
+      padding: 40px;
+      color: rgba(250,246,240,0.4);
+      font-style: italic;
+      border-bottom: none !important;
+    }
+
+    #fb-lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9500;
+      background: rgba(0,0,0,0.82);
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+    }
+    #fb-lightbox.open { display: flex; }
+    #fb-lightbox img {
+      max-width: 90vw;
+      max-height: 88vh;
+      border-radius: 4px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.7);
     }
   </style>
 </head>
@@ -393,59 +345,59 @@
 </header>
 
 <main>
-  <div class="page-header">
-    <div>
-      <h1 class="page-title">Access Applications</h1>
-      <p class="page-subtitle">Review and action contributor applications. Founding members may flag applications for curator review.</p>
+  <a href="admin-review-dashboard.html" class="back-link">&#8592; Review Queue</a>
+
+  <div class="feedback-card">
+    <div id="feedback-panel">
+
+      <div class="fb-admin-header">
+        <h2>Feedback</h2>
+        <span class="fb-admin-count" id="fb-total-count"></span>
+      </div>
+
+      <div class="fb-filter-bar">
+        <select id="fb-filter-status">
+          <option value="">All statuses</option>
+          <option value="new">New</option>
+          <option value="reviewed">Reviewed</option>
+          <option value="actioned">Actioned</option>
+          <option value="dismissed">Dismissed</option>
+        </select>
+        <select id="fb-filter-type">
+          <option value="">All types</option>
+          <option value="Bug / Something looks wrong">Bug</option>
+          <option value="Suggestion">Suggestion</option>
+          <option value="Question">Question</option>
+          <option value="Content Issue">Content Issue</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="fb-table-wrap">
+        <table class="fb-table" id="fb-admin-table">
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Page</th>
+              <th>Type</th>
+              <th>Description</th>
+              <th>Submitted by</th>
+              <th>Screenshot</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="fb-table-body">
+            <tr class="fb-state-row"><td colspan="7">Loading feedback…</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
-  <div class="filters">
-    <button class="filter-btn active" data-filter="pending">
-      Pending <span class="count-badge" id="count-pending">0</span>
-    </button>
-    <button class="filter-btn" data-filter="approved">Approved</button>
-    <button class="filter-btn" data-filter="declined">Declined</button>
-    <button class="filter-btn" data-filter="flagged">Flagged</button>
-    <button class="filter-btn" data-filter="all">All</button>
-  </div>
-
-  <div id="applications-list" class="applications-list">
-    <div class="state-box">
-      <div class="state-icon">◌</div>
-      Loading applications…
-    </div>
+  <div id="fb-lightbox">
+    <img id="fb-lightbox-img" src="" alt="Screenshot">
   </div>
 </main>
-
-<!-- Decline modal -->
-<div class="modal-overlay" id="decline-modal">
-  <div class="modal">
-    <p class="modal-title">Decline Application</p>
-    <p class="modal-sub" id="decline-modal-name"></p>
-    <textarea id="decline-notes" placeholder="Optional internal note on why this application was declined…"></textarea>
-    <div class="modal-actions">
-      <button class="btn btn-cancel" id="decline-cancel">Cancel</button>
-      <button class="btn btn-confirm-decline" id="decline-confirm">Decline Application</button>
-    </div>
-  </div>
-</div>
-
-<!-- Flag modal (suggest for curator review) -->
-<div class="modal-overlay" id="flag-modal">
-  <div class="modal">
-    <p class="modal-title">Flag for Curator Review</p>
-    <p class="modal-sub" id="flag-modal-name"></p>
-    <textarea id="flag-notes" placeholder="What should the curator look at? What caught your attention?"></textarea>
-    <div class="modal-actions">
-      <button class="btn btn-cancel" id="flag-cancel">Cancel</button>
-      <button class="btn btn-confirm-flag" id="flag-confirm">Send to Curator</button>
-    </div>
-  </div>
-</div>
-
-<!-- Toast -->
-<div class="toast" id="toast"></div>
 
 <footer class="site-footer">
   <div class="site-footer-inner">
@@ -458,16 +410,7 @@
 <script type="module">
   // ── Config ──────────────────────────────────────────────────────────────────
   const SUPABASE_URL      = 'https://hsseypuhqdlcvepgyrtd.supabase.co'
-  // Replace with your anon key — never the service role key
   const SUPABASE_ANON_KEY = 'sb_publishable_WOh4vQeiGzrN9CoICfiUTQ_XB5MQJw0'
-
-  const TIERS = [
-    { value: 'free',       label: 'Free' },
-    { value: 'associate',  label: 'Associate' },
-    { value: 'certified',  label: 'Certified' },
-    { value: 'accredited', label: 'Accredited' },
-    { value: 'founding',   label: 'Founding' },
-  ]
 
   // ── Auth ────────────────────────────────────────────────────────────────────
   let accessToken = localStorage.getItem('gns_access_token')
@@ -531,276 +474,6 @@
     }
   }
 
-  function isCuratorGeneral() { return profile?.is_curator_general === true }
-
-  // ── State ───────────────────────────────────────────────────────────────────
-  let allApplications = []
-  let currentFilter   = 'pending'
-  let activeModal     = null   // { type: 'decline'|'flag', id, name }
-
-  // ── Toast ───────────────────────────────────────────────────────────────────
-  function toast(msg, isError = false) {
-    const el = document.getElementById('toast')
-    el.textContent = msg
-    el.className = 'toast' + (isError ? ' error' : '')
-    el.classList.add('show')
-    setTimeout(() => el.classList.remove('show'), 3200)
-  }
-
-  // ── Load applications ───────────────────────────────────────────────────────
-  async function loadApplications() {
-    const list = document.getElementById('applications-list')
-    list.innerHTML = '<div class="state-box"><div class="state-icon">◌</div>Loading…</div>'
-
-    const statusParam = currentFilter === 'all' ? '' : `&status=eq.${currentFilter}`
-    try {
-      const rows = await apiFetch(
-        `access_requests?select=id,full_name,email,credentials,expertise,referral,referral_gns_id,status,review_notes,assigned_tier,created_at${statusParam}&order=created_at.desc`
-      )
-      if (rows === null) {
-        list.innerHTML = '<div class="state-box"><div class="state-icon">○</div>Could not load applications — session may have expired.</div>'
-        return
-      }
-      allApplications = rows
-      updateCounts()
-      render()
-    } catch (err) {
-      list.innerHTML = `<div class="state-box"><div class="state-icon">!</div>Failed to load: ${esc(err.message)}</div>`
-    }
-  }
-
-  function updateCounts() {
-    if (currentFilter === 'pending' || currentFilter === 'all') {
-      const pending = allApplications.filter(a => a.status === 'pending').length
-      document.getElementById('count-pending').textContent = pending
-    }
-  }
-
-  // ── Render ──────────────────────────────────────────────────────────────────
-  function render() {
-    const list = document.getElementById('applications-list')
-    const filtered = currentFilter === 'all'
-      ? allApplications
-      : allApplications.filter(a => a.status === currentFilter)
-
-    if (!filtered.length) {
-      list.innerHTML = `<div class="state-box">
-        <div class="state-icon">○</div>
-        No ${currentFilter === 'all' ? '' : currentFilter} applications.
-      </div>`
-      return
-    }
-
-    list.innerHTML = filtered.map(app => renderCard(app)).join('')
-
-    // Bind action buttons
-    filtered.forEach(app => {
-      const card = document.getElementById(`card-${app.id}`)
-      if (!card) return
-
-      card.querySelector('.btn-approve')?.addEventListener('click', () => handleApprove(app))
-      card.querySelector('.btn-decline')?.addEventListener('click', () => openModal('decline', app))
-      card.querySelector('.btn-flag')?.addEventListener('click',   () => openModal('flag',    app))
-    })
-  }
-
-  function renderCard(app) {
-    const date    = new Date(app.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-    const tagMap  = { pending: 'tag-pending', approved: 'tag-approved', declined: 'tag-declined', flagged: 'tag-flagged' }
-    const tagText = { pending: 'Pending', approved: 'Approved', declined: 'Declined', flagged: 'Flagged for Review' }
-    const isPending = app.status === 'pending' || app.status === 'flagged'
-
-    const tierOptions = TIERS.map(t =>
-      `<option value="${t.value}" ${app.assigned_tier === t.value ? 'selected' : ''}>${t.label}</option>`
-    ).join('')
-
-    const actions = isPending ? `
-      <div class="app-actions">
-        <select class="tier-select" id="tier-${app.id}" title="Assign tier on approval">
-          <option value="">Assign tier…</option>
-          ${tierOptions}
-        </select>
-        <button class="btn btn-approve" data-id="${app.id}">Approve</button>
-        <button class="btn btn-decline" data-id="${app.id}">Decline</button>
-        ${!isCuratorGeneral() ? `<button class="btn btn-flag" data-id="${app.id}" title="Suggest this application for curator review">Flag for Curator</button>` : ''}
-        ${app.status === 'flagged' && app.review_notes ? `<span class="flag-note">Flagged: ${app.review_notes}</span>` : ''}
-      </div>
-    ` : ''
-
-    const fieldsGrid = `
-      <div class="app-fields">
-        ${app.expertise   ? `<div class="app-field-label">Expertise</div><div class="app-field-value">${esc(app.expertise)}</div>`   : ''}
-        ${app.credentials ? `<div class="app-field-label">Credentials</div><div class="app-field-value">${esc(app.credentials)}</div>` : ''}
-        ${(app.referral_gns_id || app.referral) ? `<div class="app-field-label">Referred By</div><div class="app-field-value">${
-          app.referral_gns_id
-            ? `<span style="color:#A8894E;font-weight:600">${esc(app.referral_gns_id)}</span>&ensp;<span style="font-size:10px;color:#6B7A60;font-family:'Runtime',sans-serif;letter-spacing:0.06em;text-transform:uppercase">contributor</span>`
-            : esc(app.referral)
-        }</div>` : ''}
-      </div>
-    `
-
-    const declineNote = app.status === 'declined' ? `
-      <div class="app-decline-note">
-        <div class="app-field-label">Decline Note</div>
-        <div class="app-decline-value">${app.review_notes ? `<em>${esc(app.review_notes)}</em>` : 'No note added.'}</div>
-      </div>
-    ` : ''
-
-    return `
-      <div class="app-card" id="card-${app.id}">
-        <div class="app-card-header">
-          <div>
-            <div class="app-name">${esc(app.full_name)}</div>
-            <div class="app-email">${esc(app.email)}</div>
-          </div>
-          <div class="app-meta">
-            <span class="tag ${tagMap[app.status] || 'tag-pending'}">${tagText[app.status] || app.status}</span>
-            <span class="app-date">${date}</span>
-          </div>
-        </div>
-        ${fieldsGrid}
-        ${declineNote}
-        ${actions}
-      </div>
-    `
-  }
-
-  function esc(str) {
-    return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')
-  }
-
-  // ── Approve ─────────────────────────────────────────────────────────────────
-  async function handleApprove(app) {
-    const tierEl = document.getElementById(`tier-${app.id}`)
-    const tier   = tierEl?.value
-
-    if (!tier) {
-      toast('Please assign a tier before approving.', true)
-      tierEl?.focus()
-      return
-    }
-
-    const btn = document.querySelector(`#card-${app.id} .btn-approve`)
-    btn.disabled    = true
-    btn.textContent = 'Approving…'
-
-    try {
-      await apiFetch(`access_requests?id=eq.${app.id}`, {
-        method: 'PATCH',
-        headers: { 'Prefer': 'return=minimal' },
-        body: JSON.stringify({
-          status:        'approved',
-          assigned_tier: tier,
-          reviewed_at:   new Date().toISOString(),
-          review_notes:  `Approved at ${tier} tier.`,
-        })
-      })
-
-      const idx = allApplications.findIndex(a => a.id === app.id)
-      if (idx > -1) { allApplications[idx].status = 'approved'; allApplications[idx].assigned_tier = tier }
-      updateCounts()
-      render()
-      toast(`${app.full_name} approved as ${tier}.`)
-
-      // TODO: trigger invite token generation + email dispatch (ARD-81)
-
-    } catch (err) {
-      toast(`Failed to approve: ${err.message}`, true)
-      btn.disabled    = false
-      btn.textContent = 'Approve'
-    }
-  }
-
-  // ── Modals ──────────────────────────────────────────────────────────────────
-  function openModal(type, app) {
-    activeModal = { type, id: app.id, name: app.full_name }
-    if (type === 'decline') {
-      document.getElementById('decline-modal-name').textContent = app.full_name
-      document.getElementById('decline-notes').value = ''
-      document.getElementById('decline-modal').classList.add('open')
-    } else {
-      document.getElementById('flag-modal-name').textContent = app.full_name
-      document.getElementById('flag-notes').value = ''
-      document.getElementById('flag-modal').classList.add('open')
-    }
-  }
-
-  function closeModals() {
-    document.getElementById('decline-modal').classList.remove('open')
-    document.getElementById('flag-modal').classList.remove('open')
-    activeModal = null
-  }
-
-  document.getElementById('decline-cancel').addEventListener('click', closeModals)
-  document.getElementById('flag-cancel').addEventListener('click', closeModals)
-  document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('click', e => { if (e.target === o) closeModals() }))
-
-  document.getElementById('decline-confirm').addEventListener('click', async () => {
-    if (!activeModal) return
-    const notes = document.getElementById('decline-notes').value.trim()
-    const btn   = document.getElementById('decline-confirm')
-    btn.disabled    = true
-    btn.textContent = 'Declining…'
-
-    try {
-      await apiFetch(`access_requests?id=eq.${activeModal.id}`, {
-        method: 'PATCH',
-        headers: { 'Prefer': 'return=minimal' },
-        body: JSON.stringify({ status: 'declined', reviewed_at: new Date().toISOString(), review_notes: notes || null })
-      })
-      const idx = allApplications.findIndex(a => a.id === activeModal.id)
-      if (idx > -1) allApplications[idx].status = 'declined'
-      updateCounts()
-      closeModals()
-      render()
-      toast(`${activeModal.name} declined.`)
-    } catch (err) {
-      toast(`Failed: ${err.message}`, true)
-    } finally {
-      btn.disabled    = false
-      btn.textContent = 'Decline Application'
-    }
-  })
-
-  document.getElementById('flag-confirm').addEventListener('click', async () => {
-    if (!activeModal) return
-    const notes = document.getElementById('flag-notes').value.trim()
-    if (!notes) { toast('Please add a note explaining what to look at.', true); return }
-
-    const btn = document.getElementById('flag-confirm')
-    btn.disabled    = true
-    btn.textContent = 'Flagging…'
-
-    try {
-      await apiFetch(`access_requests?id=eq.${activeModal.id}`, {
-        method: 'PATCH',
-        headers: { 'Prefer': 'return=minimal' },
-        body: JSON.stringify({ status: 'flagged', review_notes: notes })
-      })
-      const idx = allApplications.findIndex(a => a.id === activeModal.id)
-      if (idx > -1) { allApplications[idx].status = 'flagged'; allApplications[idx].review_notes = notes }
-      updateCounts()
-      closeModals()
-      render()
-      toast(`Flagged for curator review.`)
-    } catch (err) {
-      toast(`Failed: ${err.message}`, true)
-    } finally {
-      btn.disabled    = false
-      btn.textContent = 'Send to Curator'
-    }
-  })
-
-  // ── Filter buttons ──────────────────────────────────────────────────────────
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'))
-      btn.classList.add('active')
-      currentFilter = btn.dataset.filter
-      loadApplications()
-    })
-  })
-
   // ── Init ────────────────────────────────────────────────────────────────────
   if (!accessToken || !storedUser?.id) {
     const refreshed = await refreshAccessToken()
@@ -821,13 +494,163 @@
     localStorage.removeItem('gns_user')
     window.location.href = 'login.html'
   })
+
   if (window.supabase) {
     window._supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
   }
 
-  await loadApplications()
+  const fp = document.getElementById('feedback-panel')
+  if (fp) fp.classList.add('active')
+  window.initFeedbackAdmin && window.initFeedbackAdmin()
 </script>
 
+<!-- ── Admin feedback logic (from admin-feedback-section.html) ── -->
+<script>
+window.initFeedbackAdmin = async function() {
+  const client = window._supabaseClient;
+  if (!client) { console.warn('initFeedbackAdmin: no supabase client'); return; }
+
+  const tbody       = document.getElementById('fb-table-body');
+  const totalCount  = document.getElementById('fb-total-count');
+  const filterStatus= document.getElementById('fb-filter-status');
+  const filterType  = document.getElementById('fb-filter-type');
+  const lightbox    = document.getElementById('fb-lightbox');
+  const lightboxImg = document.getElementById('fb-lightbox-img');
+  const newBadge    = document.getElementById('fb-new-badge');
+
+  let allRows = [];
+
+  async function loadFeedback() {
+    tbody.innerHTML = '<tr class="fb-state-row"><td colspan="7">Loading…</td></tr>';
+    const { data, error } = await client
+      .from('feedback')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      tbody.innerHTML = '<tr class="fb-state-row"><td colspan="7">Error loading feedback.</td></tr>';
+      console.error(error);
+      return;
+    }
+    allRows = data || [];
+
+    const newCount = allRows.filter(r => r.status === 'new').length;
+    if (newBadge) {
+      newBadge.style.display = newCount > 0 ? 'inline' : 'none';
+      newBadge.textContent = newCount;
+    }
+
+    renderTable();
+  }
+
+  function renderTable() {
+    const statusFilter = filterStatus.value;
+    const typeFilter   = filterType.value;
+
+    let rows = allRows;
+    if (statusFilter) rows = rows.filter(r => r.status === statusFilter);
+    if (typeFilter)   rows = rows.filter(r => r.feedback_type === typeFilter);
+
+    totalCount.textContent = rows.length === allRows.length
+      ? `${allRows.length} entr${allRows.length === 1 ? 'y' : 'ies'}`
+      : `${rows.length} of ${allRows.length}`;
+
+    if (rows.length === 0) {
+      tbody.innerHTML = '<tr class="fb-state-row"><td colspan="7">No entries match the current filters.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = rows.map(row => {
+      const ts = new Date(row.created_at);
+      const tsStr = ts.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' })
+        + ' ' + ts.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
+
+      const thumb = row.screenshot_url
+        ? `<img class="fb-thumb" src="${escHtml(row.screenshot_url)}"
+               alt="Screenshot" data-url="${escHtml(row.screenshot_url)}">`
+        : '<span style="color:rgba(250,246,240,0.25);font-size:12px">—</span>';
+
+      const subby = row.submitted_by
+        ? escHtml(row.submitted_by)
+        : '<span style="opacity:0.35">anonymous</span>';
+
+      return `
+        <tr data-id="${row.id}">
+          <td class="fb-cell-ts">${tsStr}</td>
+          <td class="fb-cell-page" title="${escHtml(row.page)}">${escHtml(row.page)}</td>
+          <td><span class="fb-type-badge">${escHtml(row.feedback_type)}</span></td>
+          <td class="fb-cell-desc">${escHtml(row.description)}</td>
+          <td class="fb-cell-sub">${subby}</td>
+          <td>${thumb}</td>
+          <td>
+            <select class="fb-status-select" data-id="${row.id}" data-status="${row.status}">
+              <option value="new"       ${row.status==='new'       ?'selected':''}>New</option>
+              <option value="reviewed"  ${row.status==='reviewed'  ?'selected':''}>Reviewed</option>
+              <option value="actioned"  ${row.status==='actioned'  ?'selected':''}>Actioned</option>
+              <option value="dismissed" ${row.status==='dismissed' ?'selected':''}>Dismissed</option>
+            </select>
+          </td>
+        </tr>`;
+    }).join('');
+
+    tbody.querySelectorAll('.fb-status-select').forEach(sel => {
+      sel.addEventListener('change', async function() {
+        const id        = this.dataset.id;
+        const newStatus = this.value;
+        this.dataset.status = newStatus;
+        const { error } = await client
+          .from('feedback')
+          .update({ status: newStatus })
+          .eq('id', id);
+        if (error) {
+          alert('Status update failed.');
+          console.error(error);
+        } else {
+          const r = allRows.find(r => r.id === id);
+          if (r) r.status = newStatus;
+          const nc = allRows.filter(r => r.status === 'new').length;
+          if (newBadge) {
+            newBadge.style.display = nc > 0 ? 'inline' : 'none';
+            newBadge.textContent = nc;
+          }
+        }
+      });
+    });
+
+    tbody.querySelectorAll('.fb-thumb').forEach(img => {
+      img.addEventListener('click', function() {
+        lightboxImg.src = this.dataset.url;
+        lightbox.classList.add('open');
+      });
+    });
+  }
+
+  filterStatus.addEventListener('change', renderTable);
+  filterType.addEventListener('change', renderTable);
+
+  lightbox.addEventListener('click', function() {
+    lightbox.classList.remove('open');
+    lightboxImg.src = '';
+  });
+
+  const panel = document.getElementById('feedback-panel');
+  if (panel && panel.classList.contains('active')) {
+    loadFeedback();
+  }
+};
+
+if (!window._fbEscHtml) {
+  window._fbEscHtml = function(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;')
+      .replace(/'/g,'&#39;');
+  };
+}
+function escHtml(s) { return window._fbEscHtml(s); }
+</script>
+<!-- ── End admin feedback logic ── -->
 
 <!--
   ============================================================
